@@ -11,7 +11,6 @@ namespace WGUMobileAppRegGarrett
         public AppShell()
         {
             InitializeComponent();
-            this.GoToAsync("//LoginPage");
         }
 
     }

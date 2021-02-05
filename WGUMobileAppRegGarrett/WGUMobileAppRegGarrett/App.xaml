@@ -27,6 +27,65 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+                <Setter
+                    Property="VerticalOptions"
+                    Value="Center"
+                />
+                <Setter
+                    Property="HorizontalOptions"
+                    Value="Center"
+                />
+            </Style>
+            <Style x:Key="centerLabel" TargetType="Label">
+                <Setter 
+                    Property="TextColor"
+                    Value="{StaticResource Primary}"
+                />
+                <Setter 
+                    Property="FontSize"
+                    Value="Large"
+                />
+                <Setter 
+                    Property="FontAttributes"
+                    Value="Bold"
+                />
+                <Setter 
+                    Property="VerticalOptions"
+                    Value="CenterAndExpand"
+                />
+                <Setter 
+                    Property="HorizontalOptions"
+                    Value="CenterAndExpand"
+                />
+                <Setter 
+                    Property="HorizontalTextAlignment"
+                    Value="Center"
+                />
+            </Style>
+            <Style x:Key="entryFrame" TargetType="Frame">
+                
+                <Setter
+                    Property="Padding"
+                    Value="5, 5, 5, 5"
+                />
+                <Setter
+                    Property="BorderColor"
+                    Value="Black"
+                />
+                <Setter
+                    Property="VerticalOptions"
+                    Value="CenterAndExpand"
+                />
+                <Setter
+                    Property="HorizontalOptions"
+                    Value="CenterAndExpand"
+                />
+            </Style>
+            <Style x:Key="centerEntry" TargetType="Entry">
+                <Setter
+                    Property="HorizontalOptions"
+                    Value="CenterAndExpand"
+                />
             </Style>
         </ResourceDictionary>        
     </Application.Resources>

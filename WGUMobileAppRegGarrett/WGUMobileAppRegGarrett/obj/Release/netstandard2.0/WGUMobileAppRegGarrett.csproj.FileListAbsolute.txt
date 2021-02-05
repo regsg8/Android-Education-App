@@ -17,3 +17,4 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\WGUMobileAppRegGarrett.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\ref\WGUMobileAppRegGarrett.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\WGUMobileAppRegGarrett.pdb
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\WGUMobileAppRegGarrett.csprojAssemblyReference.cache

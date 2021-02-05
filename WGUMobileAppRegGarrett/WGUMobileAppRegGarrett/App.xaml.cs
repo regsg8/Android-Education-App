@@ -13,7 +13,7 @@ namespace WGUMobileAppRegGarrett
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new LoginPage();
         }
 
         protected override void OnStart()

@@ -12,7 +12,7 @@ namespace WGUMobileAppRegGarrett
         public App()
         {
             InitializeComponent();
-
+            DB.initializeDB();
             MainPage = new LoginPage();
         }
 

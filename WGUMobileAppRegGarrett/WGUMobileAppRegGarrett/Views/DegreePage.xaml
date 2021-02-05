@@ -10,7 +10,4 @@
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem  Text="Logout"/>
-    </ContentPage.ToolbarItems>
 </ContentPage>

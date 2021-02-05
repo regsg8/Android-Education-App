@@ -11,6 +11,7 @@ namespace WGUMobileAppRegGarrett.Models
         [PrimaryKey, AutoIncrement]
         public int CourseId { get; set; }
         public int InstructorId { get; set; }
+        public string Name { get; set; }
         public string Status { get; set; }
         public string Notes { get; set; }
         //Storing Dates as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS")

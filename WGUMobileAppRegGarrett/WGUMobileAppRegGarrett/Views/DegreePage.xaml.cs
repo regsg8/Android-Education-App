@@ -15,6 +15,16 @@ namespace WGUMobileAppRegGarrett.Views
         public DegreePage()
         {
             InitializeComponent();
+            ToolbarItem logout = new ToolbarItem
+            {
+                Text = "Logout"
+            };
+            logout.Clicked += logoutClicked;
+            void logoutClicked(object sender, EventArgs args)
+            {
+                Application.Current.MainPage = new LoginPage();
+            }
+            this.ToolbarItems.Add(logout);
         }
     }
 }

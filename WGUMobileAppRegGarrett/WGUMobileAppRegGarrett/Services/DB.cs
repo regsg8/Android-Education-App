@@ -152,6 +152,8 @@ namespace WGUMobileAppRegGarrett.Services
                 con.Close();
             }
         }
+
+        //Convert DateTimes to SQLite strings
         private static List<string> convertDates(List<DateTime> dates)
         {
             List<string> converted = new List<string>();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WGUMobileAppRegGarrett.Services;
+using WGUMobileAppRegGarrett.ViewModels;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -78,13 +79,8 @@ namespace WGUMobileAppRegGarrett.Views
                 Text = "Login",
                 Margin = new Thickness (0, 0, 0, 80)
             };
-            login.Clicked += loginClicked;
-            void loginClicked(object sender, EventArgs args)
-            {
-                //need to check database for user
-                //check for blank entries
-                Application.Current.MainPage = new AppShell();
-            }
+            login.Clicked += LoginViewModel.loginClicked;
+            
             StackLayout stackLayout = new StackLayout 
             {
                 Children =

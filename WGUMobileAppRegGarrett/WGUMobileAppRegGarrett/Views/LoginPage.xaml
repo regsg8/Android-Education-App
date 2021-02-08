@@ -3,4 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WGUMobileAppRegGarrett.Views.LoginPage"
              Title="WGU">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="WGU Login"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="Center"
+                       FontSize="Title"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       TextColor="White"
+                       Padding="20"
+                       BackgroundColor="{StaticResource Primary}"
+                />
+                <StackLayout
+                    VerticalOptions="StartAndExpand"
+                    HorizontalOptions="CenterAndExpand"
+                    Margin="80"
+                    >
+                    <StackLayout>
+                        <Label Text="Username"
+                               Style="{StaticResource centerLabel}"
+                               Margin="60, 0"
+                        />
+                        <Entry x:Name="usernameEntry" 
+                               HorizontalOptions="FillAndExpand"
+                        />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="Password"
+                               Style="{StaticResource centerLabel}"
+                               Margin="60, 0"
+                        />
+                        <Entry x:Name="passwordEntry" 
+                               HorizontalOptions="FillAndExpand"
+                               IsPassword="True"
+                        />
+                    </StackLayout>
+                </StackLayout>
+                <Button x:Name="loginButton"
+                        Text="Login"
+                        Margin="0, 0, 0, 80"
+                        Clicked="loginButton_Clicked"
+                />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

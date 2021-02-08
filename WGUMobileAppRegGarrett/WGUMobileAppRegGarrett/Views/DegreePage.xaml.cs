@@ -15,16 +15,42 @@ namespace WGUMobileAppRegGarrett.Views
         public DegreePage()
         {
             InitializeComponent();
-            ToolbarItem logout = new ToolbarItem
+            checkForLogin();
+            //ToolbarItem logout = new ToolbarItem
+            //{
+            //    Text = "Logout"
+            //};
+            //logout.Clicked += logoutClicked;
+            //void logoutClicked(object sender, EventArgs args)
+            //{
+            //    Navigation.PopAsync();
+            //    Navigation.PushAsync(new LoginPage());
+            //}
+            //this.ToolbarItems.Add(logout);
+        }
+        public void checkForLogin()
+        {
+            if (!App.loggedIn)
             {
-                Text = "Logout"
-            };
-            logout.Clicked += logoutClicked;
-            void logoutClicked(object sender, EventArgs args)
-            {
-                Application.Current.MainPage = new LoginPage();
+                this.Content = new Label 
+                { 
+                    Text = "Please log in",
+                    Style = (Style)Application.Current.Resources["centerLabel"]
+                };
+                ToolbarItem login = new ToolbarItem
+                {
+                    Text = "Login"
+                    
+                };
+                login.Clicked += loginClicked;
+                void loginClicked(object sender, EventArgs args)
+                {
+                    //DisplayAlert("Alert", "You have been alerted", "OK");
+                    App.loggedIn = true;
+                    Application.Current.MainPage = new AppShell();
+                }
+                this.ToolbarItems.Add(login);
             }
-            this.ToolbarItems.Add(logout);
         }
     }
 }

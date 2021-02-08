@@ -33,7 +33,6 @@ namespace WGUMobileAppRegGarrett.Services
         public static void initializeDB()
         {
             SQLiteConnection con = new SQLiteConnection(dbPath);
-            DateTime now = DateTime.Now;
             try
             {
                 con.CreateTable<Models.Assessment>();
@@ -53,6 +52,8 @@ namespace WGUMobileAppRegGarrett.Services
                 if (con.Table<Models.Student>().Count() == 0)
                 {
                     //Get start and end dates for test data
+
+                    DateTime now = DateTime.Now;
                     DateTime start = new DateTime(now.Year, now.Month, 1);
                     DateTime end = start.AddMonths(6).AddHours(23).AddMinutes(59).AddSeconds(59);
                     DateTime courseStart = start.AddDays(7);
@@ -114,7 +115,7 @@ namespace WGUMobileAppRegGarrett.Services
                     };
                     con.Insert(course);
                     int courseId = course.CourseId;
-                    //Insert Assessments
+                    //Insert test Assessments
                     Models.Assessment pa = new Models.Assessment()
                     {
                         CourseId = courseId,

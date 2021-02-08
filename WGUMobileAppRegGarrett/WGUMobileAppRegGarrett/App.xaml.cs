@@ -8,12 +8,12 @@ namespace WGUMobileAppRegGarrett
 {
     public partial class App : Application
     {
-
+        public static bool loggedIn = false;
         public App()
         {
             InitializeComponent();
             DB.initializeDB();
-            MainPage = new LoginPage();
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()

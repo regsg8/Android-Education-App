@@ -1,4 +1,5 @@
 ﻿using System;
+using WGUMobileAppRegGarrett.Models;
 using WGUMobileAppRegGarrett.Services;
 using WGUMobileAppRegGarrett.Views;
 using Xamarin.Forms;
@@ -8,7 +9,6 @@ namespace WGUMobileAppRegGarrett
 {
     public partial class App : Application
     {
-        public static bool loggedIn = false;
         public App()
         {
             InitializeComponent();

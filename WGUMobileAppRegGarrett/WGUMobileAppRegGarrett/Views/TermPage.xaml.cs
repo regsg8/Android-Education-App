@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WGUMobileAppRegGarrett.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,16 +15,7 @@ namespace WGUMobileAppRegGarrett.Views
         public TermPage()
         {
             InitializeComponent();
-            ToolbarItem logout = new ToolbarItem
-            {
-                Text = "Logout"
-            };
-            logout.Clicked += logoutClicked;
-            void logoutClicked(object sender, EventArgs args)
-            {
-                Application.Current.MainPage = new LoginPage();
-            }
-            this.ToolbarItems.Add(logout);
+            Auth.loginCheck(this);
         }
     }
 }

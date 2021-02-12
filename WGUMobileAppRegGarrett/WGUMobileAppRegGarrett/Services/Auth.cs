@@ -10,8 +10,6 @@ namespace WGUMobileAppRegGarrett.Services
     {
         public static Student login = new Student
         {
-            StudentId = -2,
-            Name = "login",
             Username = "",
             Password = ""
         };
@@ -129,8 +127,8 @@ namespace WGUMobileAppRegGarrett.Services
             try
             {
                 //Check for empty entries
-                if (login.Username == "") throw new Exception("Please enter a Username.");
-                if (login.Password == "") throw new Exception("Please enter a Password.");
+                if (login.Username == "") throw new Exception("Please enter your Username.");
+                if (login.Password == "") throw new Exception("Please enter your Password.");
                 //Use Student login binding info
                 DB.studentLogin(login.Username, login.Password);
             }

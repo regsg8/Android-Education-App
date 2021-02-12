@@ -44,7 +44,7 @@ namespace WGUMobileAppRegGarrett.Services
                     }
                     else throw new Exception("Username and Password do not match.");
                 }
-                else throw new Exception("Error logging in");
+                else throw new Exception("Error logging in.");
             }
             catch (Exception x)
             {

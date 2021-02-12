@@ -19,13 +19,13 @@ namespace WGUMobileAppRegGarrett.Models
                 RaisePropertyChanged(nameof(StudentId));
             }
         }
-        public string Name 
+        public string StudentName 
         { 
             get => _name;
             set 
             {
                 _name = value;
-                RaisePropertyChanged(nameof(Name));
+                RaisePropertyChanged(nameof(StudentName));
             }
         }
         public string Username
@@ -46,6 +46,7 @@ namespace WGUMobileAppRegGarrett.Models
                 RaisePropertyChanged(nameof(Password));
             }
         }
+
         private int _id;
         private string _name;
         private string _username;

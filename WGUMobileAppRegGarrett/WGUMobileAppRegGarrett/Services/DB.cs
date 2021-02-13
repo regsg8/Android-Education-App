@@ -5,6 +5,7 @@ using System.IO;
 using SQLite;
 using WGUMobileAppRegGarrett.Models;
 using Xamarin.Forms;
+using WGUMobileAppRegGarrett.ViewModels;
 
 namespace WGUMobileAppRegGarrett.Services
 {
@@ -12,8 +13,59 @@ namespace WGUMobileAppRegGarrett.Services
     {
 
         //Degree CRUD
+        //Gets active degree by student Id
+        public async static void getActiveDegree(int studentId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                //Find user with username
+                var degrees = con.Query<Degree>($"SELECT * FROM Degrees WHERE StudentId = '{studentId}' AND DegreeActive = '1'");
+                if (degrees.Count == 1)
+                {
+                    DegreeViewModel.degree = degrees[0];
+                }
+                else throw new Exception("Error finding student's degree.");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         //Term CRUD
+        //Get all terms in a degree
+        public async static void getDegreeTerms(int degreeId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                //Find user with username
+                var terms = con.Query<Term>($"SELECT * FROM Terms WHERE DegreeId = '{degreeId}'");
+                if (terms.Count != 0)
+                {
+                    terms.ForEach(t =>
+                    {
+                        DegreeViewModel.terms.Add(t);
+                    });
+                }
+                else throw new Exception("Error finding student's terms.");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         //Course CRUD
 
@@ -58,7 +110,7 @@ namespace WGUMobileAppRegGarrett.Services
         }
 
         //Create dbPath variable for Android
-        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "wgu.db3");
+        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "date.db3");
 
         //Create DB if none exists and populate test data
         public static void initializeDB()
@@ -98,7 +150,7 @@ namespace WGUMobileAppRegGarrett.Services
                     //Insert test student
                     Models.Student student = new Models.Student
                     {
-                        Name = "test",
+                        StudentName = "test",
                         Username = "test",
                         Password = "test"
                     };
@@ -108,8 +160,8 @@ namespace WGUMobileAppRegGarrett.Services
                     Models.Degree degree = new Models.Degree
                     {
                         StudentId = studentId,
-                        Name = "My Degree",
-                        Active = 1
+                        DegreeName = "My Degree",
+                        DegreeActive = 1
                     };
                     con.Insert(degree);
                     int degreeId = degree.DegreeId;
@@ -117,16 +169,16 @@ namespace WGUMobileAppRegGarrett.Services
                     Models.Term term = new Models.Term
                     {
                         DegreeId = degreeId,
-                        Name = "First Term",
-                        Start = sqlDates[0],
-                        End = sqlDates[1]
+                        TermName = "First Term",
+                        TermStart = sqlDates[0],
+                        TermEnd = sqlDates[1]
                     };
                     con.Insert(term);
                     int termId = term.TermId;
                     //Insert test instructor
                     Models.Instructor instructor = new Models.Instructor()
                     {
-                        Name = "Reg Garrett",
+                        InstructorName = "Reg Garrett",
                         Email = "rgarr25@wgu.edu",
                         Phone = "801-623-8070"
                     };
@@ -136,7 +188,7 @@ namespace WGUMobileAppRegGarrett.Services
                     Models.Course course = new Models.Course()
                     {
                         InstructorId = instructorId,
-                        Name = "Intro to Xamarin Forms"
+                        CourseName = "Intro to Xamarin Forms"
                     };
                     con.Insert(course);
                     int courseId = course.CourseId;
@@ -145,20 +197,20 @@ namespace WGUMobileAppRegGarrett.Services
                     {
                         CourseId = courseId,
                         Type = "Performance Assessment",
-                        Start = sqlDates[4],
-                        End = sqlDates[5],
-                        StartNotification = 0,
-                        EndNotification = 0
+                        AssessmentStart = sqlDates[4],
+                        AssessmentEnd = sqlDates[5],
+                        AssessmentStartNotify = 0,
+                        AssessmentEndNotify = 0
                     };
                     con.Insert(pa);
                     Models.Assessment oa = new Models.Assessment()
                     {
                         CourseId = courseId,
                         Type = "Objective Assessment",
-                        Start = sqlDates[6],
-                        End = sqlDates[7],
-                        StartNotification = 0,
-                        EndNotification = 0
+                        AssessmentStart = sqlDates[6],
+                        AssessmentEnd = sqlDates[7],
+                        AssessmentStartNotify = 0,
+                        AssessmentEndNotify = 0
                     };
                     con.Insert(oa);
                     Models.Enrollment enrollment = new Models.Enrollment()
@@ -167,10 +219,10 @@ namespace WGUMobileAppRegGarrett.Services
                         CourseId = courseId,
                         Status = "Enrolled",
                         Notes = "",
-                        Start = sqlDates[2],
-                        End = sqlDates[3],
-                        StartNotification = 0,
-                        EndNotification = 0
+                        EnrollmentStart = sqlDates[2],
+                        EnrollmentEnd = sqlDates[3],
+                        EnrollmentStartNotify = 0,
+                        EntrollmentEndNotify = 0
                     };
                     con.Insert(enrollment);
                 }
@@ -191,7 +243,7 @@ namespace WGUMobileAppRegGarrett.Services
             List<string> converted = new List<string>();
             dates.ForEach(d =>
            {
-               string s = d.ToString("YYYY-MM-DD HH:MM:SS.SSS");
+               string s = d.ToString("yyyy-MM-dd HH:mm:ss");
                converted.Add(s);
            });
             return converted;

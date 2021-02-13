@@ -188,7 +188,7 @@
 
 	/* 20: WGUMobileAppRegGarrett.dll */
 	/* uncompressed_file_size */
-	.word	39424
+	.word	41472
 	/* loaded */
 	.byte	0
 	/* data */
@@ -566,7 +566,7 @@
 
 	/* 62: mscorlib.dll */
 	/* uncompressed_file_size */
-	.word	2060800
+	.word	2061312
 	/* loaded */
 	.byte	0
 	/* data */

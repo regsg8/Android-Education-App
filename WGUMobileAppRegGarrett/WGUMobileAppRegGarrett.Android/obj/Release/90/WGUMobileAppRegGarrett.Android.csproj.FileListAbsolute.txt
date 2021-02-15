@@ -55,6 +55,9 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\icon_about.png
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\icon_feed.png
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\diploma.png
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\university.png
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\scroll.png
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\checklist.png
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\uploadflags.txt
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\resolvedassemblies.hash
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\link.flag
@@ -75,6 +78,8 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Buffers.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Core.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Core.pdb
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Data.dll
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Data.pdb
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Drawing.Common.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Drawing.Common.pdb
@@ -417,6 +422,3 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_GenerateJavaStubs.stamp
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_ResolveLibraryProjectImports.stamp
-C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\university.png
-C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\scroll.png
-C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\checklist.png

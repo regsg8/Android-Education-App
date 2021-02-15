@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WGUMobileAppRegGarrett.Converters;
 using Xamarin.Forms;
 
 namespace WGUMobileAppRegGarrett.Templates
@@ -13,18 +14,46 @@ namespace WGUMobileAppRegGarrett.Templates
             {
                 Style = (Style)Application.Current.Resources["centerLabel"]
             };
+            Label startDate = new Label()
+            {
+                Style = (Style)Application.Current.Resources["leftLabel"]
+            };
+            Label endDate = new Label()
+            {
+                Style = (Style)Application.Current.Resources["leftLabel"]
+            };
             Label start = new Label()
             {
-                Style = (Style)Application.Current.Resources["centerLabel"]
+                Style = (Style)Application.Current.Resources["rightLabel"],
+                Text = "Start: "
             };
             Label end = new Label()
             {
-                Style = (Style)Application.Current.Resources["centerLabel"]
+                Style = (Style)Application.Current.Resources["rightLabel"],
+                Text = "End: "
             };
 
             name.SetBinding(Label.TextProperty, "TermName");
-            start.SetBinding(Label.TextProperty, "TermStart");
-            end.SetBinding(Label.TextProperty, "TermEnd");
+            startDate.SetBinding(Label.TextProperty, "TermStart", BindingMode.OneWay, new DateConverter());
+            endDate.SetBinding(Label.TextProperty, "TermEnd", BindingMode.OneWay, new DateConverter());
+
+            Grid grid = new Grid
+            {
+                RowDefinitions =
+                {
+                    new RowDefinition(),
+                    new RowDefinition()
+                },
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition(),
+                    new ColumnDefinition()
+                }
+            };
+            grid.Children.Add(start, 0, 0);
+            grid.Children.Add(startDate, 1, 0);
+            grid.Children.Add(end, 0, 1);
+            grid.Children.Add(endDate, 1, 1);
 
             StackLayout stack = new StackLayout()
             {
@@ -32,8 +61,7 @@ namespace WGUMobileAppRegGarrett.Templates
                 Children =
                 {
                     name,
-                    start,
-                    end
+                    grid
                 }
             };
 

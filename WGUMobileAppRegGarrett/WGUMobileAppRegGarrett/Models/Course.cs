@@ -7,7 +7,7 @@ using SQLite;
 namespace WGUMobileAppRegGarrett.Models
 {
     [Table("Courses")]
-    class Course : INotifyPropertyChanged
+    public class Course : INotifyPropertyChanged
     {
         [PrimaryKey, AutoIncrement]
         public int CourseId

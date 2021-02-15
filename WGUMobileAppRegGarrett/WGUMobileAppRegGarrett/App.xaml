@@ -62,6 +62,58 @@
                     Value="Center"
                 />
             </Style>
+            <Style x:Key="rightLabel" TargetType="Label">
+                <Setter 
+                    Property="TextColor"
+                    Value="{StaticResource Primary}"
+                />
+                <Setter 
+                    Property="FontSize"
+                    Value="Large"
+                />
+                <Setter 
+                    Property="FontAttributes"
+                    Value="Bold"
+                />
+                <Setter 
+                    Property="VerticalOptions"
+                    Value="CenterAndExpand"
+                />
+                <Setter 
+                    Property="HorizontalOptions"
+                    Value="EndAndExpand"
+                />
+                <Setter 
+                    Property="HorizontalTextAlignment"
+                    Value="End"
+                />
+            </Style>
+            <Style x:Key="leftLabel" TargetType="Label">
+                <Setter 
+                    Property="TextColor"
+                    Value="{StaticResource Primary}"
+                />
+                <Setter 
+                    Property="FontSize"
+                    Value="Large"
+                />
+                <Setter 
+                    Property="FontAttributes"
+                    Value="Bold"
+                />
+                <Setter 
+                    Property="VerticalOptions"
+                    Value="CenterAndExpand"
+                />
+                <Setter 
+                    Property="HorizontalOptions"
+                    Value="StartAndExpand"
+                />
+                <Setter 
+                    Property="HorizontalTextAlignment"
+                    Value="Start"
+                />
+            </Style>
             <Style x:Key="entryFrame" TargetType="Frame">
                 
                 <Setter

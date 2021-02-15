@@ -6,6 +6,8 @@ using SQLite;
 using WGUMobileAppRegGarrett.Models;
 using Xamarin.Forms;
 using WGUMobileAppRegGarrett.ViewModels;
+using System.Data;
+using WGUMobileAppRegGarrett.Converters;
 
 namespace WGUMobileAppRegGarrett.Services
 {
@@ -19,7 +21,6 @@ namespace WGUMobileAppRegGarrett.Services
             SQLiteConnection con = new SQLiteConnection(dbPath);
             try
             {
-                //Find user with username
                 var degrees = con.Query<Degree>($"SELECT * FROM Degrees WHERE StudentId = '{studentId}' AND DegreeActive = '1'");
                 if (degrees.Count == 1)
                 {
@@ -45,7 +46,6 @@ namespace WGUMobileAppRegGarrett.Services
             SQLiteConnection con = new SQLiteConnection(dbPath);
             try
             {
-                //Find user with username
                 var terms = con.Query<Term>($"SELECT * FROM Terms WHERE DegreeId = '{degreeId}'");
                 if (terms.Count != 0)
                 {
@@ -67,9 +67,71 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //
+
         //Course CRUD
+        //Get all course names and add to CourseNameConverter
+        public async static void getCourseNames()
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                DataTable coursesTable = new DataTable();
+                coursesTable.Columns.Add();
+                coursesTable.Columns.Add();
+                var courses = con.Query<Course>($"SELECT CourseId, CourseName FROM Courses");
+                if (courses.Count != 0)
+                {
+                    courses.ForEach(c =>
+                    {
+                        DataRow dataRow = coursesTable.NewRow();
+                        dataRow[0] = c.CourseId;
+                        dataRow[1] = c.CourseName;
+                        coursesTable.Rows.Add(dataRow);
+                        //CourseNameConverter.courseNames.Rows.Add(c);
+                    });
+                    CourseNameConverter.courseNames = coursesTable;
+                }
+                else throw new Exception("Error retrieving course names.");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         //Enrollment CRUD
+        //Get all enrollments in a term
+        public async static void getTermEnrollments(int termId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                var enrollments = con.Query<Enrollment>($"SELECT * FROM Enrollments WHERE TermId = '{termId}'");
+                if (enrollments.Count != 0)
+                {
+                    enrollments.ForEach(e =>
+                    {
+                        TermViewModel.enrollments.Add(e);
+                    });
+                }
+                else throw new Exception("Error finding student's enrollments.");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         //Assessment CRUD
 
@@ -238,7 +300,7 @@ namespace WGUMobileAppRegGarrett.Services
         }
 
         //Convert DateTimes to SQLite strings
-        private static List<string> convertDates(List<DateTime> dates)
+        public static List<string> convertDates(List<DateTime> dates)
         {
             List<string> converted = new List<string>();
             dates.ForEach(d =>

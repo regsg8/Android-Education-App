@@ -37,7 +37,7 @@ namespace WGUMobileAppRegGarrett.Templates
             startDate.SetBinding(Label.TextProperty, "EnrollmentStart", BindingMode.OneWay, new DateConverter());
             endDate.SetBinding(Label.TextProperty, "EnrollmentEnd", BindingMode.OneWay, new DateConverter());
 
-            Grid grid = new Grid
+            Grid dateGrid = new Grid
             {
                 RowDefinitions =
                 {
@@ -50,10 +50,10 @@ namespace WGUMobileAppRegGarrett.Templates
                     new ColumnDefinition()
                 }
             };
-            grid.Children.Add(start, 0, 0);
-            grid.Children.Add(startDate, 1, 0);
-            grid.Children.Add(end, 0, 1);
-            grid.Children.Add(endDate, 1, 1);
+            dateGrid.Children.Add(start, 0, 0);
+            dateGrid.Children.Add(startDate, 1, 0);
+            dateGrid.Children.Add(end, 0, 1);
+            dateGrid.Children.Add(endDate, 1, 1);
 
             StackLayout stack = new StackLayout()
             {
@@ -61,7 +61,7 @@ namespace WGUMobileAppRegGarrett.Templates
                 Children =
                 {
                     name,
-                    grid
+                    dateGrid
                 }
             };
 

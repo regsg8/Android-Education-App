@@ -217,7 +217,7 @@
 
 	/* 21: WGUMobileAppRegGarrett.dll */
 	/* uncompressed_file_size */
-	.long	49664
+	.long	57344
 	/* loaded */
 	.byte	0
 	/* data */

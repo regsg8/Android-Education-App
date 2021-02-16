@@ -12,6 +12,8 @@ namespace WGUMobileAppRegGarrett.ViewModels
     {
         public static Degree degree { get; set; }
         public static ObservableCollection<Term> terms;
+        public static Term selectedTerm { get; set; }
+        public static Term newTerm { get; set; }
 
         public DegreeViewModel()
         {

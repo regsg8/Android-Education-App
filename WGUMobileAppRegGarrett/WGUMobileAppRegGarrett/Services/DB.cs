@@ -49,6 +49,7 @@ namespace WGUMobileAppRegGarrett.Services
                 var terms = con.Query<Term>($"SELECT * FROM Terms WHERE DegreeId = '{degreeId}'");
                 if (terms.Count != 0)
                 {
+                    DegreeViewModel.terms.Clear();
                     terms.ForEach(t =>
                     {
                         DegreeViewModel.terms.Add(t);

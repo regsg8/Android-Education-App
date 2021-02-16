@@ -41,6 +41,7 @@ namespace WGUMobileAppRegGarrett.Views
             listview.ItemTemplate = new DataTemplate(typeof(EnrollmentCell));
             listview.ItemsSource = TermViewModel.enrollments;
 
+            //Need to add term name, start and end dates at top of page
             ScrollView scrollview = new ScrollView()
             {
                 Content = listview

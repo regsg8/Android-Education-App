@@ -422,3 +422,4 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_GenerateJavaStubs.stamp
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\res\drawable\edit.png

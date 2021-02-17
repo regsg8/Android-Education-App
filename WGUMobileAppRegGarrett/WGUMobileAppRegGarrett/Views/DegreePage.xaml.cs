@@ -68,9 +68,7 @@ namespace WGUMobileAppRegGarrett.Views
             Button edit = new Button
             {
                 Text = "Edit",
-                CornerRadius = 10,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Margin = new Thickness(10)
+                Style = (Style)Application.Current.Resources["centerButton"]
             };
             edit.Clicked += Edit_Clicked;
             StackLayout stack = new StackLayout()
@@ -116,58 +114,39 @@ namespace WGUMobileAppRegGarrett.Views
             Button removeTerm = new Button
             {
                 Text = "Remove Term",
-                CornerRadius = 10,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.StartAndExpand,
-                Margin = new Thickness(10)
+                Style = (Style)Application.Current.Resources["rightButton"]
             };
             removeTerm.Clicked += removeTerm_Clicked;
             Button add = new Button
             {
                 Text = "Add Term",
-                CornerRadius = 10,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.StartAndExpand,
-                Margin = new Thickness(10)
+                Style = (Style)Application.Current.Resources["leftButton"]
             };
             add.Clicked += Add_Clicked;
             Button save = new Button
             {
                 Text = "Save",
-                CornerRadius = 10,
-                HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10)
+                Style = (Style)Application.Current.Resources["leftButton"]
             };
             save.Clicked += Save_Clicked;
             Button cancel = new Button
             {
                 Text = "Cancel",
-                CornerRadius = 10,
-                HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10)
+                Style = (Style)Application.Current.Resources["rightButton"]
             };
             cancel.Clicked += Cancel_Clicked;
-            StackLayout buttons = new StackLayout()
-            {
-                Orientation = StackOrientation.Horizontal,
-                VerticalOptions = LayoutOptions.End,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Children =
-                {
-
-                    removeTerm,
-                    add,
-                    cancel,
-                    save
-                }
-            };
+            Grid grid = Generics.twoByTwoGrid();
+            grid.Children.Add(removeTerm, 0, 0);
+            grid.Children.Add(add, 1, 0);
+            grid.Children.Add(cancel, 0, 1);
+            grid.Children.Add(save, 1, 1);
             StackLayout stack = new StackLayout()
             {
                 Children =
                 {
                     name,
                     listview,
-                    buttons
+                    grid
                 }
             };
             ScrollView scrollview = new ScrollView()
@@ -194,7 +173,10 @@ namespace WGUMobileAppRegGarrett.Views
         }
         private void Save_Clicked(object sender, EventArgs e)
         {
-            //Loop through degreeviewmodel.terms and send an update call for each one
+            for (int i = 0; i < DegreeViewModel.terms.Count; i++)
+            {
+                DB.updateTerm(DegreeViewModel.terms[i]);
+            }
             editing = false;
             populatePage();
         }
@@ -210,21 +192,8 @@ namespace WGUMobileAppRegGarrett.Views
         private void Add_Clicked(object sender, EventArgs e)
         {
             DegreeViewModel.newTerm = new Term();
-            Grid grid = new Grid
-            {
-                RowDefinitions =
-                {
-                    new RowDefinition(),
-                    new RowDefinition(),
-                    new RowDefinition()
-                },
-                ColumnDefinitions =
-                {
-                    new ColumnDefinition(),
-                    new ColumnDefinition()
-                },
-                Margin = new Thickness(0, 40, 0, 0)
-            };
+            Grid grid = Generics.twoByThreeGrid();
+            grid.Margin = new Thickness(0, 40, 0, 0);
             Label name = new Label
             {
                 Text = "Term Name:",
@@ -243,6 +212,7 @@ namespace WGUMobileAppRegGarrett.Views
             Entry nameEntry = new Entry();
             nameEntry.SetBinding(Entry.TextProperty, "TermName", BindingMode.TwoWay);
             nameEntry.BindingContext = DegreeViewModel.newTerm;
+            DegreeViewModel.newTerm.TermName = "";
             DateTime now = DateTime.Now;
             DatePicker startDate = new DatePicker();
             startDate.SetBinding(DatePicker.DateProperty, "start", BindingMode.TwoWay);
@@ -261,17 +231,13 @@ namespace WGUMobileAppRegGarrett.Views
             Button addTerm = new Button
             {
                 Text = "Add",
-                CornerRadius = 10,
-                HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10)
+                Style = (Style)Application.Current.Resources["centerButton"]
             };
             addTerm.Clicked += AddTerm_Clicked;
             Button cancelTerm = new Button
             {
                 Text = "Cancel",
-                CornerRadius = 10,
-                HorizontalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10)
+                Style = (Style)Application.Current.Resources["centerButton"]
             };
             cancelTerm.Clicked += CancelTerm_Clicked;
             StackLayout buttons = new StackLayout()
@@ -307,9 +273,18 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void AddTerm_Clicked(object sender, EventArgs e)
         {
+            int checkDate = DateTime.Compare(degreeVM.start, degreeVM.end);
             if (DegreeViewModel.checkOverlapping(degreeVM))
             {
                 await DisplayAlert("Overlapping Terms", "Start and End dates cannot overlap existing terms.", "OK");
+            }
+            else if (DegreeViewModel.newTerm.TermName == "")
+            {
+                await DisplayAlert("No Term Name", "Please enter a name for the new term.", "OK");
+            }
+            else if (checkDate >= 0)
+            {
+                await DisplayAlert("Incorrect Dates", "Start date must be before End date", "OK");
             }
             else
             {

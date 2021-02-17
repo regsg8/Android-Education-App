@@ -171,26 +171,14 @@
                     Value="14"
                 />
             </Style>
-            <Style x:Key="corner" TargetType="Frame">
+            <Style x:Key="centerButton" TargetType="Button">
                 <Setter 
                     Property="CornerRadius"
+                    Value="10"
+                />
+                <Setter 
+                    Property="Margin"
                     Value="5"
-                />
-                <Setter 
-                    Property="BackgroundColor"
-                    Value="White"
-                />
-                <Setter 
-                    Property="HasShadow"
-                    Value="False"
-                />
-                <Setter 
-                    Property="IsClippedToBounds"
-                    Value="True"
-                />
-                <Setter 
-                    Property="Padding"
-                    Value="0"
                 />
                 <Setter 
                     Property="HorizontalOptions"
@@ -198,7 +186,55 @@
                 />
                 <Setter
                     Property="VerticalOptions"
+                    Value="StartAndExpand"
+                />
+                <Setter
+                    Property="WidthRequest"
+                    Value="130"
+                />
+            </Style>
+            <Style x:Key="leftButton" TargetType="Button">
+                <Setter 
+                    Property="CornerRadius"
+                    Value="10"
+                />
+                <Setter 
+                    Property="Margin"
+                    Value="5"
+                />
+                <Setter 
+                    Property="HorizontalOptions"
                     Value="Start"
+                />
+                <Setter
+                    Property="VerticalOptions"
+                    Value="StartAndExpand"
+                />
+                <Setter
+                    Property="WidthRequest"
+                    Value="130"
+                />
+            </Style>
+            <Style x:Key="rightButton" TargetType="Button">
+                <Setter 
+                    Property="CornerRadius"
+                    Value="10"
+                />
+                <Setter 
+                    Property="Margin"
+                    Value="5"
+                />
+                <Setter 
+                    Property="HorizontalOptions"
+                    Value="End"
+                />
+                <Setter
+                    Property="VerticalOptions"
+                    Value="StartAndExpand"
+                />
+                <Setter
+                    Property="WidthRequest"
+                    Value="130"
                 />
             </Style>
         </ResourceDictionary>        

@@ -37,19 +37,7 @@ namespace WGUMobileAppRegGarrett.Templates
             startDate.SetBinding(Label.TextProperty, "TermStart", BindingMode.OneWay, new DateConverter());
             endDate.SetBinding(Label.TextProperty, "TermEnd", BindingMode.OneWay, new DateConverter());
 
-            Grid dateGrid = new Grid
-            {
-                RowDefinitions =
-                {
-                    new RowDefinition(),
-                    new RowDefinition()
-                },
-                ColumnDefinitions =
-                {
-                    new ColumnDefinition(),
-                    new ColumnDefinition()
-                }
-            };
+            Grid dateGrid = Generics.twoByTwoGrid();
             dateGrid.Children.Add(start, 0, 0);
             dateGrid.Children.Add(startDate, 1, 0);
             dateGrid.Children.Add(end, 0, 1);

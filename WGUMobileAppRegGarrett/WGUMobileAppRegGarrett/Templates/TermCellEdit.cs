@@ -33,20 +33,7 @@ namespace WGUMobileAppRegGarrett.Templates
             startDate.SetBinding(DatePicker.DateProperty, "TermStart", BindingMode.TwoWay, new DateConverter());
             endDate.SetBinding(DatePicker.DateProperty, "TermEnd", BindingMode.TwoWay, new DateConverter());
 
-            Grid grid = new Grid
-            {
-                RowDefinitions =
-                {
-                    new RowDefinition(),
-                    new RowDefinition(),
-                    new RowDefinition()
-                },
-                ColumnDefinitions =
-                {
-                    new ColumnDefinition(),
-                    new ColumnDefinition()
-                }
-            };
+            Grid grid = Generics.twoByThreeGrid();
             grid.Children.Add(name, 0, 0);
             grid.Children.Add(nameEntry, 1, 0);
             grid.Children.Add(start, 0, 1);

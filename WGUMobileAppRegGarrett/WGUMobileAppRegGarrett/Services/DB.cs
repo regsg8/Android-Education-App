@@ -112,6 +112,25 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Update a term
+        public async static void updateTerm(Term term)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Execute($"UPDATE Terms SET TermStart = '{term.TermStart}', TermEnd = '{term.TermEnd}', TermName = '{term.TermName}' WHERE TermId = '{term.TermId}'");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
         //
 
@@ -245,7 +264,7 @@ namespace WGUMobileAppRegGarrett.Services
                     //Get start and end dates for test data
                     DateTime now = DateTime.Now;
                     DateTime start = new DateTime(now.Year, now.Month, 1);
-                    DateTime end = start.AddMonths(6).AddHours(23).AddMinutes(59).AddSeconds(59);
+                    DateTime end = new DateTime(start.Year, (start.Month + 5), DateTime.DaysInMonth(start.Year, (start.Month + 5)));
                     DateTime enrollmentStart = start.AddDays(7);
                     DateTime enrollmentEnd = enrollmentStart.AddDays(14);
                     DateTime paAssessmentStart = enrollmentStart.AddDays(12).AddHours(15).AddMinutes(30);

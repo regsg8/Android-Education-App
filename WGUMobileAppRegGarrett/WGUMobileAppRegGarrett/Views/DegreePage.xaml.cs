@@ -39,6 +39,8 @@ namespace WGUMobileAppRegGarrett.Views
         //Populate page
         private void populatePage()
         {
+            DB.getDegreeTerms(DegreeViewModel.degree.DegreeId);
+            DB.getActiveDegree(Auth.user.StudentId);
             if (editing)
             {
                 editingPage();
@@ -46,21 +48,15 @@ namespace WGUMobileAppRegGarrett.Views
             else standardPage();
         }
 
-        //Creates standard page view
+        // ↓↓↓  Standard Page  ↓↓↓ 
         private void standardPage()
         {
-            //Create page title
             Label name = new Label()
             {
                 Style = (Style)Application.Current.Resources["title"]
             };
             name.BindingContext = DegreeViewModel.degree;
             name.SetBinding(Label.TextProperty, "DegreeName");
-
-            //Create listview of terms
-            //Need to add item tapped functionality
-            //Set degreeviewmodel.selectedterm to the tapped term
-            //And navigate to the term page
             ListView listview = new ListView()
             {
                 RowHeight = 120,
@@ -69,7 +65,6 @@ namespace WGUMobileAppRegGarrett.Views
             listview.ItemTemplate = new DataTemplate(typeof(TermCell));
             listview.ItemsSource = DegreeViewModel.terms;
 
-            //Create edit button
             Button edit = new Button
             {
                 Text = "Edit",
@@ -78,8 +73,6 @@ namespace WGUMobileAppRegGarrett.Views
                 Margin = new Thickness(10)
             };
             edit.Clicked += Edit_Clicked;
-
-            //Add everything to a stacklayout
             StackLayout stack = new StackLayout()
             {
                 Children =
@@ -89,39 +82,46 @@ namespace WGUMobileAppRegGarrett.Views
                     edit
                 }
             };
-            //Set stacklayout in a scrollview
             ScrollView scrollview = new ScrollView()
             {
                 Content = stack
             };
             this.Content = scrollview;
         }
+        private void Edit_Clicked(object sender, EventArgs e)
+        {
+            editing = true;
+            populatePage();
+        }
+        // ↑↑↑  Standard Page  ↑↑↑ 
 
-        //Creates editing page
+
+        // ↓↓↓  Edit Page  ↓↓↓ 
         private void editingPage()
         {
-            //Use entries and two way bindings
-            //Create page title
             Entry name = new Entry()
             {
                 Style = (Style)Application.Current.Resources["title"]
             };
             name.BindingContext = DegreeViewModel.degree;
             name.SetBinding(Entry.TextProperty, "DegreeName");
-
-            //Create listview of terms
-            //Need to add item tapped functionality
-            //Set degreeviewmodel.selectedterm to the tapped term
-            //And navigate to the term page
             ListView listview = new ListView()
             {
-                RowHeight = 120,
-                Margin = new Thickness(5)
+                RowHeight = 160,
+                Margin = new Thickness(5) 
             };
-            listview.ItemTemplate = new DataTemplate(typeof(TermCell));
+            listview.ItemTapped += Listview_ItemTapped;
+            listview.ItemTemplate = new DataTemplate(typeof(TermCellEdit));
             listview.ItemsSource = DegreeViewModel.terms;
-
-            //Create add button
+            Button removeTerm = new Button
+            {
+                Text = "Remove Term",
+                CornerRadius = 10,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                Margin = new Thickness(10)
+            };
+            removeTerm.Clicked += removeTerm_Clicked;
             Button add = new Button
             {
                 Text = "Add Term",
@@ -131,8 +131,6 @@ namespace WGUMobileAppRegGarrett.Views
                 Margin = new Thickness(10)
             };
             add.Clicked += Add_Clicked;
-
-            //Create save button
             Button save = new Button
             {
                 Text = "Save",
@@ -141,7 +139,6 @@ namespace WGUMobileAppRegGarrett.Views
                 Margin = new Thickness(10)
             };
             save.Clicked += Save_Clicked;
-            //Create cancel button
             Button cancel = new Button
             {
                 Text = "Cancel",
@@ -150,7 +147,6 @@ namespace WGUMobileAppRegGarrett.Views
                 Margin = new Thickness(10)
             };
             cancel.Clicked += Cancel_Clicked;
-            //Put cancel and save side by side
             StackLayout buttons = new StackLayout()
             {
                 Orientation = StackOrientation.Horizontal,
@@ -158,62 +154,63 @@ namespace WGUMobileAppRegGarrett.Views
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Children =
                 {
+
+                    removeTerm,
+                    add,
                     cancel,
                     save
                 }
             };
-
-            //Add everything to a stacklayout
             StackLayout stack = new StackLayout()
             {
                 Children =
                 {
                     name,
                     listview,
-                    add,
                     buttons
                 }
             };
-            //Set stacklayout in a scrollview
             ScrollView scrollview = new ScrollView()
             {
                 Content = stack
             };
             this.Content = scrollview;
         }
-
-        private void Edit_Clicked(object sender, EventArgs e)
+        private async void removeTerm_Clicked(object sender, EventArgs e)
         {
-            editing = true;
-            populatePage();
+            if (degreeVM.selectedTerm.TermId < 0)
+            {
+                await DisplayAlert("Error", "Please select a term to remove.", "Okay");
+            }
+            else
+            {
+                var action = await DisplayAlert("Confirm Deletion", $"Are you sure you would like to delete {degreeVM.selectedTerm.TermName}?", "Yes", "No");
+                if (action)
+                {
+                    DB.deleteTerm(degreeVM.selectedTerm.TermId);
+                    populatePage();
+                }
+            }
         }
-
-        private async void Save_Clicked(object sender, EventArgs e)
+        private void Save_Clicked(object sender, EventArgs e)
         {
-            await DisplayAlert("ah", "saved", "shweet");
+            //Loop through degreeviewmodel.terms and send an update call for each one
             editing = false;
             populatePage();
         }
-
         private void Cancel_Clicked(object sender, EventArgs e)
         {
             editing = false;
-            //Undo any changes made by two-way bindings
-            DB.getDegreeTerms(DegreeViewModel.degree.DegreeId);
-            DB.getActiveDegree(Auth.user.StudentId);
             populatePage();
         }
+        // ↑↑↑  Edit Page  ↑↑↑
 
+
+        // ↓↓↓  Add Term Page  ↓↓↓
         private void Add_Clicked(object sender, EventArgs e)
         {
-            //Populate page with adding a new term
-            DegreeViewModel.newTerm = new Term
-            {
-                TermName = "",
-                TermStart = DateTime.Now.ToString(),
-                TermEnd = DateTime.Now.AddMonths(6).ToString()
-            };
-            Grid grid = new Grid 
+            DegreeViewModel.newTerm = new Term();
+            Grid grid = new Grid
             {
                 RowDefinitions =
                 {
@@ -245,16 +242,22 @@ namespace WGUMobileAppRegGarrett.Views
             };
             Entry nameEntry = new Entry();
             nameEntry.SetBinding(Entry.TextProperty, "TermName", BindingMode.TwoWay);
+            nameEntry.BindingContext = DegreeViewModel.newTerm;
+            DateTime now = DateTime.Now;
             DatePicker startDate = new DatePicker();
+            startDate.SetBinding(DatePicker.DateProperty, "start", BindingMode.TwoWay);
+            startDate.BindingContext = degreeVM;
+            degreeVM.start = new DateTime(now.Year, now.Month, 1);
             DatePicker endDate = new DatePicker();
+            endDate.SetBinding(DatePicker.DateProperty, "end", BindingMode.TwoWay);
+            endDate.BindingContext = degreeVM;
+            degreeVM.end = new DateTime(now.Year, (now.Month + 5), DateTime.DaysInMonth(now.Year, (now.Month + 5)));
             grid.Children.Add(name, 0, 0);
             grid.Children.Add(nameEntry, 1, 0);
             grid.Children.Add(start, 0, 1);
             grid.Children.Add(startDate, 1, 1);
             grid.Children.Add(end, 0, 2);
             grid.Children.Add(endDate, 1, 2);
-
-            //Create save button
             Button addTerm = new Button
             {
                 Text = "Add",
@@ -263,7 +266,6 @@ namespace WGUMobileAppRegGarrett.Views
                 Margin = new Thickness(10)
             };
             addTerm.Clicked += AddTerm_Clicked;
-            //Create cancel button
             Button cancelTerm = new Button
             {
                 Text = "Cancel",
@@ -272,7 +274,6 @@ namespace WGUMobileAppRegGarrett.Views
                 Margin = new Thickness(10)
             };
             cancelTerm.Clicked += CancelTerm_Clicked;
-            //Put cancel and save side by side
             StackLayout buttons = new StackLayout()
             {
                 Orientation = StackOrientation.Horizontal,
@@ -299,7 +300,6 @@ namespace WGUMobileAppRegGarrett.Views
 
             this.Content = scrollview;
         }
-
         private void CancelTerm_Clicked(object sender, EventArgs e)
         {
             populatePage();
@@ -307,8 +307,21 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void AddTerm_Clicked(object sender, EventArgs e)
         {
-            //add term to viewmodel terms
-            await DisplayAlert("hey friendo", "addterm clicked", "mmmkay");
+            if (DegreeViewModel.checkOverlapping(degreeVM))
+            {
+                await DisplayAlert("Overlapping Terms", "Start and End dates cannot overlap existing terms.", "OK");
+            }
+            else
+            {
+                degreeVM.addNewTerm();
+                populatePage();
+            }
+        }
+        // ↑↑↑  Add Term Page  ↑↑↑
+
+        private void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            degreeVM.selectedTerm = (Term)e.Item;
         }
     }
 }

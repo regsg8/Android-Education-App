@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TnCaSCVEs+MVWGwfj/Ko61VBCI1aDN77FqmmDMM2qG4DpdPM0t4qUghJa3R8hL3Fy87QjM6HRkUu0hMeI0ANLQ==",
+  "dgSpecHash": "6jcRiap5CJwcCCBcbyxCLBxTcNOjpAjkmuQ4j/16Plb9kZjmS3Szt72C9C5c4bfEkd5UTZnNGd1OKdX3KLl64g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Reg Garrett\\source\\repos\\WGUMobileAppRegGarrett\\WGUMobileAppRegGarrett\\WGUMobileAppRegGarrett\\WGUMobileAppRegGarrett.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "C:\\Users\\Reg Garrett\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\Reg Garrett\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\Reg Garrett\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "C:\\Users\\Reg Garrett\\.nuget\\packages\\xam.plugins.notifier\\3.0.1\\xam.plugins.notifier.3.0.1.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.8.0.1451\\xamarin.forms.4.8.0.1451.nupkg.sha512"
   ],

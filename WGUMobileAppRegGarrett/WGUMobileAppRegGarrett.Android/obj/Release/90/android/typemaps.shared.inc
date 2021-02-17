@@ -7,20 +7,20 @@
 	.section	.rodata.map_aname.1,"aMS",@progbits,1
 	.type	.L.map_aname.1, @object
 .L.map_aname.1:
-	.asciz	"Xamarin.Android.Support.Compat"
-	.size	.L.map_aname.1, 31
+	.asciz	"FormsViewGroup"
+	.size	.L.map_aname.1, 15
 
 	.section	.rodata.map_aname.2,"aMS",@progbits,1
 	.type	.L.map_aname.2, @object
 .L.map_aname.2:
-	.asciz	"FormsViewGroup"
-	.size	.L.map_aname.2, 15
+	.asciz	"Xamarin.Android.Support.v7.CardView"
+	.size	.L.map_aname.2, 36
 
 	.section	.rodata.map_aname.3,"aMS",@progbits,1
 	.type	.L.map_aname.3, @object
 .L.map_aname.3:
-	.asciz	"Xamarin.Android.Support.v7.CardView"
-	.size	.L.map_aname.3, 36
+	.asciz	"Mono.Android"
+	.size	.L.map_aname.3, 13
 
 	.section	.rodata.map_aname.4,"aMS",@progbits,1
 	.type	.L.map_aname.4, @object
@@ -43,14 +43,14 @@
 	.section	.rodata.map_aname.7,"aMS",@progbits,1
 	.type	.L.map_aname.7, @object
 .L.map_aname.7:
-	.asciz	"Xamarin.Android.Support.v7.RecyclerView"
-	.size	.L.map_aname.7, 40
+	.asciz	"Xamarin.Android.Support.Compat"
+	.size	.L.map_aname.7, 31
 
 	.section	.rodata.map_aname.8,"aMS",@progbits,1
 	.type	.L.map_aname.8, @object
 .L.map_aname.8:
-	.asciz	"Xamarin.Android.Arch.Lifecycle.LiveData.Core"
-	.size	.L.map_aname.8, 45
+	.asciz	"Xamarin.Android.Support.v7.RecyclerView"
+	.size	.L.map_aname.8, 40
 
 	.section	.rodata.map_aname.9,"aMS",@progbits,1
 	.type	.L.map_aname.9, @object
@@ -61,20 +61,20 @@
 	.section	.rodata.map_aname.10,"aMS",@progbits,1
 	.type	.L.map_aname.10, @object
 .L.map_aname.10:
-	.asciz	"Xamarin.Android.Support.v7.AppCompat"
-	.size	.L.map_aname.10, 37
+	.asciz	"Xamarin.Android.Arch.Lifecycle.LiveData.Core"
+	.size	.L.map_aname.10, 45
 
 	.section	.rodata.map_aname.11,"aMS",@progbits,1
 	.type	.L.map_aname.11, @object
 .L.map_aname.11:
-	.asciz	"Xamarin.Android.Support.CoordinaterLayout"
-	.size	.L.map_aname.11, 42
+	.asciz	"Xamarin.Android.Support.v7.AppCompat"
+	.size	.L.map_aname.11, 37
 
 	.section	.rodata.map_aname.12,"aMS",@progbits,1
 	.type	.L.map_aname.12, @object
 .L.map_aname.12:
-	.asciz	"Mono.Android"
-	.size	.L.map_aname.12, 13
+	.asciz	"Xamarin.Android.Support.CoordinaterLayout"
+	.size	.L.map_aname.12, 42
 
 	.section	.rodata.map_aname.13,"aMS",@progbits,1
 	.type	.L.map_aname.13, @object
@@ -109,12 +109,18 @@
 	.section	.rodata.map_aname.18,"aMS",@progbits,1
 	.type	.L.map_aname.18, @object
 .L.map_aname.18:
-	.asciz	"Xamarin.Android.Support.Design"
-	.size	.L.map_aname.18, 31
+	.asciz	"Plugin.LocalNotifications"
+	.size	.L.map_aname.18, 26
 
 	.section	.rodata.map_aname.19,"aMS",@progbits,1
 	.type	.L.map_aname.19, @object
 .L.map_aname.19:
+	.asciz	"Xamarin.Android.Support.Design"
+	.size	.L.map_aname.19, 31
+
+	.section	.rodata.map_aname.20,"aMS",@progbits,1
+	.type	.L.map_aname.20, @object
+.L.map_aname.20:
 	.asciz	"Xamarin.Android.Arch.Lifecycle.ViewModel"
-	.size	.L.map_aname.19, 41
+	.size	.L.map_aname.20, 41
 

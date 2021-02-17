@@ -12,16 +12,12 @@ namespace WGUMobileAppRegGarrett.Templates
         {
             Label name = new Label()
             {
-                Style = (Style)Application.Current.Resources["centerLabel"]
+                Style = (Style)Application.Current.Resources["rightLabel"],
+                Text = "Term Name: "
             };
-            Label startDate = new Label()
-            {
-                Style = (Style)Application.Current.Resources["leftLabel"]
-            };
-            Label endDate = new Label()
-            {
-                Style = (Style)Application.Current.Resources["leftLabel"]
-            };
+            Entry nameEntry = new Entry();
+            DatePicker startDate = new DatePicker();
+            DatePicker endDate = new DatePicker();
             Label start = new Label()
             {
                 Style = (Style)Application.Current.Resources["rightLabel"],
@@ -33,14 +29,15 @@ namespace WGUMobileAppRegGarrett.Templates
                 Text = "End: "
             };
 
-            name.SetBinding(Label.TextProperty, "TermName");
-            startDate.SetBinding(Label.TextProperty, "TermStart", BindingMode.OneWay, new DateConverter());
-            endDate.SetBinding(Label.TextProperty, "TermEnd", BindingMode.OneWay, new DateConverter());
+            nameEntry.SetBinding(Entry.TextProperty, "TermName", BindingMode.TwoWay);
+            startDate.SetBinding(DatePicker.DateProperty, "TermStart", BindingMode.TwoWay, new DateConverter());
+            endDate.SetBinding(DatePicker.DateProperty, "TermEnd", BindingMode.TwoWay, new DateConverter());
 
-            Grid dateGrid = new Grid
+            Grid grid = new Grid
             {
                 RowDefinitions =
                 {
+                    new RowDefinition(),
                     new RowDefinition(),
                     new RowDefinition()
                 },
@@ -50,20 +47,21 @@ namespace WGUMobileAppRegGarrett.Templates
                     new ColumnDefinition()
                 }
             };
-            dateGrid.Children.Add(start, 0, 0);
-            dateGrid.Children.Add(startDate, 1, 0);
-            dateGrid.Children.Add(end, 0, 1);
-            dateGrid.Children.Add(endDate, 1, 1);
+            grid.Children.Add(name, 0, 0);
+            grid.Children.Add(nameEntry, 1, 0);
+            grid.Children.Add(start, 0, 1);
+            grid.Children.Add(startDate, 1, 1);
+            grid.Children.Add(end, 0, 2);
+            grid.Children.Add(endDate, 1, 2);
 
             StackLayout stack = new StackLayout()
             {
                 Padding = new Thickness(5),
+                Margin = new Thickness(5),
                 Children =
                 {
-                    name,
-                    dateGrid
-                },
-                BackgroundColor = (Color)Application.Current.Resources["Neutral"]
+                    grid
+                }
             };
 
             View = stack;

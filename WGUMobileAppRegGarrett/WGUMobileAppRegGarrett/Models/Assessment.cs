@@ -19,13 +19,13 @@ namespace WGUMobileAppRegGarrett.Models
                 RaisePropertyChanged(nameof(AssessmentId));
             }
         }
-        public int CourseId
+        public int EnrollmentId
         {
-            get => _courseId;
+            get => _enrollmentId;
             set
             {
-                _courseId = value;
-                RaisePropertyChanged(nameof(CourseId));
+                _enrollmentId = value;
+                RaisePropertyChanged(nameof(EnrollmentId));
             }
         }
         public string Type
@@ -77,7 +77,7 @@ namespace WGUMobileAppRegGarrett.Models
         }
 
         private int _assessmentId;
-        private int _courseId;
+        private int _enrollmentId;
         private string _type;
         private string _assessmentStart;
         private string _assessmentEnd;

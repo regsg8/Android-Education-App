@@ -73,54 +73,54 @@
 	.section	.rodata.map_aname.12,"aMS",@progbits,1
 	.type	.L.map_aname.12, @object
 .L.map_aname.12:
-	.asciz	"Xamarin.Android.Support.Fragment"
-	.size	.L.map_aname.12, 33
+	.asciz	"WGUMobileAppRegGarrett.Android"
+	.size	.L.map_aname.12, 31
 
 	.section	.rodata.map_aname.13,"aMS",@progbits,1
 	.type	.L.map_aname.13, @object
 .L.map_aname.13:
-	.asciz	"Xamarin.Android.Support.SwipeRefreshLayout"
-	.size	.L.map_aname.13, 43
+	.asciz	"Xamarin.Android.Support.Fragment"
+	.size	.L.map_aname.13, 33
 
 	.section	.rodata.map_aname.14,"aMS",@progbits,1
 	.type	.L.map_aname.14, @object
 .L.map_aname.14:
-	.asciz	"Xamarin.Android.Support.ViewPager"
-	.size	.L.map_aname.14, 34
+	.asciz	"Xamarin.Android.Support.SwipeRefreshLayout"
+	.size	.L.map_aname.14, 43
 
 	.section	.rodata.map_aname.15,"aMS",@progbits,1
 	.type	.L.map_aname.15, @object
 .L.map_aname.15:
-	.asciz	"Xamarin.Android.Support.DrawerLayout"
-	.size	.L.map_aname.15, 37
+	.asciz	"Xamarin.Android.Support.ViewPager"
+	.size	.L.map_aname.15, 34
 
 	.section	.rodata.map_aname.16,"aMS",@progbits,1
 	.type	.L.map_aname.16, @object
 .L.map_aname.16:
-	.asciz	"Xamarin.Android.Arch.Lifecycle.Common"
-	.size	.L.map_aname.16, 38
+	.asciz	"Xamarin.Android.Support.DrawerLayout"
+	.size	.L.map_aname.16, 37
 
 	.section	.rodata.map_aname.17,"aMS",@progbits,1
 	.type	.L.map_aname.17, @object
 .L.map_aname.17:
-	.asciz	"Plugin.LocalNotifications"
-	.size	.L.map_aname.17, 26
+	.asciz	"Xamarin.Android.Arch.Lifecycle.Common"
+	.size	.L.map_aname.17, 38
 
 	.section	.rodata.map_aname.18,"aMS",@progbits,1
 	.type	.L.map_aname.18, @object
 .L.map_aname.18:
-	.asciz	"Xamarin.Android.Support.Design"
-	.size	.L.map_aname.18, 31
+	.asciz	"Plugin.LocalNotifications"
+	.size	.L.map_aname.18, 26
 
 	.section	.rodata.map_aname.19,"aMS",@progbits,1
 	.type	.L.map_aname.19, @object
 .L.map_aname.19:
-	.asciz	"Xamarin.Android.Arch.Lifecycle.ViewModel"
-	.size	.L.map_aname.19, 41
+	.asciz	"Xamarin.Android.Support.Design"
+	.size	.L.map_aname.19, 31
 
 	.section	.rodata.map_aname.20,"aMS",@progbits,1
 	.type	.L.map_aname.20, @object
 .L.map_aname.20:
-	.asciz	"WGUMobileAppRegGarrett.Android"
-	.size	.L.map_aname.20, 31
+	.asciz	"Xamarin.Android.Arch.Lifecycle.ViewModel"
+	.size	.L.map_aname.20, 41
 

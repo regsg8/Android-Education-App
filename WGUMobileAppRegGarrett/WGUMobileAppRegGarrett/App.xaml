@@ -10,6 +10,9 @@
             <Color x:Key="Primary">#003057</Color>
             <Color x:Key="Secondary">#4986AD</Color>
             <Color x:Key="Neutral">#97999B</Color>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}"></Setter>
+            </Style>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">

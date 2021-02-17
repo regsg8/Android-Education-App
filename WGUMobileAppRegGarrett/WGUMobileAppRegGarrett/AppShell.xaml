@@ -25,14 +25,14 @@
                 <Setter Property="Shell.TabBarTitleColor" Value="White"/>
                 
             </Style>
-            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
-            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+            <!--<Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />-->
 
             <!--
             Default Styles for all Flyout Items
             https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
             -->
-            <Style Class="FlyoutItemLabelStyle" TargetType="Label">
+            <!--<Style Class="FlyoutItemLabelStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="White"></Setter>
             </Style>
             <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
@@ -54,12 +54,12 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
-            </Style>
+            </Style>-->
 
             <!--
             Custom Style you can apply to any Flyout Item
             -->
-            <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+            <!--<Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
@@ -71,15 +71,15 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
-            </Style>
+            </Style>-->
         </ResourceDictionary>
     </Shell.Resources>
     
-    <TabBar>
+    <!--<TabBar>
         <ShellContent Title="Degree" Icon="university.png" Route="DegreePage" ContentTemplate="{DataTemplate local:DegreePage}" />
         <ShellContent Title="Term" Icon="scroll.png" ContentTemplate="{DataTemplate local:TermPage}" />
         <ShellContent Title="Course" Icon="checklist.png" ContentTemplate="{DataTemplate local:CoursePage}" />
-    </TabBar>
+    </TabBar>-->
     
     <!-- 
         When the Flyout is visible this defines the content to display in the flyout.

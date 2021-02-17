@@ -13,6 +13,7 @@ namespace WGUMobileAppRegGarrett.ViewModels
     {
         public static Degree degree { get; set; }
         public static ObservableCollection<Term> terms;
+        public static int selectedTermId;
         public Term selectedTerm
         {
             get => _selectedTerm;
@@ -59,13 +60,13 @@ namespace WGUMobileAppRegGarrett.ViewModels
             deselectTerm(this);
         }
 
-        //Disables the edit term button via binding
         public static void deselectTerm(DegreeViewModel dVM) 
         {
             dVM.selectedTerm = new Term()
             {
                 TermId = -1
             };
+            selectedTermId = -1;
         }
 
         //Checks for overlapping appointments when updating an appointment

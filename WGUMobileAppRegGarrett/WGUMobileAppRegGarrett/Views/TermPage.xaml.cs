@@ -15,12 +15,14 @@ namespace WGUMobileAppRegGarrett.Views
     public partial class TermPage : ContentPage
     {
         public TermViewModel termVM;
+        private bool editing;
         public TermPage()
         {
             InitializeComponent();
             Auth.loginCheck(this);
             if (Auth.loggedIn)
             {
+                editing = false;
                 linkViewModel();
                 populatePage();
             }
@@ -28,25 +30,118 @@ namespace WGUMobileAppRegGarrett.Views
         private void linkViewModel()
         {
             termVM = new TermViewModel();
+            this.BindingContext = termVM;
         }
-        //Populate page
+
         private void populatePage()
         {
-            this.BindingContext = termVM;
-            ListView listview = new ListView()
+            if (TermViewModel.currentTerm.TermId != -1) DB.getTermEnrollments(TermViewModel.currentTerm.TermId);
+            if (editing)
             {
-                RowHeight = 120,
-                Margin = new Thickness(5)
-            };
-            listview.ItemTemplate = new DataTemplate(typeof(EnrollmentCell));
-            listview.ItemsSource = TermViewModel.enrollments;
-
-            //Need to add term name, start and end dates at top of page
-            ScrollView scrollview = new ScrollView()
-            {
-                Content = listview
-            };
-            this.Content = scrollview;
+                editingPage();
+            }
+            else standardPage();
         }
+
+        // ↓↓↓  Standard Page  ↓↓↓
+        private void standardPage()
+        {
+            //Need to add term name, start and end dates at top of page
+            Label name = new Label()
+            {
+                Style = (Style)Application.Current.Resources["title"]
+            };
+            name.BindingContext = TermViewModel.currentTerm;
+            name.SetBinding(Label.TextProperty, "TermName");
+            Button edit = new Button
+            {
+                Text = "Edit Term",
+                Style = (Style)Application.Current.Resources["centerButton"]
+            };
+            edit.Clicked += Edit_Clicked;
+            //No available term
+            if (TermViewModel.currentTerm.TermId == -1)
+            {
+                StackLayout noTerm = new StackLayout()
+                {
+                    Children =
+                    {
+                        name
+                    }
+                };
+                ScrollView scrollview = new ScrollView()
+                {
+                    Content = noTerm
+                };
+                this.Content = scrollview;
+            }
+            //No available enrollments
+            else if (TermViewModel.enrollments.Count == 0)
+            {
+                Label noEnrollments = new Label()
+                {
+                    Style = (Style)Application.Current.Resources["centerLabel"],
+                    Text = "Term currently has no added classes."
+                };
+                StackLayout noList = new StackLayout()
+                {
+                    Children =
+                    {
+                        name,
+                        noEnrollments,
+                        edit
+                    }
+                };
+                ScrollView scrollview = new ScrollView()
+                {
+                    Content = noList
+                };
+                this.Content = scrollview;
+            }
+            else
+            {
+                ListView listview = new ListView()
+                {
+                    RowHeight = 120,
+                    Margin = new Thickness(5)
+                };
+                listview.ItemTemplate = new DataTemplate(typeof(EnrollmentCell));
+                listview.ItemsSource = TermViewModel.enrollments;
+
+                StackLayout withList = new StackLayout()
+                {
+                    Children =
+                    {
+                        name,
+                        listview,
+                        edit
+                    }
+                };
+                ScrollView scrollview = new ScrollView()
+                {
+                    Content = withList
+                };
+                this.Content = scrollview;
+            }
+        }
+        private void Edit_Clicked(object sender, EventArgs e)
+        {
+            editing = true;
+            populatePage();
+        }
+        // ↑↑↑  Standard Page  ↑↑↑
+
+
+        // ↓↓↓  Edit Page  ↓↓↓
+        private void editingPage()
+        {
+
+        }
+        // ↑↑↑  Edit Page  ↑↑↑
+
+
+        // ↓↓↓  Add Enrollment Page  ↓↓↓
+
+        // ↑↑↑  Add Enrollment Page  ↑↑↑
     }
 }

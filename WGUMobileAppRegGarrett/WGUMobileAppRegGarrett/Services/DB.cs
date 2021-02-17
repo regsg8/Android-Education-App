@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using WGUMobileAppRegGarrett.ViewModels;
 using System.Data;
 using WGUMobileAppRegGarrett.Converters;
+using WGUMobileAppRegGarrett.Views;
 
 namespace WGUMobileAppRegGarrett.Services
 {
@@ -131,6 +132,31 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Get term by Id
+        public static Term getTerm(int termId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            Term term = new Term() 
+            {
+                TermId = -1,
+                TermName = "Term not available."
+            };
+            try
+            {
+                term = con.Get<Term>(termId);
+                return term;
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+                return term;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         //
 
@@ -157,7 +183,6 @@ namespace WGUMobileAppRegGarrett.Services
                     });
                     CourseNameConverter.courseNames = coursesTable;
                 }
-                else throw new Exception("Error retrieving course names.");
             }
             catch (Exception x)
             {
@@ -185,7 +210,6 @@ namespace WGUMobileAppRegGarrett.Services
                         TermViewModel.enrollments.Add(e);
                     });
                 }
-                else throw new Exception("Error finding student's enrollments.");
             }
             catch (Exception x)
             {
@@ -219,7 +243,7 @@ namespace WGUMobileAppRegGarrett.Services
                     {
                         Auth.user = student[0];
                         Auth.loggedIn = true;
-                        Application.Current.MainPage = new AppShell();
+                        Application.Current.MainPage = new NavigationPage(new DegreePage());
                     }
                     else throw new Exception("Username and Password do not match.");
                 }

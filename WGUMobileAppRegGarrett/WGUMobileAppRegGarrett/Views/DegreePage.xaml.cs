@@ -57,39 +57,72 @@ namespace WGUMobileAppRegGarrett.Views
             };
             name.BindingContext = DegreeViewModel.degree;
             name.SetBinding(Label.TextProperty, "DegreeName");
-            ListView listview = new ListView()
-            {
-                RowHeight = 120,
-                Margin = new Thickness(5)
-            };
-            listview.ItemTemplate = new DataTemplate(typeof(TermCell));
-            listview.ItemsSource = DegreeViewModel.terms;
-
             Button edit = new Button
             {
-                Text = "Edit",
+                Text = "Edit Degree",
                 Style = (Style)Application.Current.Resources["centerButton"]
             };
             edit.Clicked += Edit_Clicked;
-            StackLayout stack = new StackLayout()
+            if (DegreeViewModel.terms.Count == 0)
             {
-                Children =
+                Label noTerms = new Label()
+                {
+                    Style = (Style)Application.Current.Resources["centerLabel"],
+                    Text = "Degree currently has no added terms."
+                };
+                StackLayout noList = new StackLayout()
+                {
+                    Children =
+                    {
+                        name,
+                        noTerms,
+                        edit
+                    }
+                };
+                ScrollView scrollview = new ScrollView()
+                {
+                    Content = noList
+                };
+                this.Content = scrollview;
+            }
+            else
+            {
+                ListView listview = new ListView()
+                {
+                    RowHeight = 120,
+                    Margin = new Thickness(5)
+                };
+                listview.ItemTemplate = new DataTemplate(typeof(TermCell));
+                listview.ItemsSource = DegreeViewModel.terms;
+                listview.ItemTapped += Listview_ItemTapped;
+
+                StackLayout withList = new StackLayout()
+                {
+                    Children =
                 {
                     name,
                     listview,
                     edit
                 }
-            };
-            ScrollView scrollview = new ScrollView()
-            {
-                Content = stack
-            };
-            this.Content = scrollview;
+                };
+                ScrollView scrollview = new ScrollView()
+                {
+                    Content = withList
+                };
+                this.Content = scrollview;
+            }
         }
         private void Edit_Clicked(object sender, EventArgs e)
         {
             editing = true;
             populatePage();
+        }
+        private async void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            //TermViewModel.currentTerm = (Term)e.Item;
+            degreeVM.selectedTerm = (Term)e.Item;
+            DegreeViewModel.selectedTermId = degreeVM.selectedTerm.TermId;
+            await Navigation.PushAsync(new TermPage());
         }
         // ↑↑↑  Standard Page  ↑↑↑ 
 
@@ -97,6 +130,7 @@ namespace WGUMobileAppRegGarrett.Views
         // ↓↓↓  Edit Page  ↓↓↓ 
         private void editingPage()
         {
+            DegreeViewModel.deselectTerm(degreeVM);
             Entry name = new Entry()
             {
                 Style = (Style)Application.Current.Resources["title"]
@@ -108,7 +142,7 @@ namespace WGUMobileAppRegGarrett.Views
                 RowHeight = 160,
                 Margin = new Thickness(5) 
             };
-            listview.ItemTapped += Listview_ItemTapped;
+            listview.ItemTapped += EditListview_ItemTapped;
             listview.ItemTemplate = new DataTemplate(typeof(TermCellEdit));
             listview.ItemsSource = DegreeViewModel.terms;
             Button removeTerm = new Button
@@ -184,6 +218,10 @@ namespace WGUMobileAppRegGarrett.Views
         {
             editing = false;
             populatePage();
+        }
+        private void EditListview_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            degreeVM.selectedTerm = (Term)e.Item;
         }
         // ↑↑↑  Edit Page  ↑↑↑
 
@@ -293,10 +331,5 @@ namespace WGUMobileAppRegGarrett.Views
             }
         }
         // ↑↑↑  Add Term Page  ↑↑↑
-
-        private void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            degreeVM.selectedTerm = (Term)e.Item;
-        }
     }
 }

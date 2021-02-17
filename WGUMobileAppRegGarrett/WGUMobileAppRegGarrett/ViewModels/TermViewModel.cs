@@ -10,19 +10,34 @@ namespace WGUMobileAppRegGarrett.ViewModels
 {
     public class TermViewModel : INotifyPropertyChanged
     {
-        public static Term currentTerm { get; set; }
+        public static Term currentTerm;
         public static ObservableCollection<Enrollment> enrollments;
         public TermViewModel()
         {
             enrollments = new ObservableCollection<Enrollment>();
-            getCurrentTerm();
-            DB.getTermEnrollments(currentTerm.TermId);
+            currentTerm = new Term();
+            checkTerms();
         }
-        private void getCurrentTerm()
+        private void checkTerms()
         {
-            //For now just get most recent term, need to add ability to populate selected term
-            currentTerm = DegreeViewModel.terms[DegreeViewModel.terms.Count - 1];
+            if (DegreeViewModel.terms.Count == 0)
+            {
+                currentTerm = new Term()
+                {
+                    TermName = "No terms available",
+                    TermId = -1
+                };
+            }
+            else if (DegreeViewModel.selectedTermId == -1)
+            {
+                currentTerm = DegreeViewModel.terms[DegreeViewModel.terms.Count - 1];
+            }
+            else 
+            {
+                currentTerm = DB.getTerm(DegreeViewModel.selectedTermId);
+            }  
         }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {

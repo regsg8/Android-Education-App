@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using WGUMobileAppRegGarrett.Models;
+using WGUMobileAppRegGarrett.Views;
 using Xamarin.Forms;
 
 namespace WGUMobileAppRegGarrett.Services
@@ -145,7 +146,7 @@ namespace WGUMobileAppRegGarrett.Services
             loggedIn = false;
             login.Username = "";
             login.Password = "";
-            Application.Current.MainPage = new AppShell();
+            Application.Current.MainPage = new NavigationPage(new DegreePage());
         }
     }
 }

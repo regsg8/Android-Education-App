@@ -12,7 +12,7 @@ namespace WGUMobileAppRegGarrett.Converters
     class AssessmentNameConverter : IValueConverter
     {
         public static ObservableCollection<Assessment> assessments;
-        public static void populateCourseNames()
+        public static void populateAssessments()
         {
             assessments = new ObservableCollection<Assessment>();
             assessments.Clear();
@@ -21,7 +21,7 @@ namespace WGUMobileAppRegGarrett.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo cultureInfo)
         {
             string assessmentName = "";
-            populateCourseNames();
+            populateAssessments();
             for (int i = 0; i < assessments.Count; i++)
             {
                 if (assessments[i].AssessmentId.ToString() == value.ToString())
@@ -35,7 +35,7 @@ namespace WGUMobileAppRegGarrett.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo cultureInfo)
         {
             int assessmentId = -1;
-            populateCourseNames();
+            populateAssessments();
             for (int i = 0; i < assessments.Count; i++)
             {
                 if (assessments[i].AssessmentName.ToString() == value.ToString())

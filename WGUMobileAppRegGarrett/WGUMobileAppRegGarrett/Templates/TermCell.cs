@@ -42,12 +42,15 @@ namespace WGUMobileAppRegGarrett.Templates
             dateGrid.Children.Add(startDate, 1, 0);
             dateGrid.Children.Add(end, 0, 1);
             dateGrid.Children.Add(endDate, 1, 1);
-
+            BoxView line = Generics.horizontalLine();
+            line.Color = (Color)Application.Current.Resources["Neutral"];
+            line.HeightRequest = 1;
             StackLayout stack = new StackLayout()
             {
                 Padding = new Thickness(5),
                 Children =
                 {
+                    line,
                     name,
                     dateGrid
                 }

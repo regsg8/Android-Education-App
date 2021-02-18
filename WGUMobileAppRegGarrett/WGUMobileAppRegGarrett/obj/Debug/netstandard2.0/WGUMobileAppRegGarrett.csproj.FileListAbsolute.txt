@@ -7,6 +7,7 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Debug\netstandard2.0\Views\AssessmentPage.xaml.g.cs
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Debug\netstandard2.0\Views\CoursePage.xaml.g.cs
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Debug\netstandard2.0\Views\DegreePage.xaml.g.cs
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Debug\netstandard2.0\Views\EnrollmentPage.xaml.g.cs
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Debug\netstandard2.0\Views\InstructorPage.xaml.g.cs
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Debug\netstandard2.0\Views\TermPage.xaml.g.cs
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Debug\netstandard2.0\WGUMobileAppRegGarrett.AssemblyInfoInputs.cache

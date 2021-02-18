@@ -10,28 +10,11 @@ namespace WGUMobileAppRegGarrett.Templates
     {
         public EnrollmentCell()
         {
-            Label name = new Label()
-            {
-                Style = (Style)Application.Current.Resources["centerLabel"]
-            };
-            Label startDate = new Label()
-            {
-                Style = (Style)Application.Current.Resources["leftLabel"]
-            };
-            Label endDate = new Label()
-            {
-                Style = (Style)Application.Current.Resources["leftLabel"]
-            };
-            Label start = new Label()
-            {
-                Style = (Style)Application.Current.Resources["rightLabel"],
-                Text = "Start: "
-            };
-            Label end = new Label()
-            {
-                Style = (Style)Application.Current.Resources["rightLabel"],
-                Text = "End: "
-            };
+            Label name = Generics.label("center");
+            Label startDate = Generics.label("left");
+            Label endDate = Generics.label("left");
+            Label start = Generics.label("right", "Start: ");
+            Label end = Generics.label("right", "End: ");
             name.SetBinding(Label.TextProperty, new Binding("CourseId", BindingMode.OneWay, new CourseNameConverter(), null, null));
             startDate.SetBinding(Label.TextProperty, "EnrollmentStart", BindingMode.OneWay, new DateConverter());
             endDate.SetBinding(Label.TextProperty, "EnrollmentEnd", BindingMode.OneWay, new DateConverter());
@@ -42,11 +25,15 @@ namespace WGUMobileAppRegGarrett.Templates
             dateGrid.Children.Add(end, 0, 1);
             dateGrid.Children.Add(endDate, 1, 1);
 
+            BoxView line = Generics.horizontalLine();
+            line.Color = (Color)Application.Current.Resources["Neutral"];
+            line.HeightRequest = 1;
             StackLayout stack = new StackLayout()
             {
                 Padding = new Thickness(5),
                 Children =
                 {
+                    line,
                     name,
                     dateGrid
                 }

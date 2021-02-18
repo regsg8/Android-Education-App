@@ -30,6 +30,9 @@ namespace WGUMobileAppRegGarrett.Templates
             startDate.SetBinding(DatePicker.DateProperty, "EnrollmentStart", BindingMode.TwoWay, new DateConverter());
             endDate.SetBinding(DatePicker.DateProperty, "EnrollmentEnd", BindingMode.TwoWay, new DateConverter());
 
+            BoxView line = Generics.horizontalLine();
+            line.Color = (Color)Application.Current.Resources["Neutral"];
+            line.HeightRequest = 1;
             Grid dateGrid = Generics.twoByTwoGrid();
             dateGrid.Children.Add(start, 0, 0);
             dateGrid.Children.Add(startDate, 1, 0);
@@ -41,6 +44,7 @@ namespace WGUMobileAppRegGarrett.Templates
                 Padding = new Thickness(5),
                 Children =
                 {
+                    line,
                     name,
                     dateGrid
                 }

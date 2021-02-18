@@ -48,7 +48,6 @@ namespace WGUMobileAppRegGarrett.Views
         // ↓↓↓  Standard Page  ↓↓↓
         private void standardPage()
         {
-            //Need to add term name, start and end dates at top of page
             Label name = new Label()
             {
                 Style = (Style)Application.Current.Resources["title"]

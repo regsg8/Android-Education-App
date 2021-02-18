@@ -9,6 +9,7 @@ using WGUMobileAppRegGarrett.ViewModels;
 using System.Data;
 using WGUMobileAppRegGarrett.Converters;
 using WGUMobileAppRegGarrett.Views;
+using System.Collections.ObjectModel;
 
 namespace WGUMobileAppRegGarrett.Services
 {
@@ -223,7 +224,7 @@ namespace WGUMobileAppRegGarrett.Services
             SQLiteConnection con = new SQLiteConnection(dbPath);
             try
             {
-                e = con.Get<Enrollment>($"SELECT * FROM Enrollments WHERE EnrollmentId = '{eId}'");
+                e = con.Get<Enrollment>(eId);
                 return e;
             }
             catch (Exception x)
@@ -335,6 +336,33 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Get all assessments for an Enrollment
+        public async static void getEnrollmentAssessments(int enrollmentId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                var assessments = con.Query<Assessment>($"SELECT * FROM Assessments WHERE EnrollmentId = '{enrollmentId}'");
+                if (assessments.Count != 0)
+                {
+                    EnrollmentViewModel.enrollmentAssessments.Clear();
+                    assessments.ForEach(a =>
+                    {
+                        EnrollmentViewModel.enrollmentAssessments.Add(a);
+                    });
+                }
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
         //Instructor CRUD
         //Get all Instructors for InstructorNameConverter
@@ -400,7 +428,7 @@ namespace WGUMobileAppRegGarrett.Services
         }
 
         //Create dbPath variable for Android
-        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "frank.db3");
+        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "samwise.db3");
 
         //Create DB if none exists and populate test data
         public static void initializeDB()

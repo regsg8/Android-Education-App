@@ -40,13 +40,16 @@ namespace WGUMobileAppRegGarrett.Templates
             grid.Children.Add(startDate, 1, 1);
             grid.Children.Add(end, 0, 2);
             grid.Children.Add(endDate, 1, 2);
-
+            BoxView line = Generics.horizontalLine();
+            line.Color = (Color)Application.Current.Resources["Neutral"];
+            line.HeightRequest = 1;
             StackLayout stack = new StackLayout()
             {
                 Padding = new Thickness(5),
                 Margin = new Thickness(5),
                 Children =
                 {
+                    line,
                     grid
                 }
             };

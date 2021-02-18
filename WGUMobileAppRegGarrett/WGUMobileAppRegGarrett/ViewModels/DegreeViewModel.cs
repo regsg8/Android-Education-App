@@ -14,32 +14,32 @@ namespace WGUMobileAppRegGarrett.ViewModels
         public static Degree degree { get; set; }
         public static ObservableCollection<Term> terms;
         public static int selectedTermId;
-        public Term selectedTerm
+        public static Term NewTerm { get; set; }
+        public Term SelectedTerm
         {
             get => _selectedTerm;
             set
             {
                 _selectedTerm = value;
-                RaisePropertyChanged(nameof(selectedTerm));
+                RaisePropertyChanged(nameof(SelectedTerm));
             }
         }
-        public static Term newTerm { get; set; }
-        public DateTime start
+        public DateTime Start
         {
             get => _start;
             set
             {
                 _start = value;
-                RaisePropertyChanged(nameof(start));
+                RaisePropertyChanged(nameof(Start));
             }
         }
-        public DateTime end
+        public DateTime End
         {
             get => _end;
             set
             {
                 _end = value;
-                RaisePropertyChanged(nameof(end));
+                RaisePropertyChanged(nameof(End));
             }
         }
 
@@ -53,16 +53,16 @@ namespace WGUMobileAppRegGarrett.ViewModels
 
         public void addNewTerm()
         {
-            List<DateTime> dates = new List<DateTime> { this.start, this.end };
+            List<DateTime> dates = new List<DateTime> { this.Start, this.End };
             List<string> sqlDates = DB.convertDates(dates);
-            DB.createTerm(degree.DegreeId, newTerm.TermName, sqlDates[0], sqlDates[1]);
+            DB.createTerm(degree.DegreeId, NewTerm.TermName, sqlDates[0], sqlDates[1]);
             DB.getDegreeTerms(degree.DegreeId);
             deselectTerm(this);
         }
 
         public static void deselectTerm(DegreeViewModel dVM) 
         {
-            dVM.selectedTerm = new Term()
+            dVM.SelectedTerm = new Term()
             {
                 TermId = -1
             };
@@ -75,8 +75,8 @@ namespace WGUMobileAppRegGarrett.ViewModels
             bool overlapping = false;
             try
             {
-                DateTime termStart = Convert.ToDateTime(dVM.start);
-                DateTime termEnd = Convert.ToDateTime(dVM.end);
+                DateTime termStart = Convert.ToDateTime(dVM.Start);
+                DateTime termEnd = Convert.ToDateTime(dVM.End);
                 for (int i = 0; i < DegreeViewModel.terms.Count; i++)
                 {
                     DateTime start = Convert.ToDateTime(DegreeViewModel.terms[i].TermStart);

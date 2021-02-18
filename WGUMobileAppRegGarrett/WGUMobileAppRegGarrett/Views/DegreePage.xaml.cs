@@ -120,8 +120,8 @@ namespace WGUMobileAppRegGarrett.Views
         private async void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             //TermViewModel.currentTerm = (Term)e.Item;
-            degreeVM.selectedTerm = (Term)e.Item;
-            DegreeViewModel.selectedTermId = degreeVM.selectedTerm.TermId;
+            degreeVM.SelectedTerm = (Term)e.Item;
+            DegreeViewModel.selectedTermId = degreeVM.SelectedTerm.TermId;
             await Navigation.PushAsync(new TermPage());
         }
         // ↑↑↑  Standard Page  ↑↑↑ 
@@ -191,16 +191,16 @@ namespace WGUMobileAppRegGarrett.Views
         }
         private async void removeTerm_Clicked(object sender, EventArgs e)
         {
-            if (degreeVM.selectedTerm.TermId < 0)
+            if (degreeVM.SelectedTerm.TermId < 0)
             {
                 await DisplayAlert("Error", "Please select a term to remove.", "Okay");
             }
             else
             {
-                var action = await DisplayAlert("Confirm Deletion", $"Are you sure you would like to delete {degreeVM.selectedTerm.TermName}?", "Yes", "No");
+                var action = await DisplayAlert("Confirm Deletion", $"Are you sure you would like to delete {degreeVM.SelectedTerm.TermName}?", "Yes", "No");
                 if (action)
                 {
-                    DB.deleteTerm(degreeVM.selectedTerm.TermId);
+                    DB.deleteTerm(degreeVM.SelectedTerm.TermId);
                     populatePage();
                 }
             }
@@ -221,7 +221,7 @@ namespace WGUMobileAppRegGarrett.Views
         }
         private void EditListview_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            degreeVM.selectedTerm = (Term)e.Item;
+            degreeVM.SelectedTerm = (Term)e.Item;
         }
         // ↑↑↑  Edit Page  ↑↑↑
 
@@ -229,7 +229,7 @@ namespace WGUMobileAppRegGarrett.Views
         // ↓↓↓  Add Term Page  ↓↓↓
         private void Add_Clicked(object sender, EventArgs e)
         {
-            DegreeViewModel.newTerm = new Term();
+            DegreeViewModel.NewTerm = new Term();
             Grid grid = Generics.twoByThreeGrid();
             grid.Margin = new Thickness(0, 40, 0, 0);
             Label name = new Label
@@ -249,17 +249,17 @@ namespace WGUMobileAppRegGarrett.Views
             };
             Entry nameEntry = new Entry();
             nameEntry.SetBinding(Entry.TextProperty, "TermName", BindingMode.TwoWay);
-            nameEntry.BindingContext = DegreeViewModel.newTerm;
-            DegreeViewModel.newTerm.TermName = "";
+            nameEntry.BindingContext = DegreeViewModel.NewTerm;
+            DegreeViewModel.NewTerm.TermName = "";
             DateTime now = DateTime.Now;
             DatePicker startDate = new DatePicker();
             startDate.SetBinding(DatePicker.DateProperty, "start", BindingMode.TwoWay);
             startDate.BindingContext = degreeVM;
-            degreeVM.start = new DateTime(now.Year, now.Month, 1);
+            degreeVM.Start = new DateTime(now.Year, now.Month, 1);
             DatePicker endDate = new DatePicker();
             endDate.SetBinding(DatePicker.DateProperty, "end", BindingMode.TwoWay);
             endDate.BindingContext = degreeVM;
-            degreeVM.end = new DateTime(now.Year, (now.Month + 5), DateTime.DaysInMonth(now.Year, (now.Month + 5)));
+            degreeVM.End = new DateTime(now.Year, (now.Month + 5), DateTime.DaysInMonth(now.Year, (now.Month + 5)));
             grid.Children.Add(name, 0, 0);
             grid.Children.Add(nameEntry, 1, 0);
             grid.Children.Add(start, 0, 1);
@@ -311,12 +311,12 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void AddTerm_Clicked(object sender, EventArgs e)
         {
-            int checkDate = DateTime.Compare(degreeVM.start, degreeVM.end);
+            int checkDate = DateTime.Compare(degreeVM.Start, degreeVM.End);
             if (DegreeViewModel.checkOverlapping(degreeVM))
             {
                 await DisplayAlert("Overlapping Terms", "Start and End dates cannot overlap existing terms.", "OK");
             }
-            else if (DegreeViewModel.newTerm.TermName == "")
+            else if (DegreeViewModel.NewTerm.TermName == "")
             {
                 await DisplayAlert("No Term Name", "Please enter a name for the new term.", "OK");
             }

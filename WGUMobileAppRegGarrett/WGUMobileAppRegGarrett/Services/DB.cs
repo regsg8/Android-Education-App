@@ -161,27 +161,19 @@ namespace WGUMobileAppRegGarrett.Services
         //
 
         //Course CRUD
-        //Get all course names and add to CourseNameConverter
-        public async static void getCourseNames()
+        //Get all courses for CourseNameConverter
+        public async static void getCourses()
         {
             SQLiteConnection con = new SQLiteConnection(dbPath);
             try
             {
-                DataTable coursesTable = new DataTable();
-                coursesTable.Columns.Add();
-                coursesTable.Columns.Add();
-                var courses = con.Query<Course>($"SELECT CourseId, CourseName FROM Courses");
+                var courses = con.Query<Course>("SELECT * FROM Courses");
                 if (courses.Count != 0)
                 {
                     courses.ForEach(c =>
                     {
-                        DataRow dataRow = coursesTable.NewRow();
-                        dataRow[0] = c.CourseId;
-                        dataRow[1] = c.CourseName;
-                        coursesTable.Rows.Add(dataRow);
-                        //CourseNameConverter.courseNames.Rows.Add(c);
+                        CourseNameConverter.courses.Add(c);
                     });
-                    CourseNameConverter.courseNames = coursesTable;
                 }
             }
             catch (Exception x)
@@ -195,6 +187,8 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        
+
         //Enrollment CRUD
         //Get all enrollments in a term
         public async static void getTermEnrollments(int termId)
@@ -205,6 +199,7 @@ namespace WGUMobileAppRegGarrett.Services
                 var enrollments = con.Query<Enrollment>($"SELECT * FROM Enrollments WHERE TermId = '{termId}'");
                 if (enrollments.Count != 0)
                 {
+                    TermViewModel.enrollments.Clear();
                     enrollments.ForEach(e =>
                     {
                         TermViewModel.enrollments.Add(e);
@@ -221,6 +216,75 @@ namespace WGUMobileAppRegGarrett.Services
                 con.Close();
             }
         }
+
+        //Create an enrollment
+        public async static void createEnrollment(int termId, int courseId, string start, string end)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                Models.Enrollment enrollment = new Models.Enrollment
+                {
+                    TermId = termId,
+                    CourseId = courseId,
+                    EnrollmentStart = start,
+                    EnrollmentEnd = end,
+                    Status = "Enrolled",
+                    Notes = "",
+                    EnrollmentStartNotify = 0,
+                    EntrollmentEndNotify = 0
+                };
+                con.Insert(enrollment);
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        //Update an enrollment
+        public async static void updateEnrollment(Enrollment e)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Execute($"UPDATE Enrollments SET EnrollmentStart = '{e.EnrollmentStart}', EnrollmentEnd = '{e.EnrollmentEnd}' WHERE EnrollmentId = '{e.EnrollmentId}'");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        //Delete an enrollment
+        public async static void deleteEnrollment(int enrollmentId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Delete<Enrollment>(enrollmentId);
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
         //Assessment CRUD
 

@@ -83,8 +83,6 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Buffers.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Core.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Core.pdb
-C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Data.dll
-C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Data.pdb
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Drawing.Common.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\assets\System.Drawing.Common.pdb

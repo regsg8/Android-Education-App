@@ -109,7 +109,7 @@ namespace WGUMobileAppRegGarrett.Views
                 };
                 listview.ItemTemplate = new DataTemplate(typeof(EnrollmentCell));
                 listview.ItemsSource = TermViewModel.enrollments;
-
+                listview.ItemTapped += Listview_ItemTapped;
                 StackLayout withList = new StackLayout()
                 {
                     Children =
@@ -126,6 +126,14 @@ namespace WGUMobileAppRegGarrett.Views
                 this.Content = scrollview;
             }
         }
+
+        private async void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            termVM.SelectedEnrollment = (Enrollment)e.Item;
+            TermViewModel.selectedEnrollmentId = termVM.SelectedEnrollment.EnrollmentId;
+            await Navigation.PushAsync(new EnrollmentPage());
+        }
+
         private void Edit_Clicked(object sender, EventArgs e)
         {
             editing = true;
@@ -234,7 +242,7 @@ namespace WGUMobileAppRegGarrett.Views
                         courseName = CourseNameConverter.courses[i].CourseName.ToString();
                     }
                 }
-                var action = await DisplayAlert("Confirm Deletion", $"Are you sure you would like to remove {courseName} from your term?", "Yes", "No");
+                var action = await DisplayAlert("Confirm Deletion", $"Are you sure you would like to remove '{courseName}' from your term?  This cannot be undone.", "Yes", "No");
                 if (action)
                 {
                     DB.deleteEnrollment(termVM.SelectedEnrollment.EnrollmentId);

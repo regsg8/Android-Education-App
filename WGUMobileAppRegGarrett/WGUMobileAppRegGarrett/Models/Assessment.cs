@@ -28,6 +28,15 @@ namespace WGUMobileAppRegGarrett.Models
                 RaisePropertyChanged(nameof(EnrollmentId));
             }
         }
+        public string AssessmentName
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                RaisePropertyChanged(nameof(AssessmentName));
+            }
+        }
         public string Type
         {
             get => _type;
@@ -78,6 +87,7 @@ namespace WGUMobileAppRegGarrett.Models
 
         private int _assessmentId;
         private int _enrollmentId;
+        private string _name;
         private string _type;
         private string _assessmentStart;
         private string _assessmentEnd;

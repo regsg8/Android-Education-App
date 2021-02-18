@@ -119,7 +119,6 @@ namespace WGUMobileAppRegGarrett.Views
         }
         private async void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            //TermViewModel.currentTerm = (Term)e.Item;
             degreeVM.SelectedTerm = (Term)e.Item;
             DegreeViewModel.selectedTermId = degreeVM.SelectedTerm.TermId;
             await Navigation.PushAsync(new TermPage());
@@ -197,7 +196,7 @@ namespace WGUMobileAppRegGarrett.Views
             }
             else
             {
-                var action = await DisplayAlert("Confirm Deletion", $"Are you sure you would like to delete {degreeVM.SelectedTerm.TermName}?", "Yes", "No");
+                var action = await DisplayAlert("Confirm Deletion", $"Are you sure you would like to delete {degreeVM.SelectedTerm.TermName}?  This cannot be undone.", "Yes", "No");
                 if (action)
                 {
                     DB.deleteTerm(degreeVM.SelectedTerm.TermId);

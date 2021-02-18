@@ -158,7 +158,6 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
-        //
 
         //Course CRUD
         //Get all courses for CourseNameConverter
@@ -190,7 +189,7 @@ namespace WGUMobileAppRegGarrett.Services
         
 
         //Enrollment CRUD
-        //Get all enrollments in a term
+        //Get all enrollments in a term for TermViewModel
         public async static void getTermEnrollments(int termId)
         {
             SQLiteConnection con = new SQLiteConnection(dbPath);
@@ -210,6 +209,28 @@ namespace WGUMobileAppRegGarrett.Services
             {
                 Console.WriteLine(x.Message);
                 await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        //Get enrollment by Id
+        public static Enrollment getEnrollment(int eId)
+        {
+            Enrollment e = new Enrollment();
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                e = con.Get<Enrollment>($"SELECT * FROM Enrollments WHERE EnrollmentId = '{eId}'");
+                return e;
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+                return e;
             }
             finally
             {
@@ -287,10 +308,64 @@ namespace WGUMobileAppRegGarrett.Services
 
 
         //Assessment CRUD
+        //Get all assessments for AssessmentNameConverter
+        public async static void getAssessments()
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                var assessments = con.Query<Assessment>($"SELECT * FROM Assessments");
+                if (assessments.Count != 0)
+                {
+                    AssessmentNameConverter.assessments.Clear();
+                    assessments.ForEach(a =>
+                    {
+                        AssessmentNameConverter.assessments.Add(a);
+                    });
+                }
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
         //Instructor CRUD
+        //Get all Instructors for InstructorNameConverter
+        public async static void getInstructors()
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                var instructors = con.Query<Instructor>($"SELECT * FROM Instructors");
+                if (instructors.Count != 0)
+                {
+                    InstructorNameConverter.instructors.Clear();
+                    instructors.ForEach(i =>
+                    {
+                        InstructorNameConverter.instructors.Add(i);
+                    });
+                }
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         //Student CRUD
+        //Currently not necessary, to add later
 
         //Helpers
         //Attempts to log user in
@@ -431,7 +506,8 @@ namespace WGUMobileAppRegGarrett.Services
                     Models.Assessment pa = new Models.Assessment()
                     {
                         EnrollmentId = enrollmentId,
-                        Type = "Performance Assessment",
+                        AssessmentName = "Xamarin Forms PA",
+                        Type = "PA",
                         AssessmentStart = sqlDates[4],
                         AssessmentEnd = sqlDates[5],
                         AssessmentStartNotify = 0,
@@ -441,7 +517,8 @@ namespace WGUMobileAppRegGarrett.Services
                     Models.Assessment oa = new Models.Assessment()
                     {
                         EnrollmentId = enrollmentId,
-                        Type = "Objective Assessment",
+                        AssessmentName = "Xamarin Forms OA",
+                        Type = "OA",
                         AssessmentStart = sqlDates[6],
                         AssessmentEnd = sqlDates[7],
                         AssessmentStartNotify = 0,

@@ -17,10 +17,7 @@ namespace WGUMobileAppRegGarrett.Templates
                 },
                 ColumnDefinitions =
                 {
-                    new ColumnDefinition()
-                    {
-                        Width = 110
-                    },
+                    new ColumnDefinition(),
                     new ColumnDefinition()
                 }
             };
@@ -38,10 +35,7 @@ namespace WGUMobileAppRegGarrett.Templates
                 },
                 ColumnDefinitions =
                 {
-                    new ColumnDefinition()
-                    {
-                        Width = 110
-                    },
+                    new ColumnDefinition(),
                     new ColumnDefinition()
                 }
             };

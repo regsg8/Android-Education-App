@@ -576,5 +576,21 @@ namespace WGUMobileAppRegGarrett.Services
            });
             return converted;
         }
+
+        public static ObservableCollection<string> courseStatusOptions = new ObservableCollection<string>()
+        {
+            "Enrolled",
+            "In Progress",
+            "Completed",
+            "Incomplete",
+            "Withdrawn",
+            "Planned"
+        };
+
+        public static ObservableCollection<string> assessmentTypes = new ObservableCollection<string>()
+        {
+            "Objective Assessment",
+            "Performance Assessment"
+        };
     }
 }

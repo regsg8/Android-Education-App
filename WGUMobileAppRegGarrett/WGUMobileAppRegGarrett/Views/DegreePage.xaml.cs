@@ -252,11 +252,11 @@ namespace WGUMobileAppRegGarrett.Views
             DegreeViewModel.NewTerm.TermName = "";
             DateTime now = DateTime.Now;
             DatePicker startDate = new DatePicker();
-            startDate.SetBinding(DatePicker.DateProperty, "start", BindingMode.TwoWay);
+            startDate.SetBinding(DatePicker.DateProperty, "Start", BindingMode.TwoWay);
             startDate.BindingContext = degreeVM;
             degreeVM.Start = new DateTime(now.Year, now.Month, 1);
             DatePicker endDate = new DatePicker();
-            endDate.SetBinding(DatePicker.DateProperty, "end", BindingMode.TwoWay);
+            endDate.SetBinding(DatePicker.DateProperty, "End", BindingMode.TwoWay);
             endDate.BindingContext = degreeVM;
             degreeVM.End = new DateTime(now.Year, (now.Month + 5), DateTime.DaysInMonth(now.Year, (now.Month + 5)));
             grid.Children.Add(name, 0, 0);

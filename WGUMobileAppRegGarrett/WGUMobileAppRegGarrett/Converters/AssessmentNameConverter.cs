@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 using WGUMobileAppRegGarrett.Models;
 using WGUMobileAppRegGarrett.Services;
+using WGUMobileAppRegGarrett.ViewModels;
 using Xamarin.Forms;
 
 namespace WGUMobileAppRegGarrett.Converters
@@ -38,7 +39,7 @@ namespace WGUMobileAppRegGarrett.Converters
             populateAssessments();
             for (int i = 0; i < assessments.Count; i++)
             {
-                if (assessments[i].AssessmentName.ToString() == value.ToString())
+                if (assessments[i].AssessmentName.ToString() == value.ToString() && assessments[i].EnrollmentId == EnrollmentViewModel.currentEnrollment.EnrollmentId)
                 {
                     assessmentId = assessments[i].AssessmentId;
                 }

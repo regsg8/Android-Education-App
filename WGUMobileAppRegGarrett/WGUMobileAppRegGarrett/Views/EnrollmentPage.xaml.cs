@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WGUMobileAppRegGarrett.Converters;
+using WGUMobileAppRegGarrett.Services;
 using WGUMobileAppRegGarrett.Templates;
 using WGUMobileAppRegGarrett.ViewModels;
 using Xamarin.Forms;
@@ -19,9 +20,13 @@ namespace WGUMobileAppRegGarrett.Views
         public EnrollmentPage()
         {
             InitializeComponent();
-            linkViewModel();
-            editing = false;
-            populatePage();
+            Auth.loginCheck(this);
+            if (Auth.loggedIn)
+            {
+                editing = false;
+                linkViewModel();
+                populatePage();
+            }
         }
 
         private void linkViewModel()
@@ -113,6 +118,7 @@ namespace WGUMobileAppRegGarrett.Views
                         name,
                         line6,
                         dateGrid,
+                        line5,
                         statusGrid,
                         line1,
                         instructor,
@@ -208,7 +214,101 @@ namespace WGUMobileAppRegGarrett.Views
             //course notes
 
             //save and cancel buttons   
+            this.BindingContext = EnrollmentViewModel.currentEnrollment;
+            //course name
+            Label name = new Label()
+            {
+                Style = (Style)Application.Current.Resources["title"]
+            };
+            DatePicker startDate = new DatePicker();
+            DatePicker endDate = new DatePicker();
+            Label start = Generics.label("right", "Start: ");
+            Label end = Generics.label("right", "End: ");
+            name.SetBinding(Label.TextProperty, new Binding("CourseId", BindingMode.OneWay, new CourseNameConverter(), null, null));
+            //start and end
+            startDate.SetBinding(DatePicker.DateProperty, "EnrollmentStart", BindingMode.TwoWay, new DateConverter());
+            endDate.SetBinding(DatePicker.DateProperty, "EnrollmentEnd", BindingMode.TwoWay, new DateConverter());
+            Grid dateGrid = Generics.twoByTwoGrid();
+            dateGrid.Children.Add(start, 0, 0);
+            dateGrid.Children.Add(startDate, 1, 0);
+            dateGrid.Children.Add(end, 0, 1);
+            dateGrid.Children.Add(endDate, 1, 1);
+            dateGrid.Margin = new Thickness(10);
+            //status
+            Label changeStatus = Generics.label("right", "Status: ");
+            Picker statusChange = new Picker()
+            {
+                Title = "New Status"
+            };
+            statusChange.ItemsSource = EnrollmentViewModel.courseStatusOptions;
+            statusChange.SetBinding(Picker.SelectedItemProperty, "Status", BindingMode.TwoWay);
+            Grid statusGrid = Generics.twoByOneGrid();
+            statusGrid.Children.Add(changeStatus, 0, 0);
+            statusGrid.Children.Add(statusChange, 1, 0);
+            //instructor info
+            Label instructor = Generics.label("right", "Instructor: ");
+            Label boundName = Generics.label("left");
+            boundName.SetBinding(Label.TextProperty, "InstructorName");
+            InstructorNameConverter.populateInstructors();
+            Label changeInstructor = Generics.label("right", "New Instructor: ");
+            Picker instructorChange = new Picker()
+            {
+                Title = "New Instructor"
+            };
+            instructorChange.ItemDisplayBinding = new Binding("InstructorName");
+            instructorChange.ItemsSource = InstructorNameConverter.instructors;
+            instructorChange.SetBinding(Picker.SelectedItemProperty, "InstructorId", BindingMode.TwoWay, new InstructorNameConverter());
+            Grid instructorGrid = Generics.twoByTwoGrid();
+            instructorGrid.BindingContext = EnrollmentViewModel.courseInstructor;
+            instructorGrid.Children.Add(instructor, 0, 0);
+            instructorGrid.Children.Add(boundName, 1, 0);
+            instructorGrid.Children.Add(changeInstructor, 0, 1);
+            instructorGrid.Children.Add(instructorChange, 1, 1);
+            Button editInstructors = Generics.button("center", "Edit Instructors");
+            editInstructors.Clicked += EditInstructors_Clicked;
+            //notes
+            Label noteName = Generics.label("center", "Notes:");
+            Label notes = Generics.label("center");
+            notes.LineBreakMode = LineBreakMode.WordWrap;
+            notes.SetBinding(Label.TextProperty, "Notes");
+
+            BoxView line1 = Generics.horizontalLine();
+            BoxView line2 = Generics.horizontalLine();
+            BoxView line3 = Generics.horizontalLine();
+            BoxView line4 = Generics.horizontalLine();
+            BoxView line5 = Generics.horizontalLine();
+            BoxView line6 = Generics.horizontalLine();
+            StackLayout editPage = new StackLayout()
+            {
+                Padding = new Thickness(5),
+                Children =
+                    {
+                        name,
+                        line1,
+                        dateGrid,
+                        line2,
+                        statusGrid,
+                        line3,
+                        instructorGrid,
+                        editInstructors,
+                        line4,
+                        noteName,
+                        notes,
+                        line5
+                    }
+            };
+            ScrollView scroll = new ScrollView
+            {
+                Content = editPage
+            };
+
+            this.Content = scroll;
         }
-        // ↑↑↑  Edit Page  ↑↑↑
+
+        private async void EditInstructors_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new InstructorPage());
+        }
     }
+        // ↑↑↑  Edit Page  ↑↑↑
 }

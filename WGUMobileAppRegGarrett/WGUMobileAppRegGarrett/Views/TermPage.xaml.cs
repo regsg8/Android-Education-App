@@ -346,6 +346,10 @@ namespace WGUMobileAppRegGarrett.Views
             {
                 await DisplayAlert("Course Not Selected", "Please select a course to add to your term.", "OK");
             }
+            else if (TermViewModel.enrollments.Count >= 6)
+            {
+                await DisplayAlert("Cannot Add Course", "Students can only take 6 courses per term.", "OK");
+            }
             else
             {
                 termVM.addNewEnrollment();

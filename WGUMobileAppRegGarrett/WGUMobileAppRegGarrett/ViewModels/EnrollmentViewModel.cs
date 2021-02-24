@@ -13,6 +13,8 @@ namespace WGUMobileAppRegGarrett.ViewModels
     {
         public static Enrollment currentEnrollment;
         public static ObservableCollection<Assessment> enrollmentAssessments;
+        public static ObservableCollection<string> courseStatusOptions;
+        public static ObservableCollection<string> assessmentTypes;
         public static Instructor courseInstructor;
         public EnrollmentViewModel()
         {
@@ -23,6 +25,8 @@ namespace WGUMobileAppRegGarrett.ViewModels
             courseInstructor = new Instructor();
             populateInstructor(currentEnrollment.CourseId);
             AssessmentNameConverter.populateAssessments();
+            courseStatusOptions = DB.courseStatusOptions;
+            assessmentTypes = DB.assessmentTypes;
         }
 
         private void populateInstructor(int courseId)

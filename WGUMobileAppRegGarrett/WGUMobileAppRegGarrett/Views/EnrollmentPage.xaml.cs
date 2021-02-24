@@ -24,7 +24,6 @@ namespace WGUMobileAppRegGarrett.Views
             if (Auth.loggedIn)
             {
                 editing = false;
-                linkViewModel();
                 populatePage();
             }
         }
@@ -37,6 +36,7 @@ namespace WGUMobileAppRegGarrett.Views
 
         private void populatePage()
         {
+            linkViewModel();
             if (editing) editingPage();
             else standardPage();
         }
@@ -198,43 +198,49 @@ namespace WGUMobileAppRegGarrett.Views
 
         // ↓↓↓  Edit Page  ↓↓↓
         private void editingPage()
-        {
-            //course name
-
-            //start and end date pickers
-
-            //start and end notification toggles
-
-            //status picker
-
-            //assessment edit, add button, go to assessment page
-
-            //instructor picker, edit/add button, go to instructor page
-
-            //course notes
-
-            //save and cancel buttons   
+        {  
             this.BindingContext = EnrollmentViewModel.currentEnrollment;
-            //course name
+
+            //Course Name
             Label name = new Label()
             {
                 Style = (Style)Application.Current.Resources["title"]
             };
-            DatePicker startDate = new DatePicker();
-            DatePicker endDate = new DatePicker();
-            Label start = Generics.label("right", "Start: ");
-            Label end = Generics.label("right", "End: ");
             name.SetBinding(Label.TextProperty, new Binding("CourseId", BindingMode.OneWay, new CourseNameConverter(), null, null));
-            //start and end
+
+            //Start and End Date
+            Label start = Generics.label("right", "Start: ");
+            DatePicker startDate = new DatePicker();
             startDate.SetBinding(DatePicker.DateProperty, "EnrollmentStart", BindingMode.TwoWay, new DateConverter());
+            Label end = Generics.label("right", "End: ");
+            DatePicker endDate = new DatePicker();
             endDate.SetBinding(DatePicker.DateProperty, "EnrollmentEnd", BindingMode.TwoWay, new DateConverter());
-            Grid dateGrid = Generics.twoByTwoGrid();
+            Label sNotify = Generics.label("right", "Notification: ");
+            Switch startNotify = new Switch()
+            {
+                HorizontalOptions = LayoutOptions.Start
+            };
+            startNotify.SetBinding(Switch.IsToggledProperty, "EnrollmentStartNotify", BindingMode.TwoWay, new BooleanConverter());
+            Label eNotify = Generics.label("right", "Notification: ");
+            Switch endNotify = new Switch()
+            {
+                HorizontalOptions = LayoutOptions.Start
+            };
+            endNotify.SetBinding(Switch.IsToggledProperty, "EnrollmentEndNotify", BindingMode.TwoWay, new BooleanConverter());
+
+
+            Grid dateGrid = Generics.twoByFourGrid();
             dateGrid.Children.Add(start, 0, 0);
             dateGrid.Children.Add(startDate, 1, 0);
-            dateGrid.Children.Add(end, 0, 1);
-            dateGrid.Children.Add(endDate, 1, 1);
+            dateGrid.Children.Add(sNotify, 0, 1);
+            dateGrid.Children.Add(startNotify, 1, 1);
+            dateGrid.Children.Add(end, 0, 2);
+            dateGrid.Children.Add(endDate, 1, 2);
+            dateGrid.Children.Add(eNotify, 0, 3);
+            dateGrid.Children.Add(endNotify, 1, 3);
             dateGrid.Margin = new Thickness(10);
-            //status
+
+            //Status
             Label changeStatus = Generics.label("right", "Status: ");
             Picker statusChange = new Picker()
             {
@@ -245,7 +251,8 @@ namespace WGUMobileAppRegGarrett.Views
             Grid statusGrid = Generics.twoByOneGrid();
             statusGrid.Children.Add(changeStatus, 0, 0);
             statusGrid.Children.Add(statusChange, 1, 0);
-            //instructor info
+
+            //Instructor
             Label instructor = Generics.label("right", "Instructor: ");
             Label boundName = Generics.label("left");
             boundName.SetBinding(Label.TextProperty, "InstructorName");
@@ -266,12 +273,31 @@ namespace WGUMobileAppRegGarrett.Views
             instructorGrid.Children.Add(instructorChange, 1, 1);
             Button editInstructors = Generics.button("center", "Edit Instructors");
             editInstructors.Clicked += EditInstructors_Clicked;
-            //notes
-            Label noteName = Generics.label("center", "Notes:");
-            Label notes = Generics.label("center");
-            notes.LineBreakMode = LineBreakMode.WordWrap;
-            notes.SetBinding(Label.TextProperty, "Notes");
 
+            //Notes
+            Label noteName = Generics.label("center", "Notes:");
+            Editor notes = new Editor();
+            notes.SetBinding(Editor.TextProperty, "Notes", BindingMode.TwoWay);
+            notes.AutoSize = EditorAutoSizeOption.TextChanges;
+
+            //Buttons
+            Button save = new Button
+            {
+                Text = "Save",
+                Style = (Style)Application.Current.Resources["leftButton"]
+            };
+            save.Clicked += Save_Clicked;
+            Button cancel = new Button
+            {
+                Text = "Cancel",
+                Style = (Style)Application.Current.Resources["rightButton"]
+            };
+            cancel.Clicked += Cancel_Clicked;
+            Grid btnGrid = Generics.twoByOneGrid();
+            btnGrid.Children.Add(cancel, 0, 0);
+            btnGrid.Children.Add(save, 1, 0);
+
+            //Layout
             BoxView line1 = Generics.horizontalLine();
             BoxView line2 = Generics.horizontalLine();
             BoxView line3 = Generics.horizontalLine();
@@ -294,7 +320,8 @@ namespace WGUMobileAppRegGarrett.Views
                         line4,
                         noteName,
                         notes,
-                        line5
+                        line5,
+                        btnGrid
                     }
             };
             ScrollView scroll = new ScrollView
@@ -303,6 +330,21 @@ namespace WGUMobileAppRegGarrett.Views
             };
 
             this.Content = scroll;
+        }
+
+        //Handlers
+        private void Cancel_Clicked(object sender, EventArgs e)
+        {
+            editing = false;
+            populatePage();
+            
+        }
+
+        private void Save_Clicked(object sender, EventArgs e)
+        {
+            DB.updateEnrollment(EnrollmentViewModel.currentEnrollment);
+            editing = false;
+            populatePage();
         }
 
         private async void EditInstructors_Clicked(object sender, EventArgs e)

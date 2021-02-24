@@ -254,7 +254,7 @@ namespace WGUMobileAppRegGarrett.Services
                     Status = "Enrolled",
                     Notes = "",
                     EnrollmentStartNotify = 0,
-                    EntrollmentEndNotify = 0
+                    EnrollmentEndNotify = 0
                 };
                 con.Insert(enrollment);
             }
@@ -275,7 +275,7 @@ namespace WGUMobileAppRegGarrett.Services
             SQLiteConnection con = new SQLiteConnection(dbPath);
             try
             {
-                con.Execute($"UPDATE Enrollments SET EnrollmentStart = '{e.EnrollmentStart}', EnrollmentEnd = '{e.EnrollmentEnd}' WHERE EnrollmentId = '{e.EnrollmentId}'");
+                con.Execute($"UPDATE Enrollments SET EnrollmentStart = '{e.EnrollmentStart}', EnrollmentEnd = '{e.EnrollmentEnd}', Status = '{e.Status}', Notes = '{e.Notes}', EnrollmentStartNotify = '{e.EnrollmentStartNotify}', EnrollmentEndNotify = '{e.EnrollmentEndNotify}' WHERE EnrollmentId = '{e.EnrollmentId}'");
             }
             catch (Exception x)
             {
@@ -428,7 +428,7 @@ namespace WGUMobileAppRegGarrett.Services
         }
 
         //Create dbPath variable for Android
-        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "samwise.db3");
+        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "calvin.db3");
 
         //Create DB if none exists and populate test data
         public static void initializeDB()
@@ -521,11 +521,11 @@ namespace WGUMobileAppRegGarrett.Services
                         TermId = termId,
                         CourseId = courseId,
                         Status = "Enrolled",
-                        Notes = "",
+                        Notes = "Ask Susan for notes from Friday.",
                         EnrollmentStart = sqlDates[2],
                         EnrollmentEnd = sqlDates[3],
                         EnrollmentStartNotify = 0,
-                        EntrollmentEndNotify = 0
+                        EnrollmentEndNotify = 0
                     };
                     con.Insert(enrollment);
                     int enrollmentId = enrollment.EnrollmentId;

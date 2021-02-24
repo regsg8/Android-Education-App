@@ -84,13 +84,13 @@ namespace WGUMobileAppRegGarrett.Models
                 RaisePropertyChanged(nameof(EnrollmentStartNotify));
             }
         }
-        public int EntrollmentEndNotify
+        public int EnrollmentEndNotify
         {
             get => _enrollmentEndNotify;
             set
             {
                 _enrollmentEndNotify = value;
-                RaisePropertyChanged(nameof(EntrollmentEndNotify));
+                RaisePropertyChanged(nameof(EnrollmentEndNotify));
             }
         }
 

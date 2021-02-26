@@ -40,7 +40,7 @@ namespace WGUMobileAppRegGarrett.ViewModels
             set
             {
                 _selectedEnrollment = value;
-                RaisePropertyChanged(nameof(_selectedEnrollment));
+                RaisePropertyChanged(nameof(SelectedEnrollment));
             }
         }
         public Course SelectedCourse

@@ -16,6 +16,15 @@ namespace WGUMobileAppRegGarrett.ViewModels
         public static ObservableCollection<string> courseStatusOptions;
         public static ObservableCollection<string> assessmentTypes;
         public static Instructor courseInstructor;
+        public Assessment SelectedAssessment
+        {
+            get => _selectedAssessment;
+            set
+            {
+                _selectedAssessment = value;
+                RaisePropertyChanged(nameof(SelectedAssessment));
+            }
+        }
         public EnrollmentViewModel()
         {
             currentEnrollment = DB.getEnrollment(TermViewModel.selectedEnrollmentId);
@@ -47,6 +56,8 @@ namespace WGUMobileAppRegGarrett.ViewModels
                 }
             }
         }
+
+        private Assessment _selectedAssessment;
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {

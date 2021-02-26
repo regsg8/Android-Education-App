@@ -56,11 +56,11 @@
                 />
                 <Setter 
                     Property="VerticalOptions"
-                    Value="CenterAndExpand"
+                    Value="Center"
                 />
                 <Setter 
                     Property="HorizontalOptions"
-                    Value="CenterAndExpand"
+                    Value="Center"
                 />
                 <Setter 
                     Property="HorizontalTextAlignment"

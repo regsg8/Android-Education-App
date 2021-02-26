@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WGUMobileAppRegGarrett.Converters;
+using WGUMobileAppRegGarrett.Models;
 using WGUMobileAppRegGarrett.Services;
 using WGUMobileAppRegGarrett.Templates;
 using WGUMobileAppRegGarrett.ViewModels;
@@ -17,10 +18,14 @@ namespace WGUMobileAppRegGarrett.Views
     {
         public EnrollmentViewModel eVM;
         private bool editing;
+        private bool pA;
+        private bool oA;
         public EnrollmentPage()
         {
             InitializeComponent();
             Auth.loginCheck(this);
+            pA = false;
+            oA = false;
             if (Auth.loggedIn)
             {
                 editing = false;
@@ -37,8 +42,18 @@ namespace WGUMobileAppRegGarrett.Views
         private void populatePage()
         {
             linkViewModel();
+            checkAssessmentTypes();
             if (editing) editingPage();
             else standardPage();
+        }
+        private void checkAssessmentTypes()
+        {
+            DB.getEnrollmentAssessments(EnrollmentViewModel.currentEnrollment.EnrollmentId);
+            for (int i = 0; i < EnrollmentViewModel.enrollmentAssessments.Count; i++)
+            {
+                if (EnrollmentViewModel.enrollmentAssessments[i].Type == "Performance Assessment") pA = true;
+                if (EnrollmentViewModel.enrollmentAssessments[i].Type == "Objective Assessment") oA = true;
+            }
         }
 
         // ↓↓↓  Standard Page  ↓↓↓
@@ -53,7 +68,7 @@ namespace WGUMobileAppRegGarrett.Views
             Label startDate = Generics.label("left");
             Label endDate = Generics.label("left");
             Label start = Generics.label("right", "Start: ");
-            Label end = Generics.label("right", "End: ");
+            Label end = Generics.label("right", "Due: ");
             name.SetBinding(Label.TextProperty, new Binding("CourseId", BindingMode.OneWay, new CourseNameConverter(), null, null));
             //start and end
             startDate.SetBinding(Label.TextProperty, "EnrollmentStart", BindingMode.OneWay, new DateConverter());
@@ -106,38 +121,12 @@ namespace WGUMobileAppRegGarrett.Views
             BoxView line4 = Generics.horizontalLine();
             BoxView line5 = Generics.horizontalLine();
             BoxView line6 = Generics.horizontalLine();
-            //assessments, handle no assessments
+            //assessments
+            StackLayout assessmentStack = new StackLayout();
             if (EnrollmentViewModel.enrollmentAssessments.Count == 0)
             {
-                Label NA = Generics.label("center", "No available assessments");
-                StackLayout noA = new StackLayout()
-                {
-                    Padding = new Thickness(5),
-                    Children =
-                    {
-                        name,
-                        line6,
-                        dateGrid,
-                        line5,
-                        statusGrid,
-                        line1,
-                        instructor,
-                        instructorGrid,
-                        line2,
-                        NA,
-                        line3,
-                        noteName,
-                        notes,
-                        line4,
-                        edit
-                    }
-                };
-                ScrollView noAssessments = new ScrollView
-                {
-                    Content = noA
-                };
-
-                this.Content = noAssessments;
+                Label NA = Generics.label("center", "No assessments available");
+                assessmentStack.Children.Add(NA);
             }
             else
             {
@@ -145,47 +134,72 @@ namespace WGUMobileAppRegGarrett.Views
                 aName.Margin = new Thickness(0, 10, 0, 0);
                 ListView listview = new ListView()
                 {
-                    RowHeight = 170,
+                    RowHeight = 120,
                     Margin = new Thickness(5)
                 };
                 listview.ItemTemplate = new DataTemplate(typeof(AssessmentCell));
                 listview.ItemsSource = EnrollmentViewModel.enrollmentAssessments;
                 listview.ItemTapped += Listview_ItemTapped;
-                StackLayout withList = new StackLayout()
-                {
-                    Padding = new Thickness(5),
-                    Children =
+                assessmentStack.Children.Add(aName);
+                assessmentStack.Children.Add(listview);
+            }
+            if (!pA)
+            {
+                Button addPA = Generics.button("center", "Add Performance Assessment");
+                
+                addPA.Clicked += AddPA_Clicked;
+                assessmentStack.Children.Add(addPA);
+            }
+            if (!oA)
+            {
+                Button addOA = Generics.button("center", "Add Objective Assessment");
+                addOA.Clicked += AddOA_Clicked;
+                assessmentStack.Children.Add(addOA);
+            }
+            StackLayout noA = new StackLayout()
+            {
+                Padding = new Thickness(5),
+                Children =
                     {
                         name,
                         line6,
                         dateGrid,
-                        line1,
+                        line5,
                         statusGrid,
-                        line2,
+                        line1,
                         instructor,
                         instructorGrid,
+                        line2,
+                        assessmentStack,
                         line3,
-                        aName,
-                        listview,
-                        line4,
                         noteName,
                         notes,
-                        line5,
+                        line4,
                         edit
                     }
-                };
-                ScrollView scrollview = new ScrollView
-                {
-                    Content = withList
-                };
+            };
+            ScrollView noAssessments = new ScrollView
+            {
+                Content = noA
+            };
 
-                this.Content = scrollview;
-            }
+            this.Content = noAssessments;
         }
 
-        private void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void AddOA_Clicked(object sender, EventArgs e)
         {
-            //Open assessment page
+            addAssessmentPage("Objective Assessment");
+        }
+
+        private void AddPA_Clicked(object sender, EventArgs e)
+        {
+            addAssessmentPage("Performance Assessment");
+        }
+
+        private async void Listview_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            eVM.SelectedAssessment = (Assessment)e.Item;
+            await Navigation.PushAsync(new AssessmentPage(eVM.SelectedAssessment.AssessmentId));
         }
 
         private void Edit_Clicked(object sender, EventArgs e)
@@ -212,7 +226,7 @@ namespace WGUMobileAppRegGarrett.Views
             Label start = Generics.label("right", "Start: ");
             DatePicker startDate = new DatePicker();
             startDate.SetBinding(DatePicker.DateProperty, "EnrollmentStart", BindingMode.TwoWay, new DateConverter());
-            Label end = Generics.label("right", "End: ");
+            Label end = Generics.label("right", "Due: ");
             DatePicker endDate = new DatePicker();
             endDate.SetBinding(DatePicker.DateProperty, "EnrollmentEnd", BindingMode.TwoWay, new DateConverter());
             Label sNotify = Generics.label("right", "Notification: ");
@@ -351,6 +365,97 @@ namespace WGUMobileAppRegGarrett.Views
         {
             await Navigation.PushAsync(new InstructorPage());
         }
-    }
         // ↑↑↑  Edit Page  ↑↑↑
+
+
+        // ↓↓↓  Add Assessment Page  ↓↓↓
+        private void addAssessmentPage(string type)
+        {
+            AssessmentViewModel.newAssessment = new Assessment()
+            {
+                Type = type,
+                EnrollmentId = EnrollmentViewModel.currentEnrollment.EnrollmentId,
+                AssessmentDueNotify = 0,
+                AssessmentName = "New Assessment",
+                AssessmentDue = EnrollmentViewModel.currentEnrollment.EnrollmentEnd
+            };
+            this.BindingContext = AssessmentViewModel.newAssessment;
+            //course name
+            Entry name = new Entry()
+            {
+                Style = (Style)Application.Current.Resources["title"],
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+            name.SetBinding(Entry.TextProperty, new Binding("AssessmentName", BindingMode.TwoWay));
+            Label due = Generics.label("right", "Due: ");
+            DatePicker dueDate = new DatePicker();
+            dueDate.SetBinding(DatePicker.DateProperty, "AssessmentDue", BindingMode.TwoWay, new DateConverter());
+            Label dNotify = Generics.label("right", "Notification: ");
+            Switch dueNotify = new Switch()
+            {
+                HorizontalOptions = LayoutOptions.Start
+            };
+            dueNotify.SetBinding(Switch.IsToggledProperty, "AssessmentDueNotify", BindingMode.TwoWay, new BooleanConverter());
+
+
+            Grid dateGrid = Generics.twoByTwoGrid();
+            dateGrid.Children.Add(due, 0, 0);
+            dateGrid.Children.Add(dueDate, 1, 0);
+            dateGrid.Children.Add(dNotify, 0, 1);
+            dateGrid.Children.Add(dueNotify, 1, 1);
+            dateGrid.Margin = new Thickness(10);
+
+            //Buttons
+            Button newAssessment = new Button
+            {
+                Text = "Add Assessment",
+                Style = (Style)Application.Current.Resources["leftButton"]
+            };
+            newAssessment.Clicked += NewAssessment_Clicked;
+            Button cancelAssessment = new Button
+            {
+                Text = "Cancel",
+                Style = (Style)Application.Current.Resources["rightButton"]
+            };
+            cancelAssessment.Clicked += CancelAssessment_Clicked;
+            Grid btnGrid = Generics.twoByOneGrid();
+            btnGrid.Children.Add(cancelAssessment, 0, 0);
+            btnGrid.Children.Add(newAssessment, 1, 0);
+            BoxView line1 = Generics.horizontalLine();
+            BoxView line2 = Generics.horizontalLine();
+            StackLayout stack = new StackLayout()
+            {
+                Padding = new Thickness(5),
+                Children =
+                    {
+                        name,
+                        line1,
+                        dateGrid,
+                        line2,
+                        btnGrid
+                    }
+            };
+            ScrollView scrollview = new ScrollView
+            {
+                Content = stack
+            };
+
+            this.Content = scrollview;
+        }
+
+        private void CancelAssessment_Clicked(object sender, EventArgs e)
+        {
+            populatePage();
+        }
+
+        private void NewAssessment_Clicked(object sender, EventArgs e)
+        {
+            DB.createAssessment(AssessmentViewModel.newAssessment);
+            populatePage();
+        }
+        // ↑↑↑  Add Assessment Page  ↑↑↑
+    }
+
+
+
 }

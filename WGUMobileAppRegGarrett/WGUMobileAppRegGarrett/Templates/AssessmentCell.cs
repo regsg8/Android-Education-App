@@ -11,25 +11,16 @@ namespace WGUMobileAppRegGarrett.Templates
         public AssessmentCell()
         {
             Label name = Generics.label("center");
-            Label startDate = Generics.label("left");
-            Label startTime = Generics.label("left");
+            Label type = Generics.label("center");
             Label endDate = Generics.label("left");
-            Label endTime = Generics.label("left");
-            Label start = Generics.label("right", "Start: ");
-            Label end = Generics.label("right", "End: ");
+            Label end = Generics.label("right", "Due: ");
             name.SetBinding(Label.TextProperty, new Binding("AssessmentId", BindingMode.OneWay, new AssessmentNameConverter(), null, null));
-            startDate.SetBinding(Label.TextProperty, "AssessmentStart", BindingMode.OneWay, new DateConverter());
-            endDate.SetBinding(Label.TextProperty, "AssessmentEnd", BindingMode.OneWay, new DateConverter());
-            startTime.SetBinding(Label.TextProperty, "AssessmentStart", BindingMode.OneWay, new TimeConverter());
-            endTime.SetBinding(Label.TextProperty, "AssessmentEnd", BindingMode.OneWay, new TimeConverter());
+            type.SetBinding(Label.TextProperty, new Binding("Type", BindingMode.OneWay));
+            endDate.SetBinding(Label.TextProperty, "AssessmentDue", BindingMode.OneWay, new DateConverter());
 
-            Grid dateGrid = Generics.twoByFourGrid();
-            dateGrid.Children.Add(start, 0, 0);
-            dateGrid.Children.Add(startDate, 1, 0);
-            dateGrid.Children.Add(startTime, 1, 1);
-            dateGrid.Children.Add(end, 0, 2);
-            dateGrid.Children.Add(endDate, 1, 2);
-            dateGrid.Children.Add(endTime, 1, 3);
+            Grid dateGrid = Generics.twoByOneGrid();
+            dateGrid.Children.Add(end, 0, 0);
+            dateGrid.Children.Add(endDate, 1, 0);
             BoxView line = Generics.horizontalLine();
             line.Color = (Color)Application.Current.Resources["Neutral"];
             line.HeightRequest = 1;
@@ -40,6 +31,7 @@ namespace WGUMobileAppRegGarrett.Templates
                 {
                     line,
                     name,
+                    type,
                     dateGrid
                 }
             };

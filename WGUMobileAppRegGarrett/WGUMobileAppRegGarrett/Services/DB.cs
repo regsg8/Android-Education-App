@@ -363,6 +363,89 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Get assessment by ID
+        public static Assessment getAssessment(int assessmentId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            Assessment a = new Assessment()
+            {
+                AssessmentId = -1,
+                AssessmentName = "Assessment not available"
+            };
+            try
+            {
+                a = con.Get<Assessment>(assessmentId);
+                return a;
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+                return a;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        //Update an assessment
+        public async static void updateAssessment(Assessment a)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Execute($"UPDATE Assessments SET AssessmentName = '{a.AssessmentName}', AssessmentDue = '{a.AssessmentDue}', AssessmentDueNotify = '{a.AssessmentDueNotify}' WHERE AssessmentId = '{a.AssessmentId}'");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        //Create Assessment
+        public async static void createAssessment(Assessment a)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Insert(a);
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        //Delete Assessment
+        public async static void deleteAssessment(int assessmentId)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Delete<Assessment>(assessmentId);
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
         //Instructor CRUD
         //Get all Instructors for InstructorNameConverter
@@ -428,7 +511,7 @@ namespace WGUMobileAppRegGarrett.Services
         }
 
         //Create dbPath variable for Android
-        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "calvin.db3");
+        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "haha.db3");
 
         //Create DB if none exists and populate test data
         public static void initializeDB()
@@ -535,22 +618,18 @@ namespace WGUMobileAppRegGarrett.Services
                     {
                         EnrollmentId = enrollmentId,
                         AssessmentName = "Xamarin Forms PA",
-                        Type = "PA",
-                        AssessmentStart = sqlDates[4],
-                        AssessmentEnd = sqlDates[5],
-                        AssessmentStartNotify = 0,
-                        AssessmentEndNotify = 0
+                        Type = "Performance Assessment",
+                        AssessmentDue = sqlDates[5],
+                        AssessmentDueNotify = 0
                     };
                     con.Insert(pa);
                     Models.Assessment oa = new Models.Assessment()
                     {
                         EnrollmentId = enrollmentId,
                         AssessmentName = "Xamarin Forms OA",
-                        Type = "OA",
-                        AssessmentStart = sqlDates[6],
-                        AssessmentEnd = sqlDates[7],
-                        AssessmentStartNotify = 0,
-                        AssessmentEndNotify = 0
+                        Type = "Objective Assessment",
+                        AssessmentDue = sqlDates[7],
+                        AssessmentDueNotify = 0
                     };
                     con.Insert(oa);
                 }

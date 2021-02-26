@@ -47,41 +47,23 @@ namespace WGUMobileAppRegGarrett.Models
             }
         }
         //Storing Dates as ISO8601 strings ("YYYY-MM-DD HH:MM:SS.SSS")
-        public string AssessmentStart
+        public string AssessmentDue
         {
-            get => _assessmentStart;
+            get => _assessmentDue;
             set
             {
-                _assessmentStart = value;
-                RaisePropertyChanged(nameof(AssessmentStart));
-            }
-        }
-        public string AssessmentEnd
-        {
-            get => _assessmentEnd;
-            set
-            {
-                _assessmentEnd = value;
-                RaisePropertyChanged(nameof(AssessmentEnd));
+                _assessmentDue = value;
+                RaisePropertyChanged(nameof(AssessmentDue));
             }
         }
         //SQLite stores bool as int, 0 = false, 1 = true
-        public int AssessmentStartNotify
+        public int AssessmentDueNotify
         {
-            get => _assessmentStartNotify;
+            get => _assessmentDueNotify;
             set
             {
-                _assessmentStartNotify = value;
-                RaisePropertyChanged(nameof(AssessmentStartNotify));
-            }
-        }
-        public int AssessmentEndNotify
-        {
-            get => _assessmentEndNotify;
-            set
-            {
-                _assessmentEndNotify = value;
-                RaisePropertyChanged(nameof(AssessmentEndNotify));
+                _assessmentDueNotify = value;
+                RaisePropertyChanged(nameof(AssessmentDueNotify));
             }
         }
 
@@ -89,10 +71,8 @@ namespace WGUMobileAppRegGarrett.Models
         private int _enrollmentId;
         private string _name;
         private string _type;
-        private string _assessmentStart;
-        private string _assessmentEnd;
-        private int _assessmentStartNotify;
-        private int _assessmentEndNotify;
+        private string _assessmentDue;
+        private int _assessmentDueNotify;
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {

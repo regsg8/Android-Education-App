@@ -18,10 +18,12 @@ namespace WGUMobileAppRegGarrett.Views
     {
         public TermViewModel termVM;
         private bool editing;
+        private Picker passPicker;
         public TermPage()
         {
             InitializeComponent();
             Auth.loginCheck(this);
+            passPicker = new Picker();
             if (Auth.loggedIn)
             {
                 editing = false;
@@ -273,6 +275,7 @@ namespace WGUMobileAppRegGarrett.Views
             picker.ItemDisplayBinding = new Binding("CourseName");
             picker.SetBinding(Picker.SelectedItemProperty, "SelectedCourse", BindingMode.TwoWay);
             picker.ItemsSource = TermViewModel.TVMCourses;
+            passPicker = picker;
             Button courseEdit = Generics.button("center", "Edit Courses");
             courseEdit.Clicked += CourseEdit_Clicked;
             courseEdit.VerticalOptions = LayoutOptions.Start;
@@ -342,7 +345,7 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void CourseEdit_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CoursePage());
+            await Navigation.PushAsync(new CoursePage(this.passPicker));
         }
 
         private void CancelEnrollment_Clicked(object sender, EventArgs e)

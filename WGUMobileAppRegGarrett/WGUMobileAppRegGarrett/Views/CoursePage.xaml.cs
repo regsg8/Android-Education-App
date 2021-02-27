@@ -18,10 +18,12 @@ namespace WGUMobileAppRegGarrett.Views
     {
         public CourseViewModel cVM;
         private bool editing;
-        public CoursePage()
+        public Picker currentPicker;
+        public CoursePage(Picker picker)
         {
             InitializeComponent();
             Auth.loginCheck(this);
+            currentPicker = picker;
             if (Auth.loggedIn)
             {
                 editing = false;
@@ -117,6 +119,7 @@ namespace WGUMobileAppRegGarrett.Views
             CourseNameConverter.populateCourseNames();
             TermViewModel.TVMCourses.Clear();
             TermViewModel.TVMCourses = CourseNameConverter.courses;
+            currentPicker.ItemsSource = TermViewModel.TVMCourses;
             Application.Current.MainPage.Navigation.PopAsync();
         }
 
@@ -124,8 +127,6 @@ namespace WGUMobileAppRegGarrett.Views
         {
             await Navigation.PushAsync(new InstructorPage());
         }
-
-
         // ↑↑↑  Standard Page  ↑↑↑
 
 
@@ -208,6 +209,7 @@ namespace WGUMobileAppRegGarrett.Views
                 CourseNameConverter.populateCourseNames();
                 TermViewModel.TVMCourses.Clear();
                 TermViewModel.TVMCourses = CourseNameConverter.courses;
+                currentPicker.ItemsSource = TermViewModel.TVMCourses;
                 populatePage();
             } 
         }

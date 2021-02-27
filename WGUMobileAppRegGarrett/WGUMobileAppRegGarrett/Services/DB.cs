@@ -187,6 +187,43 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Updates course by Id
+        public async static void updateCourse(Course c)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Execute($"UPDATE Courses SET CourseName = '{c.CourseName}', InstructorId = '{c.InstructorId}' WHERE CourseId = '{c.CourseId}'");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public async static void createCourse(Course c)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Insert(c);
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         
 
         //Enrollment CRUD
@@ -461,6 +498,7 @@ namespace WGUMobileAppRegGarrett.Services
                     instructors.ForEach(i =>
                     {
                         InstructorNameConverter.instructors.Add(i);
+                        InstructorNameConverter.instructorNames.Add(i.InstructorName);
                     });
                 }
             }
@@ -511,7 +549,7 @@ namespace WGUMobileAppRegGarrett.Services
         }
 
         //Create dbPath variable for Android
-        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "haha.db3");
+        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "instructors.db3");
 
         //Create DB if none exists and populate test data
         public static void initializeDB()
@@ -588,6 +626,14 @@ namespace WGUMobileAppRegGarrett.Services
                     };
                     con.Insert(instructor);
                     int instructorId = instructor.InstructorId;
+
+                    Models.Instructor instructorOther = new Models.Instructor()
+                    {
+                        InstructorName = "Other Instructor",
+                        Email = "test@test.com",
+                        Phone = "123-456-7890"
+                    };
+                    con.Insert(instructorOther);
 
                     //Insert test course
                     Models.Course course = new Models.Course()

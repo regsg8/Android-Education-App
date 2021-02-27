@@ -144,6 +144,7 @@ namespace WGUMobileAppRegGarrett.Views
         // ↓↓↓  Edit Page  ↓↓↓
         private void editingPage()
         {
+            TermViewModel.deselectEnrollment(termVM);
             this.BindingContext = termVM;
             Label name = new Label()
             {
@@ -272,6 +273,9 @@ namespace WGUMobileAppRegGarrett.Views
             picker.ItemDisplayBinding = new Binding("CourseName");
             picker.SetBinding(Picker.SelectedItemProperty, "SelectedCourse", BindingMode.TwoWay);
             picker.ItemsSource = TermViewModel.TVMCourses;
+            Button courseEdit = Generics.button("center", "Edit Courses");
+            courseEdit.Clicked += CourseEdit_Clicked;
+            courseEdit.VerticalOptions = LayoutOptions.Start;
             Label start = new Label
             {
                 Text = "Start:",
@@ -323,6 +327,7 @@ namespace WGUMobileAppRegGarrett.Views
                 Children =
                 {
                     picker,
+                    courseEdit,
                     grid,
                     buttons
                 }
@@ -333,6 +338,11 @@ namespace WGUMobileAppRegGarrett.Views
             };
 
             this.Content = scrollview;
+        }
+
+        private async void CourseEdit_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CoursePage());
         }
 
         private void CancelEnrollment_Clicked(object sender, EventArgs e)

@@ -87,7 +87,7 @@ namespace WGUMobileAppRegGarrett.Views
             statusGrid.Children.Add(status, 0, 0);
             statusGrid.Children.Add(statusEnrollment, 1, 0);
             //edit button
-            Button edit = Generics.button("center", "Edit");
+            Button edit = Generics.button("center", "Edit Class");
             edit.Clicked += Edit_Clicked;
             //instructor info
             Label instructor = Generics.label("center", "Instructor Info");
@@ -215,13 +215,22 @@ namespace WGUMobileAppRegGarrett.Views
         {  
             this.BindingContext = EnrollmentViewModel.currentEnrollment;
 
-            //Course Name
-            Label name = new Label()
+            for (int i = 0; i < CourseNameConverter.courses.Count; i++)
             {
-                Style = (Style)Application.Current.Resources["title"]
-            };
-            name.SetBinding(Label.TextProperty, new Binding("CourseId", BindingMode.OneWay, new CourseNameConverter(), null, null));
+                if (CourseNameConverter.courses[i].CourseId == EnrollmentViewModel.currentEnrollment.CourseId)
+                {
+                    eVM.updateCourseName = CourseNameConverter.courses[i].CourseName;
+                }
+            }
 
+            //Course Name
+            Entry name = new Entry()
+            {
+                Style = (Style)Application.Current.Resources["title"],
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+            name.SetBinding(Entry.TextProperty, new Binding("updateCourseName", BindingMode.TwoWay));
+            name.BindingContext = eVM;
             //Start and End Date
             Label start = Generics.label("right", "Start: ");
             DatePicker startDate = new DatePicker();
@@ -276,9 +285,9 @@ namespace WGUMobileAppRegGarrett.Views
             {
                 Title = "New Instructor"
             };
-            instructorChange.ItemDisplayBinding = new Binding("InstructorName");
-            instructorChange.ItemsSource = InstructorNameConverter.instructors;
-            instructorChange.SetBinding(Picker.SelectedItemProperty, "InstructorId", BindingMode.TwoWay, new InstructorNameConverter());
+            instructorChange.ItemsSource = InstructorNameConverter.instructorNames;
+            instructorChange.SetBinding(Picker.SelectedItemProperty, "updateCourseInstructor", BindingMode.TwoWay);
+            instructorChange.BindingContext = eVM;
             Grid instructorGrid = Generics.twoByTwoGrid();
             instructorGrid.BindingContext = EnrollmentViewModel.courseInstructor;
             instructorGrid.Children.Add(instructor, 0, 0);
@@ -310,6 +319,7 @@ namespace WGUMobileAppRegGarrett.Views
             Grid btnGrid = Generics.twoByOneGrid();
             btnGrid.Children.Add(cancel, 0, 0);
             btnGrid.Children.Add(save, 1, 0);
+
 
             //Layout
             BoxView line1 = Generics.horizontalLine();
@@ -357,6 +367,22 @@ namespace WGUMobileAppRegGarrett.Views
         private void Save_Clicked(object sender, EventArgs e)
         {
             DB.updateEnrollment(EnrollmentViewModel.currentEnrollment);
+            //loop through instructor names to get instructor ID
+            int updatedInstructorId = -1;
+            for (int i = 0; i < InstructorNameConverter.instructors.Count; i++)
+            {
+                if (InstructorNameConverter.instructors[i].InstructorName.ToString() == eVM.updateCourseInstructor)
+                {
+                    updatedInstructorId = InstructorNameConverter.instructors[i].InstructorId;
+                }
+            }
+            Course updatedCourse = new Course()
+            {
+                CourseId = EnrollmentViewModel.currentEnrollment.CourseId,
+                CourseName = eVM.updateCourseName,
+                InstructorId = updatedInstructorId
+            };
+            DB.updateCourse(updatedCourse);
             editing = false;
             populatePage();
         }

@@ -59,7 +59,7 @@ namespace WGUMobileAppRegGarrett.Views
             name.SetBinding(Label.TextProperty, "DegreeName");
             Button edit = new Button
             {
-                Text = "Edit Degree",
+                Text = "Edit Terms",
                 Style = (Style)Application.Current.Resources["centerButton"]
             };
             edit.Clicked += Edit_Clicked;
@@ -132,7 +132,8 @@ namespace WGUMobileAppRegGarrett.Views
             DegreeViewModel.deselectTerm(degreeVM);
             Entry name = new Entry()
             {
-                Style = (Style)Application.Current.Resources["title"]
+                Style = (Style)Application.Current.Resources["title"],
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
             name.BindingContext = DegreeViewModel.degree;
             name.SetBinding(Entry.TextProperty, "DegreeName");

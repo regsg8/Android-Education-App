@@ -16,6 +16,24 @@ namespace WGUMobileAppRegGarrett.ViewModels
         public static ObservableCollection<string> courseStatusOptions;
         public static ObservableCollection<string> assessmentTypes;
         public static Instructor courseInstructor;
+        public string updateCourseName
+        {
+            get => _updateCourseName;
+            set
+            {
+                _updateCourseName = value;
+                RaisePropertyChanged(nameof(updateCourseName));
+            }
+        }
+        public string updateCourseInstructor
+        {
+            get => _updateCourseInstructor;
+            set
+            {
+                _updateCourseInstructor = value;
+                RaisePropertyChanged(nameof(updateCourseInstructor));
+            }
+        }
         public Assessment SelectedAssessment
         {
             get => _selectedAssessment;
@@ -58,6 +76,8 @@ namespace WGUMobileAppRegGarrett.ViewModels
         }
 
         private Assessment _selectedAssessment;
+        private string _updateCourseName;
+        private string _updateCourseInstructor;
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {

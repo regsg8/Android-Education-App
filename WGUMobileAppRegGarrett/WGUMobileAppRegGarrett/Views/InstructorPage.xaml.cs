@@ -18,11 +18,16 @@ namespace WGUMobileAppRegGarrett.Views
     {
         public InstructorViewModel iVM;
         public Picker currentPicker;
+        public ListView currentListView;
         public InstructorPage(Picker picker)
         {
             InitializeComponent();
             Auth.loginCheck(this);
             currentPicker = picker;
+            currentListView = new ListView()
+            {
+                StyleId = "null"
+            };
             if (Auth.loggedIn)
             {
                 populatePage();
@@ -33,6 +38,25 @@ namespace WGUMobileAppRegGarrett.Views
         {
             InitializeComponent();
             Auth.loginCheck(this);
+            currentPicker = new Picker()
+            {
+                Title = "null"
+            };
+            currentListView = new ListView()
+            {
+                StyleId = "null"
+            };
+            if (Auth.loggedIn)
+            {
+                populatePage();
+            }
+        }
+
+        public InstructorPage(ListView listview)
+        {
+            InitializeComponent();
+            Auth.loginCheck(this);
+            currentListView = listview;
             currentPicker = new Picker()
             {
                 Title = "null"
@@ -146,6 +170,11 @@ namespace WGUMobileAppRegGarrett.Views
                 {
                     currentPicker.ItemsSource = InstructorNameConverter.instructorNames;
                 }
+                if (currentListView.StyleId != "null")
+                {
+                    CourseNameConverter.populateCourseNames();
+                    currentListView.ItemsSource = CourseNameConverter.courses;
+                }
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
             catch (Exception x)
@@ -251,6 +280,11 @@ namespace WGUMobileAppRegGarrett.Views
                 if (currentPicker.Title != "null")
                 {
                     currentPicker.ItemsSource = InstructorNameConverter.instructorNames;
+                }
+                if (currentListView.StyleId != "null")
+                {
+                    CourseNameConverter.populateCourseNames();
+                    currentListView.ItemsSource = CourseNameConverter.courses;
                 }
                 populatePage();
             }

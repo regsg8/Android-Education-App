@@ -18,6 +18,7 @@ namespace WGUMobileAppRegGarrett.Views
     {
         public CourseViewModel cVM;
         public Picker currentPicker;
+        public ListView passListView;
         public CoursePage(Picker picker)
         {
             InitializeComponent();
@@ -52,12 +53,13 @@ namespace WGUMobileAppRegGarrett.Views
             ListView listview = new ListView()
             {
                 RowHeight = 200,
-                Margin = new Thickness(5)
+                Margin = new Thickness(5),
+                StyleId = "passListView"
             };
             listview.ItemTemplate = new DataTemplate(typeof(CourseCellEdit));
             CourseNameConverter.populateCourseNames();
             listview.ItemsSource = CourseNameConverter.courses;
-
+            passListView = listview;
             //Buttons
             Button save = new Button
             {
@@ -123,7 +125,7 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void EditInstructors_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new InstructorPage());
+            await Navigation.PushAsync(new InstructorPage(passListView));
         }
         // ↑↑↑  Standard Page  ↑↑↑
 

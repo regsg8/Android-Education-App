@@ -20,12 +20,14 @@ namespace WGUMobileAppRegGarrett.Views
         private bool editing;
         private bool pA;
         private bool oA;
+        private Picker passPicker;
         public EnrollmentPage()
         {
             InitializeComponent();
             Auth.loginCheck(this);
             pA = false;
             oA = false;
+            passPicker = new Picker();
             if (Auth.loggedIn)
             {
                 editing = false;
@@ -288,6 +290,7 @@ namespace WGUMobileAppRegGarrett.Views
             instructorChange.ItemsSource = InstructorNameConverter.instructorNames;
             instructorChange.SetBinding(Picker.SelectedItemProperty, "updateCourseInstructor", BindingMode.TwoWay);
             instructorChange.BindingContext = eVM;
+            passPicker = instructorChange;
             Grid instructorGrid = Generics.twoByTwoGrid();
             instructorGrid.BindingContext = EnrollmentViewModel.courseInstructor;
             instructorGrid.Children.Add(instructor, 0, 0);
@@ -389,7 +392,7 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void EditInstructors_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new InstructorPage());
+            await Navigation.PushAsync(new InstructorPage(passPicker));
         }
         // ↑↑↑  Edit Page  ↑↑↑
 

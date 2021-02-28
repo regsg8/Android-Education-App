@@ -208,7 +208,7 @@
 
 	/* 20: System.dll */
 	/* uncompressed_file_size */
-	.long	758784
+	.long	759296
 	/* loaded */
 	.byte	0
 	/* data */
@@ -226,7 +226,7 @@
 
 	/* 22: WGUMobileAppRegGarrett.dll */
 	/* uncompressed_file_size */
-	.long	94208
+	.long	101376
 	/* loaded */
 	.byte	0
 	/* data */

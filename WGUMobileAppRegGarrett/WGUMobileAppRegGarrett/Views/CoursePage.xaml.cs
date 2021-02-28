@@ -17,7 +17,6 @@ namespace WGUMobileAppRegGarrett.Views
     public partial class CoursePage : ContentPage
     {
         public CourseViewModel cVM;
-        private bool editing;
         public Picker currentPicker;
         public CoursePage(Picker picker)
         {
@@ -26,7 +25,6 @@ namespace WGUMobileAppRegGarrett.Views
             currentPicker = picker;
             if (Auth.loggedIn)
             {
-                editing = false;
                 populatePage();
             }
         }

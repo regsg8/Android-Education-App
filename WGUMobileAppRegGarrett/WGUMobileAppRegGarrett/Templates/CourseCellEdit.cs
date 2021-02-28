@@ -13,6 +13,7 @@ namespace WGUMobileAppRegGarrett.Templates
         {
              Entry name = new Entry()
              {
+                 Style = (Style)Application.Current.Resources["title"],
                  HorizontalOptions = LayoutOptions.FillAndExpand
              };
             name.SetBinding(Entry.TextProperty, "CourseName", BindingMode.TwoWay);

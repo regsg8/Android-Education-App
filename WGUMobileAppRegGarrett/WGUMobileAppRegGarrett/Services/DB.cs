@@ -206,6 +206,7 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Create a course
         public async static void createCourse(Course c)
         {
             SQLiteConnection con = new SQLiteConnection(dbPath);
@@ -512,6 +513,43 @@ namespace WGUMobileAppRegGarrett.Services
                 con.Close();
             }
         }
+        //Create an instructor
+        public async static void createInstructor(Instructor i)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Insert(i);
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        //Updates instructor by Id
+        public async static void updateInstructor(Instructor i)
+        {
+            SQLiteConnection con = new SQLiteConnection(dbPath);
+            try
+            {
+                con.Execute($"UPDATE Instructors SET InstructorName = '{i.InstructorName}', Phone = '{i.Phone}', Email = '{i.Email}' WHERE InstructorId = '{i.InstructorId}'");
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                await Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
         //Student CRUD
         //Currently not necessary, to add later
@@ -702,6 +740,37 @@ namespace WGUMobileAppRegGarrett.Services
             return converted;
         }
 
+        //Validate email format
+        public static bool validateEmail(string email)
+        {
+            try
+            {
+                System.Net.Mail.MailAddress validAddress = new System.Net.Mail.MailAddress(email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        //Validate phone number
+        public static bool validatePhone(string phone)
+        {
+            try
+            {
+                if (phone.Length != 10) throw new Exception();
+                long.Parse(phone);
+                return true;
+            }
+            catch (Exception X)
+            {
+                Console.WriteLine(X.Message);
+                return false;
+            }
+        }
+
+        //List of course status options
         public static ObservableCollection<string> courseStatusOptions = new ObservableCollection<string>()
         {
             "Enrolled",
@@ -712,6 +781,7 @@ namespace WGUMobileAppRegGarrett.Services
             "Planned"
         };
 
+        //List of assessment types
         public static ObservableCollection<string> assessmentTypes = new ObservableCollection<string>()
         {
             "Objective Assessment",

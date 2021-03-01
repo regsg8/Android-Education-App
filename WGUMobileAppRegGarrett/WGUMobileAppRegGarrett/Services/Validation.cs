@@ -68,6 +68,43 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Verify enrollment dates occur within its term
+        public static bool checkWithinTermDates(DateTime enrollmentStart, DateTime enrollmentEnd, DateTime termStart, DateTime termEnd)
+        {
+            bool startWithinTerm = false;
+            bool endWithinTerm = false;
+            bool withinTerm = false;
+            try
+            {
+                for (int i = 0; i < TermViewModel.enrollments.Count; i++)
+                {
+                    int startTermStart = DateTime.Compare(termStart, enrollmentStart);
+                    int endTermStart = DateTime.Compare(termEnd, enrollmentStart);
+                    int startTermEnd = DateTime.Compare(termStart, enrollmentEnd);
+                    int endTermEnd = DateTime.Compare(termEnd, enrollmentEnd);
+                    if (startTermStart <= 0 && endTermStart > 0)
+                    {
+                        startWithinTerm = true;
+                    }
+                    if (startTermEnd < 0 && endTermEnd >= 0)
+                    {
+                        endWithinTerm = true;
+                    }
+                    if (startWithinTerm && endWithinTerm)
+                    {
+                        withinTerm = true;
+                    }
+                    
+                }
+                return withinTerm;
+            }
+            catch (Exception x)
+            {
+                Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+                return withinTerm;
+            }
+        }
+
         //Validate email format
         public static bool validateEmail(string email)
         {

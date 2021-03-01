@@ -218,14 +218,36 @@ namespace WGUMobileAppRegGarrett.Views
             populatePage();
         }
 
-        private void Save_Clicked(object sender, EventArgs e)
+        private async void Save_Clicked(object sender, EventArgs e)
         {
+            bool validDates = true;
+            bool withinTerm = true;
             for (int i = 0; i < TermViewModel.enrollments.Count; i++)
             {
-                DB.updateEnrollment(TermViewModel.enrollments[i]);
+                DateTime start = DateTime.Parse(TermViewModel.enrollments[i].EnrollmentStart);
+                DateTime end = DateTime.Parse(TermViewModel.enrollments[i].EnrollmentEnd);
+                DateTime termStart = DateTime.Parse(TermViewModel.currentTerm.TermStart);
+                DateTime termEnd = DateTime.Parse(TermViewModel.currentTerm.TermEnd);
+                if (!Validation.startBeforeEnd(start, end) && validDates)
+                {
+                    validDates = false;
+                    await DisplayAlert("Incorrect Dates", "Start dates must be before end dates.", "OK");
+                }
+                if (!Validation.checkWithinTermDates(start, end, termStart, termEnd) && validDates)
+                {
+                    withinTerm = false;
+                    await DisplayAlert("Class not within Term", $"Start and end dates must occur within term dates:\n{termStart.ToShortDateString()} - {termEnd.ToShortDateString()}.", "OK");
+                }
             }
-            editing = false;
-            populatePage();
+            if (validDates && withinTerm)
+            {
+                for (int i = 0; i < TermViewModel.enrollments.Count; i++)
+                {
+                    DB.updateEnrollment(TermViewModel.enrollments[i]);
+                }
+                editing = false;
+                populatePage();
+            }
         }
         private async void RemoveEnrollment_Clicked(object sender, EventArgs e)
         {

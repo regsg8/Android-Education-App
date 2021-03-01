@@ -295,24 +295,6 @@ namespace WGUMobileAppRegGarrett.Views
             instructorGrid.Children.Add(instructorChange, 1, 0);
             Button editInstructors = Generics.button("center", "Edit Instructors");
             editInstructors.Clicked += EditInstructors_Clicked;
-            //Label changeInstructor = Generics.label("right", "New Instructor: ");
-            //eVM.updateCourseInstructor = EnrollmentViewModel.courseInstructor.InstructorName;
-            //Picker instructorChange = new Picker()
-            //{
-            //    Title = "Select Instructor"
-            //};
-            //instructorChange.ItemsSource = InstructorNameConverter.instructorNames;
-            //instructorChange.SetBinding(Picker.SelectedItemProperty, "updateCourseInstructor", BindingMode.TwoWay);
-            //instructorChange.BindingContext = eVM;
-            //passPicker = instructorChange;
-            //Grid instructorGrid = Generics.twoByTwoGrid();
-            //instructorGrid.BindingContext = EnrollmentViewModel.courseInstructor;
-            //instructorGrid.Children.Add(instructor, 0, 0);
-            //instructorGrid.Children.Add(boundName, 1, 0);
-            //instructorGrid.Children.Add(changeInstructor, 0, 1);
-            //instructorGrid.Children.Add(instructorChange, 1, 1);
-            //Button editInstructors = Generics.button("center", "Edit Instructors");
-            //editInstructors.Clicked += EditInstructors_Clicked;
 
             //Notes
             Label noteName = Generics.label("center", "Notes:");
@@ -383,27 +365,67 @@ namespace WGUMobileAppRegGarrett.Views
             
         }
 
-        private void Save_Clicked(object sender, EventArgs e)
+        private async void Save_Clicked(object sender, EventArgs e)
         {
-            DB.updateEnrollment(EnrollmentViewModel.currentEnrollment);
-            //loop through instructor names to get instructor ID
-            int updatedInstructorId = -1;
-            for (int i = 0; i < InstructorNameConverter.instructors.Count; i++)
+            //DB.updateEnrollment(EnrollmentViewModel.currentEnrollment);
+            ////loop through instructor names to get instructor ID
+            //int updatedInstructorId = -1;
+            //for (int i = 0; i < InstructorNameConverter.instructors.Count; i++)
+            //{
+            //    if (InstructorNameConverter.instructors[i].InstructorName.ToString() == eVM.updateCourseInstructor)
+            //    {
+            //        updatedInstructorId = InstructorNameConverter.instructors[i].InstructorId;
+            //    }
+            //}
+            //Course updatedCourse = new Course()
+            //{
+            //    CourseId = EnrollmentViewModel.currentEnrollment.CourseId,
+            //    CourseName = eVM.updateCourseName,
+            //    InstructorId = updatedInstructorId
+            //};
+            //DB.updateCourse(updatedCourse);
+            //editing = false;
+            //populatePage();
+            bool validDates = true;
+            bool withinTerm = true;
+            for (int i = 0; i < TermViewModel.enrollments.Count; i++)
             {
-                if (InstructorNameConverter.instructors[i].InstructorName.ToString() == eVM.updateCourseInstructor)
+                DateTime start = DateTime.Parse(EnrollmentViewModel.currentEnrollment.EnrollmentStart);
+                DateTime end = DateTime.Parse(EnrollmentViewModel.currentEnrollment.EnrollmentEnd);
+                DateTime termStart = DateTime.Parse(TermViewModel.currentTerm.TermStart);
+                DateTime termEnd = DateTime.Parse(TermViewModel.currentTerm.TermEnd);
+                if (!Validation.startBeforeEnd(start, end) && validDates)
                 {
-                    updatedInstructorId = InstructorNameConverter.instructors[i].InstructorId;
+                    validDates = false;
+                    await DisplayAlert("Incorrect Dates", "Start date must be before end date.", "OK");
+                }
+                if (!Validation.checkWithinTermDates(start, end, termStart, termEnd) && validDates)
+                {
+                    withinTerm = false;
+                    await DisplayAlert("Class not within Term", $"Start and end dates must occur within term dates:\n{termStart.ToShortDateString()} - {termEnd.ToShortDateString()}.", "OK");
                 }
             }
-            Course updatedCourse = new Course()
+            if (validDates && withinTerm)
             {
-                CourseId = EnrollmentViewModel.currentEnrollment.CourseId,
-                CourseName = eVM.updateCourseName,
-                InstructorId = updatedInstructorId
-            };
-            DB.updateCourse(updatedCourse);
-            editing = false;
-            populatePage();
+                DB.updateEnrollment(EnrollmentViewModel.currentEnrollment);
+                int updatedInstructorId = -1;
+                for (int i = 0; i < InstructorNameConverter.instructors.Count; i++)
+                {
+                    if (InstructorNameConverter.instructors[i].InstructorName.ToString() == eVM.updateCourseInstructor)
+                    {
+                        updatedInstructorId = InstructorNameConverter.instructors[i].InstructorId;
+                    }
+                }
+                Course updatedCourse = new Course()
+                {
+                    CourseId = EnrollmentViewModel.currentEnrollment.CourseId,
+                    CourseName = eVM.updateCourseName,
+                    InstructorId = updatedInstructorId
+                };
+                DB.updateCourse(updatedCourse);
+                editing = false;
+                populatePage();
+            }
         }
 
         private async void EditInstructors_Clicked(object sender, EventArgs e)

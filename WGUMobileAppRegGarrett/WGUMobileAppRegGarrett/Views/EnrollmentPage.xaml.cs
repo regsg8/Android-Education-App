@@ -8,6 +8,7 @@ using WGUMobileAppRegGarrett.Models;
 using WGUMobileAppRegGarrett.Services;
 using WGUMobileAppRegGarrett.Templates;
 using WGUMobileAppRegGarrett.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -116,6 +117,8 @@ namespace WGUMobileAppRegGarrett.Views
             Label notes = Generics.label("center");
             notes.LineBreakMode = LineBreakMode.WordWrap;
             notes.SetBinding(Label.TextProperty, "Notes");
+            Button shareNotes = Generics.button("center", "Share Notes");
+            shareNotes.Clicked += ShareNotes_Clicked;
 
             BoxView line1 = Generics.horizontalLine();
             BoxView line2 = Generics.horizontalLine();
@@ -176,6 +179,7 @@ namespace WGUMobileAppRegGarrett.Views
                         line3,
                         noteName,
                         notes,
+                        shareNotes,
                         line4,
                         edit
                     }
@@ -203,7 +207,36 @@ namespace WGUMobileAppRegGarrett.Views
             eVM.SelectedAssessment = (Assessment)e.Item;
             await Navigation.PushAsync(new AssessmentPage(eVM.SelectedAssessment.AssessmentId));
         }
-
+        private async void ShareNotes_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                string courseName = "";
+                CourseNameConverter.populateCourseNames();
+                for (int i = 0; i < CourseNameConverter.courses.Count; i++)
+                {
+                    if (CourseNameConverter.courses[i].CourseId.ToString() == EnrollmentViewModel.currentEnrollment.CourseId.ToString())
+                    {
+                        courseName = CourseNameConverter.courses[i].CourseName.ToString();
+                    }
+                }
+                EmailMessage message = new EmailMessage
+                {
+                    Subject = $"{courseName} Notes",
+                    Body = EnrollmentViewModel.currentEnrollment.Notes
+                };
+                await Email.ComposeAsync(message);
+            }
+            catch (FeatureNotSupportedException notSupported)
+            {
+                Console.WriteLine(notSupported.Message);
+                await DisplayAlert("Alert", "Email is not supported on this device.", "OK");
+            }
+            catch (Exception x)
+            {
+                await DisplayAlert("Alert", x.Message, "OK");
+            }
+        }
         private void Edit_Clicked(object sender, EventArgs e)
         {
             editing = true;
@@ -295,31 +328,19 @@ namespace WGUMobileAppRegGarrett.Views
             instructorGrid.Children.Add(instructorChange, 1, 0);
             Button editInstructors = Generics.button("center", "Edit Instructors");
             editInstructors.Clicked += EditInstructors_Clicked;
-
             //Notes
             Label noteName = Generics.label("center", "Notes:");
             Editor notes = new Editor();
             notes.SetBinding(Editor.TextProperty, "Notes", BindingMode.TwoWay);
             notes.AutoSize = EditorAutoSizeOption.TextChanges;
-
             //Buttons
-            Button save = new Button
-            {
-                Text = "Save",
-                Style = (Style)Application.Current.Resources["leftButton"]
-            };
+            Button save = Generics.button("left", "Save");
             save.Clicked += Save_Clicked;
-            Button cancel = new Button
-            {
-                Text = "Cancel",
-                Style = (Style)Application.Current.Resources["rightButton"]
-            };
+            Button cancel = Generics.button("right", "Cancel");
             cancel.Clicked += Cancel_Clicked;
             Grid btnGrid = Generics.twoByOneGrid();
             btnGrid.Children.Add(cancel, 0, 0);
             btnGrid.Children.Add(save, 1, 0);
-
-
             //Layout
             BoxView line1 = Generics.horizontalLine();
             BoxView line2 = Generics.horizontalLine();
@@ -339,8 +360,6 @@ namespace WGUMobileAppRegGarrett.Views
                         statusGrid,
                         line3,
                         instructorGrid,
-                        //instructor,
-                        //instructorChange,
                         editInstructors,
                         line4,
                         noteName,

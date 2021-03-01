@@ -12,6 +12,9 @@
       </intent-filter>
     </activity>
     <receiver android:enabled="true" android:label="Local Notifications Plugin Broadcast Receiver" android:name="crc640f9a3bf7250ef269.ScheduledAlarmHandler" />
+    <provider android:authorities="com.companyname.wgumobileappreggarrett.fileProvider" android:exported="false" android:grantUriPermissions="true" android:name="xamarin.essentials.fileProvider">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/xamarin_essentials_fileprovider_file_paths" />
+    </provider>
     <receiver android:enabled="true" android:exported="false" android:name="crc643f46942d9dd1fff9.PowerSaveModeBroadcastReceiver" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="1999999999" android:authorities="com.companyname.wgumobileappreggarrett.mono.MonoRuntimeProvider.__mono_init__" />
   </application>

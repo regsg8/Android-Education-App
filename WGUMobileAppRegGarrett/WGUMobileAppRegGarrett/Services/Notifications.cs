@@ -20,18 +20,6 @@ namespace WGUMobileAppRegGarrett.Services
         private static List<string> assessmentDueNotifications;
         private static string message;
 
-        //Implement notifications on degreeviewmodel
-        //if degreeviewmodel checkednotifications is false, set to true
-        //Get current datetime
-        //add degreeviewmodel terms to terms
-        //add enrollments and assessments
-        //check all enrollment start and end
-        //add strings to enrollmentNotifications
-        //check all assessment end
-        //add strings to assessmentNotifications
-        //if notification lists != 0, add list strings to message with breaklines
-        //if message != "" display notification
-        //CrossLocalNotifications.Current.Show("Notifications", message);
 
         public static void checkNotifications()
         {

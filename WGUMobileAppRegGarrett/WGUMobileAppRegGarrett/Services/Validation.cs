@@ -119,11 +119,11 @@ namespace WGUMobileAppRegGarrett.Services
                     int endTermStart = DateTime.Compare(outerEnd, innerStart);
                     int startTermEnd = DateTime.Compare(outerStart, innerEnd);
                     int endTermEnd = DateTime.Compare(outerEnd, innerEnd);
-                    if (startTermStart < 0 && endTermStart > 0)
+                    if (startTermStart <= 0 && endTermStart >= 0)
                     {
                         startWithinOuter = true;
                     }
-                    if (startTermEnd < 0 && endTermEnd > 0)
+                    if (startTermEnd <= 0 && endTermEnd >= 0)
                     {
                         endWithinOuter = true;
                     }

@@ -26,7 +26,7 @@
 
 	/* 2: Mono.Android.dll */
 	/* uncompressed_file_size */
-	.word	2008576
+	.word	2030080
 	/* loaded */
 	.byte	0
 	/* data */
@@ -206,7 +206,7 @@
 
 	/* 22: WGUMobileAppRegGarrett.dll */
 	/* uncompressed_file_size */
-	.word	111616
+	.word	113152
 	/* loaded */
 	.byte	0
 	/* data */
@@ -314,7 +314,7 @@
 
 	/* 34: Xamarin.Android.Support.Compat.dll */
 	/* uncompressed_file_size */
-	.word	427520
+	.word	434688
 	/* loaded */
 	.byte	0
 	/* data */
@@ -539,7 +539,7 @@
 
 	/* 59: Xamarin.Essentials.dll */
 	/* uncompressed_file_size */
-	.word	25088
+	.word	32768
 	/* loaded */
 	.byte	0
 	/* data */

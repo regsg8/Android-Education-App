@@ -184,11 +184,24 @@ namespace WGUMobileAppRegGarrett.Views
             populatePage();
         }
 
-        private void Save_Clicked(object sender, EventArgs e)
+        private async void Save_Clicked(object sender, EventArgs e)
         {
-            DB.updateAssessment(AssessmentViewModel.currentAssessment);
-            editing = false;
-            populatePage();
+            bool withinEnrollment = true;
+            DateTime start = DateTime.Parse(EnrollmentViewModel.currentEnrollment.EnrollmentStart);
+            DateTime due = DateTime.Parse(AssessmentViewModel.currentAssessment.AssessmentDue);
+            DateTime enrollmentStart = start;
+            DateTime enrollmentEnd = DateTime.Parse(EnrollmentViewModel.currentEnrollment.EnrollmentEnd);
+            if (!Validation.checkWithinDates(start, due, enrollmentStart, enrollmentEnd))
+            {
+                withinEnrollment = false;
+                await DisplayAlert("Assessment not within Class", $"Due date must occur within class dates:\n{enrollmentStart.ToShortDateString()} - {enrollmentEnd.ToShortDateString()}.", "OK");
+            }
+            if (withinEnrollment)
+            {
+                DB.updateAssessment(AssessmentViewModel.currentAssessment);
+                editing = false;
+                populatePage();
+            }
         }
         // ↑↑↑  Edit Page  ↑↑↑
     }

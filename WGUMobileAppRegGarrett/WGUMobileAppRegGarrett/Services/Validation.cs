@@ -105,6 +105,43 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
+        //Verify inner object dates occur within outer object dates
+        public static bool checkWithinDates(DateTime innerStart, DateTime innerEnd, DateTime outerStart, DateTime outerEnd)
+        {
+            bool startWithinOuter = false;
+            bool endWithinOuter = false;
+            bool inOuter = false;
+            try
+            {
+                for (int i = 0; i < TermViewModel.enrollments.Count; i++)
+                {
+                    int startTermStart = DateTime.Compare(outerStart, innerStart);
+                    int endTermStart = DateTime.Compare(outerEnd, innerStart);
+                    int startTermEnd = DateTime.Compare(outerStart, innerEnd);
+                    int endTermEnd = DateTime.Compare(outerEnd, innerEnd);
+                    if (startTermStart < 0 && endTermStart > 0)
+                    {
+                        startWithinOuter = true;
+                    }
+                    if (startTermEnd < 0 && endTermEnd > 0)
+                    {
+                        endWithinOuter = true;
+                    }
+                    if (startWithinOuter && endWithinOuter)
+                    {
+                        inOuter = true;
+                    }
+
+                }
+                return inOuter;
+            }
+            catch (Exception x)
+            {
+                Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
+                return inOuter;
+            }
+        }
+
         //Validate email format
         public static bool validateEmail(string email)
         {

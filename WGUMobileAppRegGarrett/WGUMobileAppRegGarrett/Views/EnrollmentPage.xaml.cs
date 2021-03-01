@@ -278,7 +278,7 @@ namespace WGUMobileAppRegGarrett.Views
             statusGrid.Children.Add(statusChange, 1, 0);
 
             //Instructor
-            Label instructor = Generics.label("center", "Instructor: ");
+            Label instructor = Generics.label("right", "Instructor: ");
             InstructorNameConverter.populateInstructors();
             eVM.updateCourseInstructor = EnrollmentViewModel.courseInstructor.InstructorName;
             Picker instructorChange = new Picker()
@@ -367,25 +367,6 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void Save_Clicked(object sender, EventArgs e)
         {
-            //DB.updateEnrollment(EnrollmentViewModel.currentEnrollment);
-            ////loop through instructor names to get instructor ID
-            //int updatedInstructorId = -1;
-            //for (int i = 0; i < InstructorNameConverter.instructors.Count; i++)
-            //{
-            //    if (InstructorNameConverter.instructors[i].InstructorName.ToString() == eVM.updateCourseInstructor)
-            //    {
-            //        updatedInstructorId = InstructorNameConverter.instructors[i].InstructorId;
-            //    }
-            //}
-            //Course updatedCourse = new Course()
-            //{
-            //    CourseId = EnrollmentViewModel.currentEnrollment.CourseId,
-            //    CourseName = eVM.updateCourseName,
-            //    InstructorId = updatedInstructorId
-            //};
-            //DB.updateCourse(updatedCourse);
-            //editing = false;
-            //populatePage();
             bool validDates = true;
             bool withinTerm = true;
             for (int i = 0; i < TermViewModel.enrollments.Count; i++)
@@ -399,7 +380,7 @@ namespace WGUMobileAppRegGarrett.Views
                     validDates = false;
                     await DisplayAlert("Incorrect Dates", "Start date must be before end date.", "OK");
                 }
-                if (!Validation.checkWithinTermDates(start, end, termStart, termEnd) && validDates)
+                if (!Validation.checkWithinDates(start, end, termStart, termEnd) && validDates)
                 {
                     withinTerm = false;
                     await DisplayAlert("Class not within Term", $"Start and end dates must occur within term dates:\n{termStart.ToShortDateString()} - {termEnd.ToShortDateString()}.", "OK");
@@ -515,10 +496,23 @@ namespace WGUMobileAppRegGarrett.Views
             populatePage();
         }
 
-        private void NewAssessment_Clicked(object sender, EventArgs e)
+        private async void NewAssessment_Clicked(object sender, EventArgs e)
         {
-            DB.createAssessment(AssessmentViewModel.newAssessment);
-            populatePage();
+            bool withinEnrollment = true;
+            DateTime start = DateTime.Parse(EnrollmentViewModel.currentEnrollment.EnrollmentStart);
+            DateTime due = DateTime.Parse(AssessmentViewModel.newAssessment.AssessmentDue);
+            DateTime enrollmentStart = start;
+            DateTime enrollmentEnd = DateTime.Parse(EnrollmentViewModel.currentEnrollment.EnrollmentEnd);
+            if (!Validation.checkWithinDates(start, due, enrollmentStart, enrollmentEnd))
+            {
+                withinEnrollment = false;
+                await DisplayAlert("Assessment not within Class", $"Due date must occur within class dates:\n{enrollmentStart.ToShortDateString()} - {enrollmentEnd.ToShortDateString()}.", "OK");
+            }
+            if (withinEnrollment)
+            {
+                DB.createAssessment(AssessmentViewModel.newAssessment);
+                populatePage();
+            }
         }
         // ↑↑↑  Add Assessment Page  ↑↑↑
     }

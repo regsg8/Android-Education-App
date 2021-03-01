@@ -233,7 +233,7 @@ namespace WGUMobileAppRegGarrett.Views
                     validDates = false;
                     await DisplayAlert("Incorrect Dates", "Start dates must be before end dates.", "OK");
                 }
-                if (!Validation.checkWithinTermDates(start, end, termStart, termEnd) && validDates)
+                if (!Validation.checkWithinDates(start, end, termStart, termEnd) && validDates)
                 {
                     withinTerm = false;
                     await DisplayAlert("Class not within Term", $"Start and end dates must occur within term dates:\n{termStart.ToShortDateString()} - {termEnd.ToShortDateString()}.", "OK");
@@ -387,8 +387,28 @@ namespace WGUMobileAppRegGarrett.Views
             }
             else
             {
-                termVM.addNewEnrollment();
-                populatePage();
+                bool validDates = true;
+                bool withinTerm = true;
+                DateTime start = DateTime.Parse(TermViewModel.NewEnrollment.EnrollmentStart);
+                DateTime end = DateTime.Parse(TermViewModel.NewEnrollment.EnrollmentEnd);
+                DateTime termStart = DateTime.Parse(TermViewModel.currentTerm.TermStart);
+                DateTime termEnd = DateTime.Parse(TermViewModel.currentTerm.TermEnd);
+                if (!Validation.startBeforeEnd(start, end) && validDates)
+                {
+                    validDates = false;
+                    await DisplayAlert("Incorrect Dates", "Start dates must be before end dates.", "OK");
+                }
+                if (!Validation.checkWithinDates(start, end, termStart, termEnd) && validDates)
+                {
+                    withinTerm = false;
+                    await DisplayAlert("Class not within Term", $"Start and end dates must occur within term dates:\n{termStart.ToShortDateString()} - {termEnd.ToShortDateString()}.", "OK");
+                }
+                if (validDates && withinTerm)
+                {
+                    termVM.addNewEnrollment();
+                    populatePage();
+                    populatePage();
+                }
             }
         }
         // ↑↑↑  Add Enrollment Page  ↑↑↑

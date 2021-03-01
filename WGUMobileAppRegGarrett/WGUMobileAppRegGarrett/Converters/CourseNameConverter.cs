@@ -18,7 +18,7 @@ namespace WGUMobileAppRegGarrett.Converters
             courses = new ObservableCollection<Course>();
             courses.Clear();
             DB.getCourses();
-    }
+        }
         public object Convert(object value, Type targetType, object parameter, CultureInfo cultureInfo)
         {
             string courseName = "";

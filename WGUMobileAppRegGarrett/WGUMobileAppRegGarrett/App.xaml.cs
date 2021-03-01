@@ -14,8 +14,6 @@ namespace WGUMobileAppRegGarrett
             InitializeComponent();
             DB.initializeDB();
             MainPage = new NavigationPage(new DegreePage());
-            //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = (Color)Application.Current.Resources["Primary"];
-            //MainPage = new AppShell();
         }
 
         protected override void OnStart()

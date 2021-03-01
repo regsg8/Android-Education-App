@@ -22,9 +22,9 @@ namespace WGUMobileAppRegGarrett.Views
         public CoursePage(Picker picker)
         {
             InitializeComponent();
-            Auth.loginCheck(this);
+            Authentication.loginCheck(this);
             currentPicker = picker;
-            if (Auth.loggedIn)
+            if (Authentication.loggedIn)
             {
                 populatePage();
             }

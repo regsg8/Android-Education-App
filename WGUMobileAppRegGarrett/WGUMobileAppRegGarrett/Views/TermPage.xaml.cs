@@ -22,9 +22,9 @@ namespace WGUMobileAppRegGarrett.Views
         public TermPage()
         {
             InitializeComponent();
-            Auth.loginCheck(this);
+            Authentication.loginCheck(this);
             passPicker = new Picker();
-            if (Auth.loggedIn)
+            if (Authentication.loggedIn)
             {
                 editing = false;
                 linkViewModel();

@@ -83,7 +83,7 @@ namespace WGUMobileAppRegGarrett.ViewModels
         public void addNewEnrollment()
         {
             List<DateTime> dates = new List<DateTime> { this.NewEnrollmentStart, this.NewEnrollmentEnd };
-            List<string> sqlDates = DB.convertDates(dates);
+            List<string> sqlDates = Validation.convertDates(dates);
             DB.createEnrollment(currentTerm.TermId, SelectedCourse.CourseId, sqlDates[0], sqlDates[1]);
             DB.getTermEnrollments(TermViewModel.currentTerm.TermId);
             deselectEnrollment(this);

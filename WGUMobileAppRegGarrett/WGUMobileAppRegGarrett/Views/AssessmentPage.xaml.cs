@@ -21,9 +21,9 @@ namespace WGUMobileAppRegGarrett.Views
         public AssessmentPage(int assessmentId)
         {
             InitializeComponent();
-            Auth.loginCheck(this);
+            Authentication.loginCheck(this);
             aID = assessmentId;
-            if (Auth.loggedIn)
+            if (Authentication.loggedIn)
             {
                 editing = false;
                 populatePage();
@@ -109,6 +109,7 @@ namespace WGUMobileAppRegGarrett.Views
             populatePage();
         }
         // ↑↑↑  Standard Page  ↑↑↑
+
 
         // ↓↓↓  Edit Page  ↓↓↓
         private void editingPage()

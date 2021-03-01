@@ -567,8 +567,8 @@ namespace WGUMobileAppRegGarrett.Services
                 {
                     if (student[0].Password == password)
                     {
-                        Auth.user = student[0];
-                        Auth.loggedIn = true;
+                        Authentication.user = student[0];
+                        Authentication.loggedIn = true;
                         Application.Current.MainPage = new NavigationPage(new DegreePage());
                     }
                     else throw new Exception("Username and Password do not match.");
@@ -622,7 +622,7 @@ namespace WGUMobileAppRegGarrett.Services
                     DateTime oaAssessmentStart = paAssessmentEnd.AddHours(2).AddMinutes(30);
                     DateTime oaAssessmentEnd = oaAssessmentStart.AddHours(2);
                     List<DateTime> dates = new List<DateTime> { start, end, enrollmentStart, enrollmentEnd, paAssessmentStart, paAssessmentEnd, oaAssessmentStart, oaAssessmentEnd };
-                    List<string> sqlDates = convertDates(dates);
+                    List<string> sqlDates = Validation.convertDates(dates);
 
                     //Insert test student
                     Models.Student student = new Models.Student
@@ -728,48 +728,7 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
-        //Convert DateTimes to SQLite strings
-        public static List<string> convertDates(List<DateTime> dates)
-        {
-            List<string> converted = new List<string>();
-            dates.ForEach(d =>
-           {
-               string s = d.ToString("yyyy-MM-dd HH:mm:ss");
-               converted.Add(s);
-           });
-            return converted;
-        }
-
-        //Validate email format
-        public static bool validateEmail(string email)
-        {
-            try
-            {
-                System.Net.Mail.MailAddress validAddress = new System.Net.Mail.MailAddress(email);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        //Validate phone number
-        public static bool validatePhone(string phone)
-        {
-            try
-            {
-                if (phone.Length != 10) throw new Exception();
-                long.Parse(phone);
-                return true;
-            }
-            catch (Exception X)
-            {
-                Console.WriteLine(X.Message);
-                return false;
-            }
-        }
-
+        
         //List of course status options
         public static ObservableCollection<string> courseStatusOptions = new ObservableCollection<string>()
         {

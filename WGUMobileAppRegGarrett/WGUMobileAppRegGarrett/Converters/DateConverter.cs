@@ -18,7 +18,7 @@ namespace WGUMobileAppRegGarrett.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             List<DateTime> datetime = new List<DateTime> { DateTime.Parse(value.ToString()) };
-            List<string> date = DB.convertDates(datetime);
+            List<string> date = Validation.convertDates(datetime);
             return date[0];
         }
     }

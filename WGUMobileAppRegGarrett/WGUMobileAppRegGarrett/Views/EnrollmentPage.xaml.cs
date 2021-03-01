@@ -24,11 +24,11 @@ namespace WGUMobileAppRegGarrett.Views
         public EnrollmentPage()
         {
             InitializeComponent();
-            Auth.loginCheck(this);
+            Authentication.loginCheck(this);
             pA = false;
             oA = false;
             passPicker = new Picker();
-            if (Auth.loggedIn)
+            if (Authentication.loggedIn)
             {
                 editing = false;
                 populatePage();
@@ -278,27 +278,41 @@ namespace WGUMobileAppRegGarrett.Views
             statusGrid.Children.Add(statusChange, 1, 0);
 
             //Instructor
-            Label instructor = Generics.label("right", "Instructor: ");
-            Label boundName = Generics.label("left");
-            boundName.SetBinding(Label.TextProperty, "InstructorName");
+            Label instructor = Generics.label("center", "Instructor: ");
             InstructorNameConverter.populateInstructors();
-            Label changeInstructor = Generics.label("right", "New Instructor: ");
+            eVM.updateCourseInstructor = EnrollmentViewModel.courseInstructor.InstructorName;
             Picker instructorChange = new Picker()
             {
-                Title = "New Instructor"
+                Title = "Select Instructor"
             };
             instructorChange.ItemsSource = InstructorNameConverter.instructorNames;
             instructorChange.SetBinding(Picker.SelectedItemProperty, "updateCourseInstructor", BindingMode.TwoWay);
             instructorChange.BindingContext = eVM;
             passPicker = instructorChange;
-            Grid instructorGrid = Generics.twoByTwoGrid();
+            Grid instructorGrid = Generics.twoByOneGrid();
             instructorGrid.BindingContext = EnrollmentViewModel.courseInstructor;
             instructorGrid.Children.Add(instructor, 0, 0);
-            instructorGrid.Children.Add(boundName, 1, 0);
-            instructorGrid.Children.Add(changeInstructor, 0, 1);
-            instructorGrid.Children.Add(instructorChange, 1, 1);
+            instructorGrid.Children.Add(instructorChange, 1, 0);
             Button editInstructors = Generics.button("center", "Edit Instructors");
             editInstructors.Clicked += EditInstructors_Clicked;
+            //Label changeInstructor = Generics.label("right", "New Instructor: ");
+            //eVM.updateCourseInstructor = EnrollmentViewModel.courseInstructor.InstructorName;
+            //Picker instructorChange = new Picker()
+            //{
+            //    Title = "Select Instructor"
+            //};
+            //instructorChange.ItemsSource = InstructorNameConverter.instructorNames;
+            //instructorChange.SetBinding(Picker.SelectedItemProperty, "updateCourseInstructor", BindingMode.TwoWay);
+            //instructorChange.BindingContext = eVM;
+            //passPicker = instructorChange;
+            //Grid instructorGrid = Generics.twoByTwoGrid();
+            //instructorGrid.BindingContext = EnrollmentViewModel.courseInstructor;
+            //instructorGrid.Children.Add(instructor, 0, 0);
+            //instructorGrid.Children.Add(boundName, 1, 0);
+            //instructorGrid.Children.Add(changeInstructor, 0, 1);
+            //instructorGrid.Children.Add(instructorChange, 1, 1);
+            //Button editInstructors = Generics.button("center", "Edit Instructors");
+            //editInstructors.Clicked += EditInstructors_Clicked;
 
             //Notes
             Label noteName = Generics.label("center", "Notes:");
@@ -343,6 +357,8 @@ namespace WGUMobileAppRegGarrett.Views
                         statusGrid,
                         line3,
                         instructorGrid,
+                        //instructor,
+                        //instructorChange,
                         editInstructors,
                         line4,
                         noteName,

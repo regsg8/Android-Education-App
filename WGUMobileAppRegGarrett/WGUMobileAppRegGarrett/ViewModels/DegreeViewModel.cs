@@ -14,6 +14,7 @@ namespace WGUMobileAppRegGarrett.ViewModels
         public static Degree degree { get; set; }
         public static ObservableCollection<Term> terms;
         public static int selectedTermId;
+        public static bool checkedNotifications;
         public static Term NewTerm { get; set; }
         public Term SelectedTerm
         {
@@ -46,15 +47,16 @@ namespace WGUMobileAppRegGarrett.ViewModels
         public DegreeViewModel()
         {
             terms = new ObservableCollection<Term>();
-            DB.getActiveDegree(Auth.user.StudentId);
+            DB.getActiveDegree(Authentication.user.StudentId);
             DB.getDegreeTerms(degree.DegreeId);
             deselectTerm(this);
+            if (!checkedNotifications) Notifications.checkNotifications();
         }
 
         public void addNewTerm()
         {
             List<DateTime> dates = new List<DateTime> { this.Start, this.End };
-            List<string> sqlDates = DB.convertDates(dates);
+            List<string> sqlDates = Validation.convertDates(dates);
             DB.createTerm(degree.DegreeId, NewTerm.TermName, sqlDates[0], sqlDates[1]);
             DB.getDegreeTerms(degree.DegreeId);
             deselectTerm(this);
@@ -69,44 +71,7 @@ namespace WGUMobileAppRegGarrett.ViewModels
             selectedTermId = -1;
         }
 
-        //Checks for overlapping appointments when updating an appointment
-        public static bool checkOverlapping(DegreeViewModel dVM)
-        {
-            bool overlapping = false;
-            try
-            {
-                DateTime termStart = Convert.ToDateTime(dVM.Start);
-                DateTime termEnd = Convert.ToDateTime(dVM.End);
-                for (int i = 0; i < DegreeViewModel.terms.Count; i++)
-                {
-                    DateTime start = Convert.ToDateTime(DegreeViewModel.terms[i].TermStart);
-                    DateTime end = Convert.ToDateTime(DegreeViewModel.terms[i].TermEnd);
-                    int startTermStart = DateTime.Compare(start, termStart);
-                    int startTermEnd = DateTime.Compare(start, termEnd);
-                    int endTermStart = DateTime.Compare(end, termStart);
-                    int endTermEnd = DateTime.Compare(end, termEnd);
-                    if (startTermStart <= 0)
-                    {
-                        overlapping = (endTermStart <= 0) ? false : true;
-                    }
-                    else if (startTermStart > 0)
-                    {
-                        overlapping = (startTermEnd > 0) ? false : true;
-                    }
-                    else if (startTermStart > 0 && endTermEnd <= 0)
-                    {
-                        overlapping = true;
-                    }
-                }
-                return overlapping;
-            }
-            catch (Exception x)
-            {
-                Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
-                return overlapping;
-            }
-        }
-
+        
         private Term _selectedTerm;
         private DateTime _start;
         private DateTime _end;

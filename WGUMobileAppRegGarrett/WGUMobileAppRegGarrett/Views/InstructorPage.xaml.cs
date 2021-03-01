@@ -22,31 +22,13 @@ namespace WGUMobileAppRegGarrett.Views
         public InstructorPage(Picker picker)
         {
             InitializeComponent();
-            Auth.loginCheck(this);
+            Authentication.loginCheck(this);
             currentPicker = picker;
             currentListView = new ListView()
             {
                 StyleId = "null"
             };
-            if (Auth.loggedIn)
-            {
-                populatePage();
-            }
-        }
-
-        public InstructorPage()
-        {
-            InitializeComponent();
-            Auth.loginCheck(this);
-            currentPicker = new Picker()
-            {
-                Title = "null"
-            };
-            currentListView = new ListView()
-            {
-                StyleId = "null"
-            };
-            if (Auth.loggedIn)
+            if (Authentication.loggedIn)
             {
                 populatePage();
             }
@@ -55,13 +37,13 @@ namespace WGUMobileAppRegGarrett.Views
         public InstructorPage(ListView listview)
         {
             InitializeComponent();
-            Auth.loginCheck(this);
+            Authentication.loginCheck(this);
             currentListView = listview;
             currentPicker = new Picker()
             {
                 Title = "null"
             };
-            if (Auth.loggedIn)
+            if (Authentication.loggedIn)
             {
                 populatePage();
             }
@@ -150,12 +132,12 @@ namespace WGUMobileAppRegGarrett.Views
             {
                 for (int i = 0; i < InstructorViewModel.IVMInstructors.Count; i++)
                 {
-                    if (InstructorViewModel.IVMInstructors[i].Email == "" || !DB.validateEmail(InstructorViewModel.IVMInstructors[i].Email))
+                    if (InstructorViewModel.IVMInstructors[i].Email == "" || !Validation.validateEmail(InstructorViewModel.IVMInstructors[i].Email))
                     {
                         //await DisplayAlert("Invalid Email", "Please enter valid email addresses.", "OK");
                         throw new Exception("Please enter valid email addresses");
                     }
-                    else if (InstructorViewModel.IVMInstructors[i].Phone == "" || !DB.validatePhone(InstructorViewModel.IVMInstructors[i].Phone))
+                    else if (InstructorViewModel.IVMInstructors[i].Phone == "" || !Validation.validatePhone(InstructorViewModel.IVMInstructors[i].Phone))
                     {
                         //await DisplayAlert("Invalid Phone", "Please enter 10 digit phone numbers with no dashes.", "OK");
                         throw new Exception("Please enter 10 digit phone numbers with no dashes.");
@@ -265,11 +247,11 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void AddInstructor_Clicked(object sender, EventArgs e)
         {
-            if (InstructorViewModel.newInstructor.Email == "" || !DB.validateEmail(InstructorViewModel.newInstructor.Email))
+            if (InstructorViewModel.newInstructor.Email == "" || !Validation.validateEmail(InstructorViewModel.newInstructor.Email))
             {
                 await DisplayAlert("Invalid Email", "Please enter a valid email address.", "OK");
             }
-            else if (InstructorViewModel.newInstructor.Phone == "" || !DB.validatePhone(InstructorViewModel.newInstructor.Phone))
+            else if (InstructorViewModel.newInstructor.Phone == "" || !Validation.validatePhone(InstructorViewModel.newInstructor.Phone))
             {
                 await DisplayAlert("Invalid Phone", "Please enter a 10 digit phone number with no dashes.", "OK");
             }

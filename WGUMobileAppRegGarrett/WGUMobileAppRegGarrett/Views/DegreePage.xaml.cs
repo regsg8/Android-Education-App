@@ -21,8 +21,8 @@ namespace WGUMobileAppRegGarrett.Views
         public DegreePage()
         {
             InitializeComponent();
-            Auth.loginCheck(this);
-            if (Auth.loggedIn)
+            Authentication.loginCheck(this);
+            if (Authentication.loggedIn)
             {
                 editing = false;
                 linkViewModel();
@@ -40,7 +40,7 @@ namespace WGUMobileAppRegGarrett.Views
         private void populatePage()
         {
             DB.getDegreeTerms(DegreeViewModel.degree.DegreeId);
-            DB.getActiveDegree(Auth.user.StudentId);
+            DB.getActiveDegree(Authentication.user.StudentId);
             if (editing)
             {
                 editingPage();
@@ -205,15 +205,45 @@ namespace WGUMobileAppRegGarrett.Views
                 }
             }
         }
-        private void Save_Clicked(object sender, EventArgs e)
+        private async void Save_Clicked(object sender, EventArgs e)
         {
+            bool validDates = true;
+            bool validNames = true;
+            bool overlapping = false;
             for (int i = 0; i < DegreeViewModel.terms.Count; i++)
             {
-                DB.updateTerm(DegreeViewModel.terms[i]);
+                    if (DegreeViewModel.terms[i].TermName == "" && validNames)
+                    {
+                        await DisplayAlert("No term name", "Please enter a name for each term.", "OK");
+                        validNames = false;
+                    }
+                    DateTime start = DateTime.Parse(DegreeViewModel.terms[i].TermStart);
+                    DateTime end = DateTime.Parse(DegreeViewModel.terms[i].TermEnd);
+                    if (Validation.checkOverlapping(DegreeViewModel.terms[i].TermId, start, end) && validNames)
+                    {
+                        await DisplayAlert("Overlapping Terms", $"{DegreeViewModel.terms[i].TermName}'s start and End dates cannot overlap with other terms.", "OK");
+                        overlapping = true;
+                    }
+                    if (!overlapping && validNames)
+                    {
+                        if (!Validation.startBeforeEnd(start, end))
+                        {
+                            await DisplayAlert("Incorrect Dates", $"{DegreeViewModel.terms[i].TermName}'s start date must be before its end date.", "OK");
+                            validDates = false;
+                        }
+                    }
             }
-            editing = false;
-            populatePage();
+            if (validDates && validNames && !overlapping)
+            {
+                for (int i = 0; i < DegreeViewModel.terms.Count; i++)
+                {
+                    DB.updateTerm(DegreeViewModel.terms[i]);
+                }
+                editing = false;
+                populatePage();
+            }
         }
+
         private void Cancel_Clicked(object sender, EventArgs e)
         {
             editing = false;
@@ -311,18 +341,17 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void AddTerm_Clicked(object sender, EventArgs e)
         {
-            int checkDate = DateTime.Compare(degreeVM.Start, degreeVM.End);
-            if (DegreeViewModel.checkOverlapping(degreeVM))
+            if (Validation.checkOverlapping(-1, degreeVM.Start, degreeVM.End))
             {
-                await DisplayAlert("Overlapping Terms", "Start and End dates cannot overlap existing terms.", "OK");
+                await DisplayAlert("Overlapping Terms", "The new term cannot overlap with existing terms.", "OK");
             }
             else if (DegreeViewModel.NewTerm.TermName == "")
             {
                 await DisplayAlert("No Term Name", "Please enter a name for the new term.", "OK");
             }
-            else if (checkDate >= 0)
+            else if (!Validation.startBeforeEnd(degreeVM.Start, degreeVM.End))
             {
-                await DisplayAlert("Incorrect Dates", "Start date must be before End date", "OK");
+                await DisplayAlert("Incorrect Dates", "Start date must be before End date.", "OK");
             }
             else
             {

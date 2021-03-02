@@ -19,12 +19,12 @@ namespace WGUMobileAppRegGarrett.Templates
             Label start = new Label()
             {
                 Style = (Style)Application.Current.Resources["rightLabel"],
-                Text = "Start: "
+                Text = "Class Start: "
             };
             Label end = new Label()
             {
                 Style = (Style)Application.Current.Resources["rightLabel"],
-                Text = "End: "
+                Text = "Class End: "
             };
             name.SetBinding(Label.TextProperty, new Binding("CourseId", BindingMode.OneWay, new CourseNameConverter(), null, null));
             startDate.SetBinding(DatePicker.DateProperty, "EnrollmentStart", BindingMode.TwoWay, new DateConverter());

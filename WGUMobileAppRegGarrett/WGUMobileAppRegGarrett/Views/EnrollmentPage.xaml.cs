@@ -70,8 +70,8 @@ namespace WGUMobileAppRegGarrett.Views
             };
             Label startDate = Generics.label("left");
             Label endDate = Generics.label("left");
-            Label start = Generics.label("right", "Start: ");
-            Label end = Generics.label("right", "Due: ");
+            Label start = Generics.label("right", "Class Start: ");
+            Label end = Generics.label("right", "Class Due: ");
             name.SetBinding(Label.TextProperty, new Binding("CourseId", BindingMode.OneWay, new CourseNameConverter(), null, null));
             //start and end
             startDate.SetBinding(Label.TextProperty, "EnrollmentStart", BindingMode.OneWay, new DateConverter());
@@ -267,10 +267,10 @@ namespace WGUMobileAppRegGarrett.Views
             name.SetBinding(Entry.TextProperty, new Binding("updateCourseName", BindingMode.TwoWay));
             name.BindingContext = eVM;
             //Start and End Date
-            Label start = Generics.label("right", "Start: ");
+            Label start = Generics.label("right", "Class Start: ");
             DatePicker startDate = new DatePicker();
             startDate.SetBinding(DatePicker.DateProperty, "EnrollmentStart", BindingMode.TwoWay, new DateConverter());
-            Label end = Generics.label("right", "Due: ");
+            Label end = Generics.label("right", "Class Due: ");
             DatePicker endDate = new DatePicker();
             endDate.SetBinding(DatePicker.DateProperty, "EnrollmentEnd", BindingMode.TwoWay, new DateConverter());
             Label sNotify = Generics.label("right", "Notification: ");

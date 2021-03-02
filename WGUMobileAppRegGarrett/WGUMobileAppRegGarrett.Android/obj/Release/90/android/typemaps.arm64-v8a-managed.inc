@@ -2144,15 +2144,15 @@ module16_managed_to_java_duplicates:
 	.section	.rodata.module17_managed_to_java,"a",@progbits
 	.type	module17_managed_to_java, @object
 module17_managed_to_java:
-	.word	33554440
-	.word	535
+	.word	33554434
+	.word	741
 	.size	module17_managed_to_java, 8
 
 	.section	.rodata.module18_managed_to_java,"a",@progbits
 	.type	module18_managed_to_java, @object
 module18_managed_to_java:
-	.word	33554434
-	.word	741
+	.word	33554440
+	.word	535
 	.size	module18_managed_to_java, 8
 
 	.section	.rodata.module19_managed_to_java,"a",@progbits

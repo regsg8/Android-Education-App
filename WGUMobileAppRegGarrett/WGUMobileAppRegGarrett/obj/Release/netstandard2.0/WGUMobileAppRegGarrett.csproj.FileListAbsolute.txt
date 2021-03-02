@@ -2,6 +2,7 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\bin\Release\netstandard2.0\WGUMobileAppRegGarrett.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\bin\Release\netstandard2.0\ref\WGUMobileAppRegGarrett.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\bin\Release\netstandard2.0\WGUMobileAppRegGarrett.pdb
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\WGUMobileAppRegGarrett.csprojAssemblyReference.cache
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\App.xaml.g.cs
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\AppShell.xaml.g.cs
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\Views\AssessmentPage.xaml.g.cs
@@ -17,4 +18,3 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\WGUMobileAppRegGarrett.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\ref\WGUMobileAppRegGarrett.dll
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\WGUMobileAppRegGarrett.pdb
-C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\obj\Release\netstandard2.0\WGUMobileAppRegGarrett.csprojAssemblyReference.cache

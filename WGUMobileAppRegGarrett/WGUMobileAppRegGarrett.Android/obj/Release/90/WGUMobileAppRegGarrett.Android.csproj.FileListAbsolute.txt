@@ -406,6 +406,7 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\src\mono\android\support\v7\widget\RecyclerView_RecyclerListenerImplementor.java
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\src\mono\android\support\v7\widget\Toolbar_OnMenuItemClickListenerImplementor.java
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\src\mono\MonoPackageManager_Resources.java
+C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\src\xamarin\essentials\fileProvider.java
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\bin\packaged_resources
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\src\com\companyname\wgumobileappreggarrett\R.java
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\compressed_assemblies.armeabi-v7a.s
@@ -426,4 +427,3 @@ C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_GenerateJavaStubs.stamp
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\stamp\_ResolveLibraryProjectImports.stamp
-C:\Users\Reg Garrett\source\repos\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett\WGUMobileAppRegGarrett.Android\obj\Release\90\android\src\xamarin\essentials\fileProvider.java

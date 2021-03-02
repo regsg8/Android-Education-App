@@ -308,7 +308,7 @@ namespace WGUMobileAppRegGarrett.Views
             };
             Label end = new Label
             {
-                Text = "End:",
+                Text = "Due:",
                 Style = (Style)Application.Current.Resources["rightLabel"]
             };
             DateTime now = DateTime.Now;

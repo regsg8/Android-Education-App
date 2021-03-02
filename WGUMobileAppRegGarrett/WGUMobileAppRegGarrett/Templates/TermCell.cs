@@ -25,12 +25,12 @@ namespace WGUMobileAppRegGarrett.Templates
             Label start = new Label()
             {
                 Style = (Style)Application.Current.Resources["rightLabel"],
-                Text = "Start: "
+                Text = "Term Start: "
             };
             Label end = new Label()
             {
                 Style = (Style)Application.Current.Resources["rightLabel"],
-                Text = "End: "
+                Text = "Term End: "
             };
 
             name.SetBinding(Label.TextProperty, "TermName");

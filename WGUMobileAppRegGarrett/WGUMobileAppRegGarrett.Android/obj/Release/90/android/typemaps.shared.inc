@@ -103,14 +103,14 @@
 	.section	.rodata.map_aname.17,"aMS",@progbits,1
 	.type	.L.map_aname.17, @object
 .L.map_aname.17:
-	.asciz	"Plugin.LocalNotifications"
-	.size	.L.map_aname.17, 26
+	.asciz	"WGUMobileAppRegGarrett.Android"
+	.size	.L.map_aname.17, 31
 
 	.section	.rodata.map_aname.18,"aMS",@progbits,1
 	.type	.L.map_aname.18, @object
 .L.map_aname.18:
-	.asciz	"WGUMobileAppRegGarrett.Android"
-	.size	.L.map_aname.18, 31
+	.asciz	"Plugin.LocalNotifications"
+	.size	.L.map_aname.18, 26
 
 	.section	.rodata.map_aname.19,"aMS",@progbits,1
 	.type	.L.map_aname.19, @object

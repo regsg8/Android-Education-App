@@ -383,8 +383,8 @@ map_modules:
 	/* java_map */
 	.long	0
 
-	/* module_uuid: a23da4cd-2d70-4ddb-adf5-e97e74908221 */
-	.byte	0xcd, 0xa4, 0x3d, 0xa2, 0x70, 0x2d, 0xdb, 0x4d, 0xad, 0xf5, 0xe9, 0x7e, 0x74, 0x90, 0x82, 0x21
+	/* module_uuid: 068837c5-53de-438f-8aca-84dbc61f6616 */
+	.byte	0xc5, 0x37, 0x88, 0x06, 0xde, 0x53, 0x8f, 0x43, 0x8a, 0xca, 0x84, 0xdb, 0xc6, 0x1f, 0x66, 0x16
 	/* entry_count */
 	.long	1
 	/* duplicate_count */
@@ -393,7 +393,7 @@ map_modules:
 	.long	module17_managed_to_java
 	/* duplicate_map */
 	.long	0
-	/* assembly_name: Plugin.LocalNotifications */
+	/* assembly_name: WGUMobileAppRegGarrett.Android */
 	.long	.L.map_aname.17
 	/* image */
 	.long	0
@@ -402,8 +402,8 @@ map_modules:
 	/* java_map */
 	.long	0
 
-	/* module_uuid: 49b40ed5-8952-4c7c-9bce-bbb3df588092 */
-	.byte	0xd5, 0x0e, 0xb4, 0x49, 0x52, 0x89, 0x7c, 0x4c, 0x9b, 0xce, 0xbb, 0xb3, 0xdf, 0x58, 0x80, 0x92
+	/* module_uuid: a23da4cd-2d70-4ddb-adf5-e97e74908221 */
+	.byte	0xcd, 0xa4, 0x3d, 0xa2, 0x70, 0x2d, 0xdb, 0x4d, 0xad, 0xf5, 0xe9, 0x7e, 0x74, 0x90, 0x82, 0x21
 	/* entry_count */
 	.long	1
 	/* duplicate_count */
@@ -412,7 +412,7 @@ map_modules:
 	.long	module18_managed_to_java
 	/* duplicate_map */
 	.long	0
-	/* assembly_name: WGUMobileAppRegGarrett.Android */
+	/* assembly_name: Plugin.LocalNotifications */
 	.long	.L.map_aname.18
 	/* image */
 	.long	0
@@ -5285,7 +5285,7 @@ map_java:
 
 	/* #535 */
 	/* module_index */
-	.long	17
+	.long	18
 	/* type_token_id */
 	.long	33554440
 	/* java_name */
@@ -7139,7 +7139,7 @@ map_java:
 
 	/* #741 */
 	/* module_index */
-	.long	18
+	.long	17
 	/* type_token_id */
 	.long	33554434
 	/* java_name */

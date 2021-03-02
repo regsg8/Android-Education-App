@@ -587,7 +587,7 @@ namespace WGUMobileAppRegGarrett.Services
         }
 
         //Create dbPath variable for Android
-        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "instructors.db3");
+        static string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "evalData.db3");
 
         //Create DB if none exists and populate test data
         public static void initializeDB()
@@ -665,14 +665,6 @@ namespace WGUMobileAppRegGarrett.Services
                     con.Insert(instructor);
                     int instructorId = instructor.InstructorId;
 
-                    Models.Instructor instructorOther = new Models.Instructor()
-                    {
-                        InstructorName = "Other Instructor",
-                        Email = "test@test.com",
-                        Phone = "123-456-7890"
-                    };
-                    con.Insert(instructorOther);
-
                     //Insert test course
                     Models.Course course = new Models.Course()
                     {
@@ -688,7 +680,7 @@ namespace WGUMobileAppRegGarrett.Services
                         TermId = termId,
                         CourseId = courseId,
                         Status = "Enrolled",
-                        Notes = "Ask Susan for notes from Friday.",
+                        Notes = "Xamarin Forms can be used to target multiple mobile platforms.",
                         EnrollmentStart = sqlDates[2],
                         EnrollmentEnd = sqlDates[3],
                         EnrollmentStartNotify = 0,

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WGUMobileAppRegGarrett.Converters;
 using WGUMobileAppRegGarrett.Models;
 using WGUMobileAppRegGarrett.ViewModels;
 using Xamarin.Forms;
@@ -68,43 +69,6 @@ namespace WGUMobileAppRegGarrett.Services
             }
         }
 
-        //Verify enrollment dates occur within its term
-        public static bool checkWithinTermDates(DateTime enrollmentStart, DateTime enrollmentEnd, DateTime termStart, DateTime termEnd)
-        {
-            bool startWithinTerm = false;
-            bool endWithinTerm = false;
-            bool withinTerm = false;
-            try
-            {
-                for (int i = 0; i < TermViewModel.enrollments.Count; i++)
-                {
-                    int startTermStart = DateTime.Compare(termStart, enrollmentStart);
-                    int endTermStart = DateTime.Compare(termEnd, enrollmentStart);
-                    int startTermEnd = DateTime.Compare(termStart, enrollmentEnd);
-                    int endTermEnd = DateTime.Compare(termEnd, enrollmentEnd);
-                    if (startTermStart <= 0 && endTermStart > 0)
-                    {
-                        startWithinTerm = true;
-                    }
-                    if (startTermEnd < 0 && endTermEnd >= 0)
-                    {
-                        endWithinTerm = true;
-                    }
-                    if (startWithinTerm && endWithinTerm)
-                    {
-                        withinTerm = true;
-                    }
-                    
-                }
-                return withinTerm;
-            }
-            catch (Exception x)
-            {
-                Application.Current.MainPage.DisplayAlert("Error", x.Message, "OK");
-                return withinTerm;
-            }
-        }
-
         //Verify inner object dates occur within outer object dates
         public static bool checkWithinDates(DateTime innerStart, DateTime innerEnd, DateTime outerStart, DateTime outerEnd)
         {
@@ -148,7 +112,16 @@ namespace WGUMobileAppRegGarrett.Services
             try
             {
                 System.Net.Mail.MailAddress validAddress = new System.Net.Mail.MailAddress(email);
-                return true;
+                string domain = validAddress.Host;
+                int p = domain.LastIndexOf(".");
+                string topDomain = domain.Substring(p + 1);
+                int period = email.LastIndexOf(".");
+                int atSymbol = email.LastIndexOf("@");
+                if (p == -1 || topDomain.Length < 2 || atSymbol > period)
+                {
+                    return false;
+                }
+                else return true;
             }
             catch
             {
@@ -170,6 +143,64 @@ namespace WGUMobileAppRegGarrett.Services
                 Console.WriteLine(X.Message);
                 return false;
             }
+        }
+
+        //Validate unique name for new course
+        public static bool validCourseName(string courseName)
+        {
+            bool uniqueName = true;
+            CourseNameConverter.populateCourseNames();
+            for (int i = 0; i < CourseNameConverter.courses.Count; i++)
+            {
+                if (courseName == "") uniqueName = false;
+                if (courseName == CourseNameConverter.courses[i].CourseName) uniqueName = false;
+            }
+            return uniqueName;
+        }
+
+        //Validate unique name for updated course
+        public static bool validCourseName(int courseId, string courseName)
+        {
+            bool uniqueName = true;
+            CourseNameConverter.populateCourseNames();
+            for (int i = 0; i < CourseNameConverter.courses.Count; i++)
+            {
+                if (courseName == "") uniqueName = false;
+                if (courseId != CourseNameConverter.courses[i].CourseId)
+                {
+                    if (courseName == CourseNameConverter.courses[i].CourseName) uniqueName = false;
+                }
+            }
+            return uniqueName;
+        }
+
+        //Validate unique name for new instructor
+        public static bool validInstructorName(string instructorName)
+        {
+            bool uniqueName = true;
+            InstructorNameConverter.populateInstructors();
+            for (int i = 0; i < InstructorNameConverter.instructors.Count; i++)
+            {
+                if (instructorName == "") uniqueName = false;
+                if (instructorName == InstructorNameConverter.instructors[i].InstructorName) uniqueName = false;
+            }
+            return uniqueName;
+        }
+
+        //Validate unique name for updated instructor
+        public static bool validInstructorName(int instructorId, string instructorName)
+        {
+            bool uniqueName = true;
+            InstructorNameConverter.populateInstructors();
+            for (int i = 0; i < InstructorNameConverter.instructors.Count; i++)
+            {
+                if (instructorName == "") uniqueName = false;
+                if (instructorId != InstructorNameConverter.instructors[i].InstructorId)
+                {
+                    if (instructorName == InstructorNameConverter.instructors[i].InstructorName) uniqueName = false;
+                }
+            }
+            return uniqueName;
         }
     }
 }

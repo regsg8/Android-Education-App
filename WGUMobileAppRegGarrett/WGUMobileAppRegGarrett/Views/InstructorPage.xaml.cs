@@ -134,13 +134,15 @@ namespace WGUMobileAppRegGarrett.Views
                 {
                     if (InstructorViewModel.IVMInstructors[i].Email == "" || !Validation.validateEmail(InstructorViewModel.IVMInstructors[i].Email))
                     {
-                        //await DisplayAlert("Invalid Email", "Please enter valid email addresses.", "OK");
                         throw new Exception("Please enter valid email addresses");
                     }
                     else if (InstructorViewModel.IVMInstructors[i].Phone == "" || !Validation.validatePhone(InstructorViewModel.IVMInstructors[i].Phone))
                     {
-                        //await DisplayAlert("Invalid Phone", "Please enter 10 digit phone numbers with no dashes.", "OK");
                         throw new Exception("Please enter 10 digit phone numbers with no dashes.");
+                    }
+                    else if (!Validation.validInstructorName(InstructorViewModel.IVMInstructors[i].InstructorId, InstructorViewModel.IVMInstructors[i].InstructorName))
+                    {
+                        throw new Exception("Please enter a unique name for each instructor");
                     }
                 }
                 for (int i = 0; i < InstructorViewModel.IVMInstructors.Count; i++)
@@ -172,9 +174,9 @@ namespace WGUMobileAppRegGarrett.Views
         {
             InstructorViewModel.newInstructor = new Instructor()
             {
-                InstructorName = "Enter name",
-                Email = "Enter email",
-                Phone = "Enter phone"
+                InstructorName = "",
+                Email = "",
+                Phone = ""
             };
             this.BindingContext = InstructorViewModel.newInstructor;
             Label iName = Generics.label("right", "Name: ");
@@ -182,19 +184,16 @@ namespace WGUMobileAppRegGarrett.Views
             Label iEmail = Generics.label("right", "Email: ");
             Entry name = new Entry()
             {
-                Style = (Style)Application.Current.Resources["title"],
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             name.SetBinding(Entry.TextProperty, "InstructorName", BindingMode.TwoWay);
             Entry phone = new Entry()
             {
-                Style = (Style)Application.Current.Resources["title"],
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             phone.SetBinding(Entry.TextProperty, "Phone", BindingMode.TwoWay);
             Entry email = new Entry()
             {
-                Style = (Style)Application.Current.Resources["title"],
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
             email.SetBinding(Entry.TextProperty, "Email", BindingMode.TwoWay);
@@ -228,7 +227,6 @@ namespace WGUMobileAppRegGarrett.Views
                 Padding = new Thickness(5),
                 Children =
                 {
-                    name,
                     instructorGrid,
                     btnGrid
                 }
@@ -247,6 +245,7 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void AddInstructor_Clicked(object sender, EventArgs e)
         {
+            bool validName = true;
             if (InstructorViewModel.newInstructor.Email == "" || !Validation.validateEmail(InstructorViewModel.newInstructor.Email))
             {
                 await DisplayAlert("Invalid Email", "Please enter a valid email address.", "OK");
@@ -255,7 +254,12 @@ namespace WGUMobileAppRegGarrett.Views
             {
                 await DisplayAlert("Invalid Phone", "Please enter a 10 digit phone number with no dashes.", "OK");
             }
-            else
+            else if (!Validation.validInstructorName(InstructorViewModel.newInstructor.InstructorName))
+            {
+                validName = false;
+                await DisplayAlert("Invalid Name", "Please enter a unique instructor name.", "OK");
+            }
+            else if (validName)
             {
                 DB.createInstructor(InstructorViewModel.newInstructor);
                 InstructorNameConverter.populateInstructors();

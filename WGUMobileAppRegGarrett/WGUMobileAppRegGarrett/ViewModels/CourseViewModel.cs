@@ -11,7 +11,7 @@ namespace WGUMobileAppRegGarrett.ViewModels
     public class CourseViewModel : INotifyPropertyChanged
     {
         public static Course newCourse;
-
+        public static ObservableCollection<Course> CVMCourses;
         public CourseViewModel()
         {
             

@@ -389,8 +389,8 @@ namespace WGUMobileAppRegGarrett.Views
             {
                 bool validDates = true;
                 bool withinTerm = true;
-                DateTime start = DateTime.Parse(TermViewModel.NewEnrollment.EnrollmentStart);
-                DateTime end = DateTime.Parse(TermViewModel.NewEnrollment.EnrollmentEnd);
+                DateTime start = termVM.NewEnrollmentStart;
+                DateTime end = termVM.NewEnrollmentEnd;
                 DateTime termStart = DateTime.Parse(TermViewModel.currentTerm.TermStart);
                 DateTime termEnd = DateTime.Parse(TermViewModel.currentTerm.TermEnd);
                 if (!Validation.startBeforeEnd(start, end) && validDates)

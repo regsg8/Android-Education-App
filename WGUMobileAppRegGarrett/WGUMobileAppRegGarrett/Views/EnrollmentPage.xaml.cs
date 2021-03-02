@@ -422,7 +422,14 @@ namespace WGUMobileAppRegGarrett.Views
                     CourseName = eVM.updateCourseName,
                     InstructorId = updatedInstructorId
                 };
-                DB.updateCourse(updatedCourse);
+                if (!Validation.validCourseName(updatedCourse.CourseId, updatedCourse.CourseName))
+                {
+                    await DisplayAlert("Course Name Error", $"'{updatedCourse.CourseName}' is not valid or already exists.  Please enter a unique name for the course.", "OK");
+                }
+                else
+                {
+                    DB.updateCourse(updatedCourse);
+                }
                 editing = false;
                 populatePage();
             }

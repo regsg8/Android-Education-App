@@ -58,7 +58,8 @@ namespace WGUMobileAppRegGarrett.Views
             };
             listview.ItemTemplate = new DataTemplate(typeof(CourseCellEdit));
             CourseNameConverter.populateCourseNames();
-            listview.ItemsSource = CourseNameConverter.courses;
+            CourseViewModel.CVMCourses = CourseNameConverter.courses;
+            listview.ItemsSource = CourseViewModel.CVMCourses;
             passListView = listview;
             //Buttons
             Button save = new Button
@@ -110,17 +111,29 @@ namespace WGUMobileAppRegGarrett.Views
             Application.Current.MainPage.Navigation.PopAsync();
         }
 
-        private void Save_Clicked(object sender, EventArgs e)
+        private async void Save_Clicked(object sender, EventArgs e)
         {
-            for (int i = 0; i < CourseNameConverter.courses.Count; i ++)
+            bool validNames = true;
+            for (int i = 0; i < CourseViewModel.CVMCourses.Count; i ++)
             {
-                DB.updateCourse(CourseNameConverter.courses[i]);
+                if (!Validation.validCourseName(CourseViewModel.CVMCourses[i].CourseId, CourseViewModel.CVMCourses[i].CourseName))
+                {
+                    validNames = false;
+                    await DisplayAlert("Course Name Error", $"'{CourseViewModel.CVMCourses[i].CourseName}' is not valid or already exists.  Please enter a unique name for the course.", "OK");
+                }
             }
-            CourseNameConverter.populateCourseNames();
-            TermViewModel.TVMCourses.Clear();
-            TermViewModel.TVMCourses = CourseNameConverter.courses;
-            currentPicker.ItemsSource = TermViewModel.TVMCourses;
-            Application.Current.MainPage.Navigation.PopAsync();
+            if (validNames)
+            {
+                for (int i = 0; i < CourseViewModel.CVMCourses.Count; i++)
+                {
+                    DB.updateCourse(CourseViewModel.CVMCourses[i]);
+                }
+                CourseNameConverter.populateCourseNames();
+                TermViewModel.TVMCourses.Clear();
+                TermViewModel.TVMCourses = CourseNameConverter.courses;
+                currentPicker.ItemsSource = TermViewModel.TVMCourses;
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
         }
 
         private async void EditInstructors_Clicked(object sender, EventArgs e)
@@ -199,9 +212,14 @@ namespace WGUMobileAppRegGarrett.Views
 
         private async void AddCourse_Clicked(object sender, EventArgs e)
         {
+            
             if (CourseViewModel.newCourse.InstructorId == -1)
             {
                 await DisplayAlert("No Instructor Selected", "Please select an instructor.", "OK");
+            }
+            else if (!Validation.validCourseName(CourseViewModel.newCourse.CourseName))
+            {
+                await DisplayAlert("Course Name Error", $"'{CourseViewModel.newCourse.CourseName}' is not valid or already exists.  Please enter a unique name for the course.", "OK");
             }
             else
             {
